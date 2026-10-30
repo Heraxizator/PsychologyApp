@@ -218,7 +218,8 @@ public sealed partial class CompanionDialogue(
         }
 
         // "Okay, let us try" right after an offer starts that practice, instead of listing the offer again.
-        if (previous.OfferedPrimary is { } offered && previous.TurnsSinceOffer == 0 && Enum.TryParse(offered, out TechniqueId _) && UtteranceClassifier.AcceptsOffer(text))
+        if (previous.OfferedPrimary is { } offered && previous.TurnsSinceOffer == 0
+            && Enum.TryParse(offered, out TechniqueId offeredId) && Enum.IsDefined(offeredId) && UtteranceClassifier.AcceptsOffer(text))
         {
             return RespondToQuickReply(previous, new ChatQuickReply(ChatQuickReplyKinds.Practice, string.Empty, offered));
         }
@@ -852,7 +853,7 @@ public sealed partial class CompanionDialogue(
             if (rating < reference)
             {
                 List<string> good = [CompanionDialogueContent.PostPracticeBetter(reference, rating, english)];
-                if (state.LastPractice is { } helpful && Enum.TryParse(helpful, out TechniqueId helpedId))
+                if (state.LastPractice is { } helpful && Enum.TryParse(helpful, out TechniqueId helpedId) && Enum.IsDefined(helpedId))
                 {
                     // Said once per practice per chat; every drop is still counted.
                     if (!state.HelpedPractices.Contains(helpful))
@@ -973,7 +974,7 @@ public sealed partial class CompanionDialogue(
     /// <summary>"Is there something else?" after an offer: the alternative that was kept back, or a fresh offer.</summary>
     private CompanionReply RespondToAskForOther(CompanionState state, CompanionEmotion emotion, CompanionTheme? theme)
     {
-        if (Enum.TryParse(state.OfferedAlternative, out TechniqueId alternative))
+        if (Enum.TryParse(state.OfferedAlternative, out TechniqueId alternative) && Enum.IsDefined(alternative))
         {
             List<ChatQuickReply> chips =
             [
@@ -1034,7 +1035,8 @@ public sealed partial class CompanionDialogue(
             : TechniqueSuggester.Suggest(analysis with { Emotion = emotion });
 
         // What has helped this person before comes first, mentioned once per chat. A panic attack gets the standard help, not an experiment.
-        if (!state.PreferredMentioned && emotion != CompanionEmotion.Panic && Enum.TryParse(state.PreferredPractice, out TechniqueId preferred))
+        if (!state.PreferredMentioned && emotion != CompanionEmotion.Panic
+            && Enum.TryParse(state.PreferredPractice, out TechniqueId preferred) && Enum.IsDefined(preferred))
         {
             suggestions = [preferred, .. suggestions.Where(s => s != preferred).Take(1)];
             messages.Add($"{CompanionSmallTalk.PreferredNote(preferred, english)} {CompanionContent.OfferLine(preferred, english)}");
@@ -1186,11 +1188,11 @@ public sealed partial class CompanionDialogue(
     private static partial System.Text.RegularExpressions.Regex RatingPattern();
 
     private static CompanionEmotion ParseEmotion(string? name) =>
-        Enum.TryParse(name, out CompanionEmotion e) ? e : CompanionEmotion.Unknown;
+        Enum.TryParse(name, out CompanionEmotion e) && Enum.IsDefined(e) ? e : CompanionEmotion.Unknown;
 
     private static CompanionTheme? ParseTheme(string? name) =>
-        Enum.TryParse(name, out CompanionTheme t) ? t : null;
+        Enum.TryParse(name, out CompanionTheme t) && Enum.IsDefined(t) ? t : null;
 
     private static CompanionPerson? ParsePerson(string? name) =>
-        Enum.TryParse(name, out CompanionPerson p) ? p : null;
+        Enum.TryParse(name, out CompanionPerson p) && Enum.IsDefined(p) ? p : null;
 }

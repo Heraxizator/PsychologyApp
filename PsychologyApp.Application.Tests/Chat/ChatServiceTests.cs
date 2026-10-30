@@ -713,6 +713,28 @@ public class ChatServiceTests
     }
 
     [Fact]
+    public async Task A_failed_journal_write_does_not_save_a_reply_that_claims_the_mood_was_logged()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Меня бесит начальник, опять раскритиковал при всех");
+        await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Rating, "7", "7"));
+        ChatTurnResult thanks = await service.SendTextAsync(id, "Спасибо");
+        ChatQuickReply journalChip = thanks.NewMessages[^1].QuickReplies.First(c => c.Payload == "journal:log");
+        int savedMessages = (await _repository.GetMessagesAsync(id)).Count;
+        ChatSessionDTO before = (await _repository.GetSessionAsync(id))!;
+        _progress.Setup(p => p.RecordMoodAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("Journal unavailable"));
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => service.SendQuickReplyAsync(id, journalChip));
+
+        Assert.Equal(savedMessages, (await _repository.GetMessagesAsync(id)).Count);
+        ChatSessionDTO after = (await _repository.GetSessionAsync(id))!;
+        Assert.Equal(before.StateJson, after.StateJson);
+        Assert.Equal(before.UpdatedAt, after.UpdatedAt);
+    }
+
+    [Fact]
     public async Task A_recent_stress_test_result_is_referenced_when_the_companion_would_suggest_a_test()
     {
         ChatService service = CreateService();

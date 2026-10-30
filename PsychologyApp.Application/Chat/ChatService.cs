@@ -366,7 +366,7 @@ public sealed class ChatService(
 
         for (int i = before.HelpedPractices.Count; i < reply.State.HelpedPractices.Count; i++)
         {
-            if (Enum.TryParse(reply.State.HelpedPractices[i], out TechniqueId helped))
+            if (Enum.TryParse(reply.State.HelpedPractices[i], out TechniqueId helped) && Enum.IsDefined(helped))
             {
                 changes.Add(new ChatMemoryChange(ChatMemoryKeys.Helped(helped), Increment: true));
             }
@@ -424,6 +424,13 @@ public sealed class ChatService(
         CompanionReply reply = dialogue.Respond(state, input);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
 
+        // Do not persist a reply that says the mood was logged before the journal write commits. A failed journal
+        // write leaves the user's turn unsaved, so the UI can restore the chip and retry the same action.
+        if (reply.Action is { Kind: DialogueActionKind.LogMood, MoodLevel: { } moodLevel })
+        {
+            await progress.RecordMoodAsync(moodLevel, reply.Action.Note, now, cancellationToken).ConfigureAwait(false);
+        }
+
         // The user's message and the whole reply are stored in one transaction: a turn is saved completely or not at all.
         List<ChatMessageDTO> pending =
         [
@@ -433,12 +440,10 @@ public sealed class ChatService(
         IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, pending, MemoryChanges(state, reply, memory, now), cancellationToken).ConfigureAwait(false);
 
         // Logging to the journal is a side effect the companion carries out itself; the UI never sees it as a navigation instruction.
-        if (reply.Action is { Kind: DialogueActionKind.LogMood, MoodLevel: { } moodLevel })
+        if (reply.Action?.Kind == DialogueActionKind.LogMood)
         {
-            await progress.RecordMoodAsync(moodLevel, reply.Action.Note, now, cancellationToken).ConfigureAwait(false);
             return new ChatTurnResult(session, added, null);
         }
-
         return new ChatTurnResult(session, added, reply.Action);
     }
 
@@ -470,7 +475,7 @@ public sealed class ChatService(
             session.Title = CompanionDialogueContent.Title(reply.Emotion, reply.Theme, source, language.IsEnglish);
         }
         else if (themeWasUnknown && reply.Theme is { } laterTheme
-            && Enum.TryParse(session.Emotion, out CompanionEmotion named) && named != CompanionEmotion.Unknown
+            && Enum.TryParse(session.Emotion, out CompanionEmotion named) && Enum.IsDefined(named) && named != CompanionEmotion.Unknown
             && session.Title == CompanionDialogueContent.Title(named, null, session.Title, language.IsEnglish))
         {
             // The chat was named by its feeling before its theme was heard ("Тревога"): the theme joins the title, so two

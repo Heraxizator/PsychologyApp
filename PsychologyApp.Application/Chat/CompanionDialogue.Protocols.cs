@@ -31,6 +31,7 @@ public sealed partial class CompanionDialogue
 
         // A quarrel, too much work or a lost job ask for a plan; fear of an exam, a failure or a betrayal mostly live in what one tells oneself.
         bool actionable = Enum.TryParse(state.Event, out CompanionEvent happened)
+            && Enum.IsDefined(happened)
             && happened is CompanionEvent.Conflict or CompanionEvent.Overload or CompanionEvent.JobLoss;
         if (emotion == CompanionEmotion.Procrastination || (actionable && emotion is not (CompanionEmotion.Guilt or CompanionEmotion.Overthinking)))
         {

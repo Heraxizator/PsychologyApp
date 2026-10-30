@@ -140,6 +140,25 @@ public class ChatStatisticsTests
         Assert.Null(ChatMemoryKeys.MostHelped(NoMemory));
     }
 
+    [Fact]
+    public void Undefined_numeric_memory_values_are_ignored_in_profile_and_practice_preferences()
+    {
+        Dictionary<string, string> memory = new()
+        {
+            [ChatMemoryKeys.HelpedPrefix + "999"] = "10",
+            [ChatMemoryKeys.TriedPrefix + TechniqueId.Breathing] = "-2",
+            [ChatMemoryKeys.Helped(TechniqueId.Grounding)] = "1"
+        };
+
+        CompanionProfile profile = Compute([Chat(0, "999"), Chat(1, "Anxiety")], memory);
+
+        Assert.Equal([TechniqueId.Grounding], profile.Practices.Select(p => p.Technique));
+        Assert.Equal(0, profile.PracticesTried);
+        Assert.Equal(1, profile.PracticesHelped);
+        Assert.Equal(CompanionEmotion.Anxiety, Assert.Single(profile.Emotions).Emotion);
+        Assert.Equal(TechniqueId.Grounding, ChatMemoryKeys.MostHelped(memory));
+    }
+
     [Theory]
     [InlineData(0, 0, 0.0, 5)]
     [InlineData(4, 0, 0.8, 1)]

@@ -44,7 +44,9 @@ public static class ChatMemoryKeys
         {
             if (key.StartsWith(prefix, StringComparison.Ordinal)
                 && Enum.TryParse(key[prefix.Length..], out TechniqueId id)
-                && int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int count))
+                && Enum.IsDefined(id)
+                && int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int count)
+                && count > 0)
             {
                 yield return (id, count);
             }
@@ -175,7 +177,7 @@ public static class ChatStatistics
     private static List<EmotionStat> Emotions(List<ChatSessionDTO> chats)
     {
         List<CompanionEmotion> known = chats
-            .Select(s => Enum.TryParse(s.Emotion, out CompanionEmotion e) ? e : CompanionEmotion.Unknown)
+            .Select(s => Enum.TryParse(s.Emotion, out CompanionEmotion e) && Enum.IsDefined(e) ? e : CompanionEmotion.Unknown)
             .Where(e => e != CompanionEmotion.Unknown)
             .ToList();
         return known

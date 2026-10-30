@@ -148,7 +148,7 @@ public static class CompanionActContent
     public static string? TargetedQuestion(string id, bool english)
     {
         string[] parts = id.Split(':');
-        if (parts.Length != 3 || parts[0] != "t" || !Enum.TryParse(parts[2], out CompanionPerson person))
+        if (parts.Length != 3 || parts[0] != "t" || !Enum.TryParse(parts[2], out CompanionPerson person) || !Enum.IsDefined(person))
         {
             return null;
         }
@@ -158,7 +158,7 @@ public static class CompanionActContent
         {
             text = PersonFallback[person];
         }
-        else if (Enum.TryParse(parts[1], out CompanionEmotion emotion) && Targeted.TryGetValue((emotion, person), out text))
+        else if (Enum.TryParse(parts[1], out CompanionEmotion emotion) && Enum.IsDefined(emotion) && Targeted.TryGetValue((emotion, person), out text))
         {
         }
         else

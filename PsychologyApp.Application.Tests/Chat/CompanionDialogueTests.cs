@@ -41,6 +41,26 @@ public class CompanionDialogueTests
     }
 
     [Fact]
+    public void Undefined_numeric_emotions_and_themes_in_restored_state_are_treated_as_unknown()
+    {
+        CompanionState restored = CompanionState.Deserialize(
+            "{\"emotion\":\"999\",\"secondary\":\"999\",\"theme\":\"999\",\"person\":\"999\",\"event\":\"999\",\"pending\":\"999\",\"primary\":\"999\",\"alternative\":\"999\",\"lastPractice\":\"999\",\"preferred\":\"999\",\"helped\":[\"999\",\"Breathing\"]}");
+
+        Assert.Equal(nameof(CompanionEmotion.Unknown), restored.Emotion);
+        Assert.Equal(nameof(CompanionEmotion.Unknown), restored.Secondary);
+        Assert.Null(restored.Theme);
+        Assert.Null(restored.Person);
+        Assert.Null(restored.Event);
+        Assert.Null(restored.PendingPractice);
+        Assert.Null(restored.OfferedPrimary);
+        Assert.Null(restored.OfferedAlternative);
+        Assert.Null(restored.LastPractice);
+        Assert.Null(restored.PreferredPractice);
+        Assert.Equal([nameof(TechniqueId.Breathing)], restored.HelpedPractices);
+        Assert.Equal(CompanionEmotion.Unknown, Say(Create(), restored, "Привет").Emotion);
+    }
+
+    [Fact]
     public void A_long_message_that_names_no_feeling_gets_the_choice_of_feelings_at_once()
     {
         CompanionDialogue dialogue = Create();

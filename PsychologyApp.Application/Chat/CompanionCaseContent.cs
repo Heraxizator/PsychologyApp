@@ -145,11 +145,11 @@ public static class CompanionCaseContent
         Texts.ContainsKey(kind) && !asked.Contains(EventQuestionId(kind)) ? EventQuestionId(kind) : null;
 
     public static string? EventQuestion(string id, bool english) =>
-        id.StartsWith("e:", StringComparison.Ordinal) && Enum.TryParse(id[2..], out CompanionEvent kind) && Texts.TryGetValue(kind, out EventText? t)
+        id.StartsWith("e:", StringComparison.Ordinal) && Enum.TryParse(id[2..], out CompanionEvent kind) && Enum.IsDefined(kind) && Texts.TryGetValue(kind, out EventText? t)
             ? (english ? t.AskEn : t.AskRu)
             : null;
 
-    public static CompanionEvent ParseEvent(string? name) => Enum.TryParse(name, out CompanionEvent kind) ? kind : CompanionEvent.None;
+    public static CompanionEvent ParseEvent(string? name) => Enum.TryParse(name, out CompanionEvent kind) && Enum.IsDefined(kind) ? kind : CompanionEvent.None;
 
     /// <summary>The question that fits the answer "yes" / "no" to the question just asked, or null when a generic follow-up will do.</summary>
     public static string? FollowUp(string? questionId, bool yes, bool english, bool force = false)
@@ -166,7 +166,7 @@ public static class CompanionCaseContent
                 : (english ? "Then it matters even more that you are saying it here. What would help you get through today?" : "Тогда тем важнее, что вы говорите об этом здесь. Что помогло бы вам пережить сегодняшний день?");
         }
 
-        if (questionId.StartsWith("e:", StringComparison.Ordinal) && Enum.TryParse(questionId[2..], out CompanionEvent kind) && Texts.TryGetValue(kind, out EventText? t))
+        if (questionId.StartsWith("e:", StringComparison.Ordinal) && Enum.TryParse(questionId[2..], out CompanionEvent kind) && Enum.IsDefined(kind) && Texts.TryGetValue(kind, out EventText? t))
         {
             // "Yes" to "what worries you most: money, the future or others?" answers nothing: ask for the choice, do not pretend it was understood.
             if (!force && !YesNoQuestions.Contains(kind))

@@ -1,5 +1,7 @@
 using System.Text;
 using System.Text.Json;
+using PsychologyApp.Application.Conversation.Companion;
+using PsychologyApp.Domain.Practice;
 
 namespace PsychologyApp.Application.Chat;
 
@@ -261,8 +263,8 @@ public sealed record CompanionState
             {
                 Turns = Int(r, "turns") ?? 0,
                 Greetings = Int(r, "greetings") ?? 0,
-                Emotion = Str(r, "emotion") ?? "Unknown",
-                Theme = Str(r, "theme"),
+                Emotion = EnumName<CompanionEmotion>(r, "emotion") ?? nameof(CompanionEmotion.Unknown),
+                Theme = EnumName<CompanionTheme>(r, "theme"),
                 FirstIntensity = Int(r, "first"),
                 LastIntensity = Int(r, "last"),
                 TurnsSinceOffer = Int(r, "sinceOffer") ?? 99,
@@ -272,15 +274,15 @@ public sealed record CompanionState
                 AwaitingPostPracticeRating = Bool(r, "awaitingPost"),
                 AskedQuestions = Array(r, "asked"),
                 RecentTexts = Array(r, "recent"),
-                PendingPractice = Str(r, "pending"),
+                PendingPractice = EnumName<TechniqueId>(r, "pending"),
                 PendingPracticeStartedUtc = Str(r, "pendingAt") is { } at
                     && DateTime.TryParse(at, null, System.Globalization.DateTimeStyles.RoundtripKind, out DateTime parsed)
                         ? parsed.ToUniversalTime()
                         : null,
-                OfferedPrimary = Str(r, "primary"),
-                OfferedAlternative = Str(r, "alternative"),
-                Person = Str(r, "person"),
-                Secondary = Str(r, "secondary") ?? "Unknown",
+                OfferedPrimary = EnumName<TechniqueId>(r, "primary"),
+                OfferedAlternative = EnumName<TechniqueId>(r, "alternative"),
+                Person = EnumName<CompanionPerson>(r, "person"),
+                Secondary = EnumName<CompanionEmotion>(r, "secondary") ?? nameof(CompanionEmotion.Unknown),
                 FirstQuote = Str(r, "firstQuote"),
                 LastRecapTurn = Int(r, "lastRecap") ?? 0,
                 CallbackAsked = Bool(r, "callbackAsked"),
@@ -289,16 +291,19 @@ public sealed record CompanionState
                 NamePending = Bool(r, "namePending"),
                 LastQuestion = Str(r, "lastQuestion"),
                 RecentReplies = Array(r, "recentReplies"),
-                LastPractice = Str(r, "lastPractice"),
-                HelpedPractices = Array(r, "helped"),
-                PreferredPractice = Str(r, "preferred"),
+                LastPractice = EnumName<TechniqueId>(r, "lastPractice"),
+                HelpedPractices = Array(r, "helped")
+                    .Select(name => Enum.TryParse(name, out TechniqueId id) && Enum.IsDefined(id) ? id.ToString() : null)
+                    .OfType<string>()
+                    .ToArray(),
+                PreferredPractice = EnumName<TechniqueId>(r, "preferred"),
                 PreferredMentioned = Bool(r, "preferredMentioned"),
                 OfferedResource = Str(r, "offeredResource"),
                 JournalLogged = Bool(r, "journalLogged"),
                 GriefShared = Bool(r, "grief"),
                 PracticesDeclined = Bool(r, "declined"),
                 ProfessionalHelpNoted = Bool(r, "helpNoted"),
-                Event = Str(r, "event"),
+                Event = EnumName<CompanionEvent>(r, "event"),
                 Goal = Str(r, "goal"),
                 GoalAsked = Bool(r, "goalAsked"),
                 LastQuestionId = Str(r, "lastQuestionId"),
@@ -357,6 +362,9 @@ public sealed record CompanionState
 
     private static string? Str(JsonElement e, string name) =>
         e.TryGetProperty(name, out JsonElement p) && p.ValueKind == JsonValueKind.String ? p.GetString() : null;
+
+    private static string? EnumName<TEnum>(JsonElement e, string name) where TEnum : struct, Enum =>
+        Str(e, name) is { } text && Enum.TryParse(text, out TEnum value) && Enum.IsDefined(value) ? value.ToString() : null;
 
     private static int? Int(JsonElement e, string name) =>
         e.TryGetProperty(name, out JsonElement p) && p.ValueKind == JsonValueKind.Number && p.TryGetInt32(out int v) ? v : null;

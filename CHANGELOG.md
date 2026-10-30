@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Restored chat state and practice counters now discard undefined numeric enum values, so damaged data cannot show invalid practices or pollute the companion profile. A failed journal write no longer saves a chat reply that says the mood was logged. Regression tests added; not checked on a device.
+
 - Forgetting chat memory no longer restores an old name or preferred practice from a saved chat state. Regression test added; not checked on a device.
 
 - Closing the chat page no longer cancels a message that was already sent before it could be saved. Regression test added; not checked on a device.

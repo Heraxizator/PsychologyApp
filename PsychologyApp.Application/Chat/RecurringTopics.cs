@@ -52,8 +52,8 @@ public static class RecurringTopics
     /// <summary>How the topic is named in a sentence: the person or the area of life.</summary>
     public static string? Label(string topicKey, bool english) => topicKey.Split(':') switch
     {
-        ["person", var who] when Enum.TryParse(who, out CompanionPerson person) => CompanionActContent.PersonName(person, english),
-        ["theme", var area] when Enum.TryParse(area, out CompanionTheme theme) => CompanionContent.ThemeName(theme, english),
+        ["person", var who] when Enum.TryParse(who, out CompanionPerson person) && Enum.IsDefined(person) => CompanionActContent.PersonName(person, english),
+        ["theme", var area] when Enum.TryParse(area, out CompanionTheme theme) && Enum.IsDefined(theme) => CompanionContent.ThemeName(theme, english),
         _ => null
     };
 
