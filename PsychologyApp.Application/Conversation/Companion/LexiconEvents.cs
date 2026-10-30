@@ -77,7 +77,7 @@ public sealed partial class LexiconSituationAnalyzer
             int first = int.MaxValue;
             foreach (string term in terms)
             {
-                int at = IndexOf(term, normalized, tokens, offsets, respectNegation: false);
+                int at = IndexOf(term, normalized, tokens, offsets, respectNegation: true);
                 if (at >= 0)
                 {
                     hits++;
