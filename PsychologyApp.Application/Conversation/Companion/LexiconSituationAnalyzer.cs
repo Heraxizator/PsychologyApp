@@ -8,7 +8,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 {
     private const double MinScore = 1.0;
 
-    private static readonly HashSet<string> Negations = ["не", "нет", "ни", "no", "not", "never", "dont", "cant", "cannot"];
+    private static readonly HashSet<string> Negations = ["не", "нет", "ни", "без", "no", "not", "never", "dont", "cant", "cannot"];
 
     // A negation is still recognised across a short chain of these ("не чувствую себя очень тревожной"), but not across an arbitrary word —
     // normalization drops sentence punctuation, so an unbounded look-back would misread "Не знаю. Тревожусь" as negated.
@@ -77,8 +77,11 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 
     private static readonly string[] BodyTerms =
     [
-        "сердц", "давит", "=грудь", "груд", "живот", "желуд", "голов", "тошн", "комок", "зажим", "мышц", "плеч", "дрож", "трясет", "трясу", "потею", "горл", "сжима", "спазм", "пульс", "ледяные руки",
-        "chest", "stomach", "heart", "shaking", "trembl", "nausea", "headache", "tight", "lump", "shoulders", "throat", "sweat", "numb"
+        "давит груд", "сдавл груд", "сжимает груд", "боль груд", "болит груд", "тяжест груд", "сердц колот", "сердц бьет", "сердц выскакива",
+        "болит живот", "боль живот", "крутит живот", "голов болит", "головная боль", "тошн", "комок горл", "сжимает горл", "зажим плеч", "мышц зажим",
+        "дрож", "трясет", "трясу", "потею", "спазм", "пульс зашкаливает", "ледяные руки", "не могу дышать",
+        "tight chest", "chest tight", "tightness chest", "chest pain", "heart racing", "racing heart", "heart pounding", "pounding heart",
+        "stomach ache", "stomach pain", "stomach cramps", "headache", "nausea", "shaking", "trembl", "sweat", "numb", "throat tight", "shoulder tension", "muscle tension", "cant breathe", "cannot breathe"
     ];
 
     private static readonly string[] IntensityTerms =
@@ -151,7 +154,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 
         bool Matches(string term, bool respectNegation) => IndexOf(term, normalized, tokens, offsets, respectNegation) >= 0;
 
-        bool hasBody = BodyTerms.Any(term => Matches(term, respectNegation: false));
+        bool hasBody = BodyTerms.Any(term => Matches(term, respectNegation: true));
         if (hasBody && scores.ContainsKey(CompanionEmotion.Anxiety))
         {
             scores[CompanionEmotion.Panic] = scores.GetValueOrDefault(CompanionEmotion.Panic) + 1;

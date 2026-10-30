@@ -56,7 +56,7 @@ public enum CompanionPerson
 
 /// <param name="Emotion">Best-matching state, or <see cref="CompanionEmotion.Unknown"/> when nothing in the text was recognised.</param>
 /// <param name="Confidence">0..1, how clearly the top state beat the runner-up.</param>
-/// <param name="HasBodySymptoms">The text mentions physical sensations (chest, stomach, shaking...).</param>
+/// <param name="HasBodySymptoms">The text mentions an active physical sensation (chest pressure, nausea, shaking...), not a body part alone.</param>
 /// <param name="IsIntense">The text contains intensifiers such as "very", "unbearable".</param>
 /// <param name="Secondary">A second state that scored almost as high (mixed feelings), or Unknown.</param>
 /// <param name="Persons">Who the message is about (boss, partner, parent...), most mentioned first.</param>

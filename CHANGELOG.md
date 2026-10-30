@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Physical-symptom recognition now requires an active sensation and respects negation, so a bare body-part mention or a denied symptom does not escalate ordinary anxiety. Not checked on a device.
+
 - Advice replies now acknowledge the recognized feeling and situation first; messages about a loss or trauma follow the existing support path instead of generic advice and practice offers. Not checked on a device.
 
 - Emotion recognition now carries negation through a short chain of known modifiers (for example, “I don't feel very anxious”) without letting it cross unrelated words. Not checked on a device.
