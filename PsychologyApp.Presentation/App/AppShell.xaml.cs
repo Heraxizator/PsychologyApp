@@ -138,7 +138,7 @@ public partial class AppShell : Shell
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Tab haptic skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Tab haptic skipped ({ex.GetType().Name}).");
         }
     }
 

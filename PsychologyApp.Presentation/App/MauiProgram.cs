@@ -52,7 +52,7 @@ public static class MauiProgram
         NavigationThread.InvokeAsync = action => MainThread.InvokeOnMainThreadAsync(action);
 
 #if DEBUG
-        builder.Logging.AddDebug();
+        // Keep diagnostics in the privacy-filtered local sink; the platform Debug provider formats exception messages verbatim.
         builder.Logging.SetMinimumLevel(LogLevel.Debug);
         string logFilePath = Path.Combine(FileSystem.AppDataDirectory, "logs", "app-debug.log");
         builder.Logging.AddProvider(new DebugFileLoggerProvider(logFilePath));

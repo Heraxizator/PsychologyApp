@@ -25,7 +25,7 @@ public static class BestEffort
         }
         else
         {
-            System.Diagnostics.Trace.TraceWarning($"Ignored failure in {origin}: {error.Message}");
+            System.Diagnostics.Trace.TraceWarning($"Ignored failure in {origin} ({error.GetType().Name}).");
         }
     }
 }

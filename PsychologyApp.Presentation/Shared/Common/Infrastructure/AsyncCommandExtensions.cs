@@ -41,7 +41,7 @@ public static class AsyncCommandExtensions
                 }
                 else
                 {
-                    System.Diagnostics.Trace.TraceError($"Unobserved async failure in {origin}: {error}");
+                    System.Diagnostics.Trace.TraceError($"Unobserved async failure in {origin} ({error.GetType().Name}).");
                 }
 
                 if (onError is not null)

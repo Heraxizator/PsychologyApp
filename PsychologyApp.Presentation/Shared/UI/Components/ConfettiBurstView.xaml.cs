@@ -65,7 +65,7 @@ public partial class ConfettiBurstView : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"ConfettiBurstView.PlayAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"ConfettiBurstView.PlayAsync skipped ({ex.GetType().Name}).");
         }
         finally
         {

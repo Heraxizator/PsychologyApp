@@ -99,7 +99,7 @@ public sealed class TestRunCoordinator(
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
-                System.Diagnostics.Trace.TraceError("Could not record the risk signal from a questionnaire: " + ex);
+                System.Diagnostics.Trace.TraceError($"Could not record the risk signal from a questionnaire ({ex.GetType().Name}).");
             }
         }
 

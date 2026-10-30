@@ -26,7 +26,8 @@ public sealed class GlobalExceptionHandler
     public void Attach(Microsoft.Maui.Controls.Application application)
     {
         AsyncCommandExtensions.DefaultErrorHandler = ex => LogAndNotify(ex, "Background task failed", useDialog: false);
-        AsyncCommandExtensions.DefaultErrorLogger = (ex, origin) => _logger.LogWarning(ex, "Background task started in {Origin} failed", origin);
+        AsyncCommandExtensions.DefaultErrorLogger = (ex, origin) =>
+            _logger.LogWarning("Background task started in {Origin} failed ({ExceptionType})", origin, ex.GetType().Name);
         application.HandlerChanged += OnHandlerChanged;
         AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandled;
         TaskScheduler.UnobservedTaskException += OnUnobservedTask;
@@ -57,7 +58,7 @@ public sealed class GlobalExceptionHandler
             // The process is ending: a dialog would never be seen and the queued logger may not be drained, so write the crash straight to disk.
             DebugFileLoggerProvider.AppendNow(
                 DebugFileLoggerProvider.ErrorLogPath,
-                $"[{DateTimeOffset.Now:yyyy-MM-dd HH:mm:ss.fff}] CRASH Unhandled domain exception: {ex}");
+                $"[{DateTimeOffset.Now:yyyy-MM-dd HH:mm:ss.fff}] CRASH Unhandled domain exception ({ex.GetType().Name}).");
             return;
         }
 
@@ -70,11 +71,11 @@ public sealed class GlobalExceptionHandler
         // It is logged; the task is marked observed so it cannot take the process down.
         try
         {
-            _logger.LogWarning(e.Exception.Flatten(), "Unobserved task exception");
+            _logger.LogWarning("Unobserved task exception ({ExceptionType})", e.Exception.GetBaseException().GetType().Name);
         }
         catch
         {
-            System.Diagnostics.Debug.WriteLine(e.Exception);
+            System.Diagnostics.Debug.WriteLine($"Unobserved task exception ({e.Exception.GetBaseException().GetType().Name}).");
         }
 
         e.SetObserved();
@@ -84,15 +85,11 @@ public sealed class GlobalExceptionHandler
     {
         try
         {
-            _logger.LogError(
-                exception,
-                "{Message}. Type={ExceptionType}",
-                message,
-                exception.GetType().Name);
+            _logger.LogError("{Message}. Type={ExceptionType}", message, exception.GetType().Name);
         }
         catch
         {
-            System.Diagnostics.Debug.WriteLine($"{message}: {exception}");
+            System.Diagnostics.Debug.WriteLine($"{message} ({exception.GetType().Name}).");
         }
 
         if (IsExpectedNoise(exception))

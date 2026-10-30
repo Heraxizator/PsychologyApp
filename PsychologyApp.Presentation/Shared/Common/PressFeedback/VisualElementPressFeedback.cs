@@ -224,7 +224,7 @@ public static class VisualElementPressFeedback
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Haptic feedback skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Haptic feedback skipped ({ex.GetType().Name}).");
         }
     }
 

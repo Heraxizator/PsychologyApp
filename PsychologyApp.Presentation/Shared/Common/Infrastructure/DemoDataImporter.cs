@@ -29,7 +29,7 @@ internal static class DemoDataImporter
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Demo data import failed: {ex}");
+            System.Diagnostics.Debug.WriteLine($"Demo data import failed ({ex.GetType().Name}).");
         }
     }
 }

@@ -85,7 +85,7 @@ public static class UiAnimations
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeRevealPremiumAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeRevealPremiumAsync skipped ({ex.GetType().Name}).");
             ResetVisualState(view);
         }
     }
@@ -106,7 +106,7 @@ public static class UiAnimations
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeFadeInAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeFadeInAsync skipped ({ex.GetType().Name}).");
             ResetVisualState(view);
         }
     }
@@ -133,7 +133,7 @@ public static class UiAnimations
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeRevealLiteAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeRevealLiteAsync skipped ({ex.GetType().Name}).");
             ResetVisualState(view);
         }
     }
@@ -328,7 +328,7 @@ public static class UiAnimations
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafePulseAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafePulseAsync skipped ({ex.GetType().Name}).");
             ResetVisualState(view);
         }
     }
@@ -367,7 +367,7 @@ public static class UiAnimations
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeShakeAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeShakeAsync skipped ({ex.GetType().Name}).");
             ResetVisualState(view);
         }
     }
@@ -409,7 +409,7 @@ public static class UiAnimations
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeInputFocusAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeInputFocusAsync skipped ({ex.GetType().Name}).");
             if (border is not null)
             {
                 ApplyInputFocusInstant(border, focused);
@@ -526,7 +526,7 @@ public static class UiAnimations
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeHideAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeHideAsync skipped ({ex.GetType().Name}).");
             ResetVisualState(view);
         }
     }

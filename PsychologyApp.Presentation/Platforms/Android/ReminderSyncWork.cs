@@ -28,7 +28,7 @@ internal static class ReminderSyncWork
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"{typeof(TCoordinator).Name} sync from a broadcast failed: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"{typeof(TCoordinator).Name} sync from a broadcast failed ({ex.GetType().Name}).");
             }
             finally
             {

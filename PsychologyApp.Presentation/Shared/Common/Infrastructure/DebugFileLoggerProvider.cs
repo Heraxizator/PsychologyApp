@@ -12,6 +12,7 @@ namespace PsychologyApp.Presentation.Shared.Common.Infrastructure;
 public sealed class DebugFileLoggerProvider : ILoggerProvider
 {
     private const long MaxFileBytes = 2 * 1024 * 1024;
+    private const int MaxEntryCharacters = 4096;
 
     private readonly string _filePath;
     private readonly LogLevel _minimumLevel;
@@ -28,10 +29,17 @@ public sealed class DebugFileLoggerProvider : ILoggerProvider
     {
         try
         {
+            string entry = text.Length <= 4096 ? text : text[..4096];
             lock (SyncWriteLock)
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-                File.AppendAllText(filePath, text + Environment.NewLine, Encoding.UTF8);
+                long incomingBytes = Encoding.UTF8.GetByteCount(entry) + Encoding.UTF8.GetByteCount(Environment.NewLine);
+                if (File.Exists(filePath) && new FileInfo(filePath).Length + incomingBytes > MaxFileBytes)
+                {
+                    File.Delete(filePath);
+                }
+
+                File.AppendAllText(filePath, entry + Environment.NewLine, Encoding.UTF8);
             }
         }
         catch
@@ -62,41 +70,63 @@ public sealed class DebugFileLoggerProvider : ILoggerProvider
                 Directory.CreateDirectory(directory);
             }
 
-            // Start fresh when the previous runs have grown the file past the cap.
-            if (File.Exists(_filePath) && new FileInfo(_filePath).Length > MaxFileBytes)
+            lock (SyncWriteLock)
             {
-                File.Delete(_filePath);
-            }
-
-            StreamWriter writer = new(_filePath, append: true, Encoding.UTF8);
-            try
-            {
-                ChannelReader<string> reader = _lines.Reader;
-                while (await reader.WaitToReadAsync().ConfigureAwait(false))
+                if (File.Exists(_filePath) && new FileInfo(_filePath).Length > MaxFileBytes)
                 {
-                    while (reader.TryRead(out string? line))
-                    {
-                        await writer.WriteLineAsync(line).ConfigureAwait(false);
-                    }
-
-                    await writer.FlushAsync().ConfigureAwait(false);
-
-                    // The cap holds within a run too: an error repeating in a loop must not fill the phone's storage.
-                    if (writer.BaseStream.Length > MaxFileBytes)
-                    {
-                        await writer.DisposeAsync().ConfigureAwait(false);
-                        writer = new StreamWriter(_filePath, append: false, Encoding.UTF8);
-                    }
+                    File.Delete(_filePath);
                 }
             }
-            finally
+
+            ChannelReader<string> reader = _lines.Reader;
+            while (await reader.WaitToReadAsync().ConfigureAwait(false))
             {
-                await writer.DisposeAsync().ConfigureAwait(false);
+                List<string> batch = [];
+                while (reader.TryRead(out string? line))
+                {
+                    if (line is not null)
+                    {
+                        batch.Add(line);
+                    }
+                }
+
+                AppendBatch(batch);
             }
         }
         catch
         {
             // Never fail the app because of log file I/O.
+        }
+    }
+
+    private void AppendBatch(List<string> batch)
+    {
+        if (batch.Count == 0)
+        {
+            return;
+        }
+
+        string[] bounded = batch.Select(line => line.Length <= MaxEntryCharacters ? line : line[..MaxEntryCharacters]).ToArray();
+        int first = 0;
+        long batchBytes = bounded.Sum(line => (long)Encoding.UTF8.GetByteCount(line) + Encoding.UTF8.GetByteCount(Environment.NewLine));
+        while (batchBytes > MaxFileBytes && first < bounded.Length)
+        {
+            batchBytes -= Encoding.UTF8.GetByteCount(bounded[first]) + Encoding.UTF8.GetByteCount(Environment.NewLine);
+            first++;
+        }
+
+        string content = string.Join(Environment.NewLine, bounded.Skip(first)) + Environment.NewLine;
+        lock (SyncWriteLock)
+        {
+            long existingBytes = File.Exists(_filePath) ? new FileInfo(_filePath).Length : 0;
+            if (existingBytes + Encoding.UTF8.GetByteCount(content) > MaxFileBytes)
+            {
+                File.WriteAllText(_filePath, content, Encoding.UTF8);
+            }
+            else
+            {
+                File.AppendAllText(_filePath, content, Encoding.UTF8);
+            }
         }
     }
 

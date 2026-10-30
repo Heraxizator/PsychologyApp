@@ -11,7 +11,7 @@ public static class MilestoneCelebrationFeedback
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Milestone haptic skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Milestone haptic skipped ({ex.GetType().Name}).");
         }
     }
 }

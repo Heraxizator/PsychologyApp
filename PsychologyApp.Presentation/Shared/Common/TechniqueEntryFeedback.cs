@@ -11,7 +11,7 @@ public static class TechniqueEntryFeedback
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Entry-add haptic skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Entry-add haptic skipped ({ex.GetType().Name}).");
         }
     }
 }
