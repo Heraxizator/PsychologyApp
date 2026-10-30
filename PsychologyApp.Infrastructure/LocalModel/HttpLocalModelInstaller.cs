@@ -7,8 +7,8 @@ namespace PsychologyApp.Infrastructure.LocalModel;
 
 /// <summary>
 /// Resumable, verified, atomic model download. Files go to <c>{target}.partial</c> (resuming with HTTP Range),
-/// each is checked for size and SHA-256, and only when everything is present the folder is renamed to <c>{target}</c>
-/// and a marker is written. A half-downloaded model can therefore never be picked up by the runtime.
+/// each is checked for size and SHA-256, and only when everything is present the marker is written and the folder promoted
+/// to <c>{target}</c>. A half-downloaded model can therefore never be picked up by the runtime.
 /// </summary>
 public sealed class HttpLocalModelInstaller(HttpClient http, LocalModelManifest manifest, string targetDirectory) : ILocalModelInstaller
 {
@@ -17,6 +17,7 @@ public sealed class HttpLocalModelInstaller(HttpClient http, LocalModelManifest 
     private static readonly TimeSpan ProgressInterval = TimeSpan.FromMilliseconds(250);
 
     private string StagingDirectory => targetDirectory + ".partial";
+    private string PreviousDirectory => targetDirectory + ".previous";
 
     public LocalModelManifest Manifest => manifest;
 
@@ -25,14 +26,25 @@ public sealed class HttpLocalModelInstaller(HttpClient http, LocalModelManifest 
         get
         {
             string marker = Path.Combine(targetDirectory, MarkerFile);
-            return File.Exists(marker) && File.ReadAllText(marker).Trim() == Fingerprint(manifest);
+            if (!File.Exists(marker) || File.ReadAllText(marker).Trim() != Fingerprint(manifest))
+            {
+                return false;
+            }
+
+            return manifest.Files.All(file =>
+            {
+                string path = SafePath(targetDirectory, file.Path);
+                return File.Exists(path) && new FileInfo(path).Length == file.SizeBytes;
+            });
         }
     }
 
     public async Task InstallAsync(IProgress<ModelInstallProgress>? progress = null, CancellationToken cancellationToken = default)
     {
+        RestorePreviousIfTargetMissing();
         if (IsInstalled)
         {
+            TryDeletePrevious();
             return;
         }
 
@@ -45,28 +57,54 @@ public sealed class HttpLocalModelInstaller(HttpClient http, LocalModelManifest 
             string finalPath = SafePath(StagingDirectory, file.Path);
             if (File.Exists(finalPath) && new FileInfo(finalPath).Length == file.SizeBytes)
             {
-                done += file.SizeBytes;
-                reporter.Report(done, file.Path, force: true);
-                continue;
+                try
+                {
+                    await VerifyAsync(file, finalPath, cancellationToken).ConfigureAwait(false);
+                    done += file.SizeBytes;
+                    reporter.Report(done, file.Path, force: true);
+                    continue;
+                }
+                catch (IOException) when (!File.Exists(finalPath))
+                {
+                    // A same-sized file from an older manifest failed its checksum and was discarded; fetch this version again.
+                }
             }
 
             await DownloadFileAsync(file, finalPath, done, reporter, cancellationToken).ConfigureAwait(false);
             done += file.SizeBytes;
         }
 
+        await File.WriteAllTextAsync(Path.Combine(StagingDirectory, MarkerFile), Fingerprint(manifest), cancellationToken).ConfigureAwait(false);
+
+        bool movedPrevious = false;
         if (Directory.Exists(targetDirectory))
         {
-            Directory.Delete(targetDirectory, recursive: true);
+            DeletePreviousIfPresent();
+            Directory.Move(targetDirectory, PreviousDirectory);
+            movedPrevious = true;
         }
 
-        Directory.Move(StagingDirectory, targetDirectory);
-        await File.WriteAllTextAsync(Path.Combine(targetDirectory, MarkerFile), Fingerprint(manifest), cancellationToken).ConfigureAwait(false);
+        try
+        {
+            Directory.Move(StagingDirectory, targetDirectory);
+        }
+        catch
+        {
+            if (movedPrevious && !Directory.Exists(targetDirectory) && Directory.Exists(PreviousDirectory))
+            {
+                Directory.Move(PreviousDirectory, targetDirectory);
+            }
+
+            throw;
+        }
+
+        TryDeletePrevious();
         reporter.Report(manifest.TotalBytes, string.Empty, force: true);
     }
 
     public Task DeleteAsync(CancellationToken cancellationToken = default)
     {
-        foreach (string directory in new[] { targetDirectory, StagingDirectory })
+        foreach (string directory in new[] { targetDirectory, StagingDirectory, PreviousDirectory })
         {
             if (Directory.Exists(directory))
             {
@@ -75,6 +113,38 @@ public sealed class HttpLocalModelInstaller(HttpClient http, LocalModelManifest 
         }
 
         return Task.CompletedTask;
+    }
+
+    private void RestorePreviousIfTargetMissing()
+    {
+        if (!Directory.Exists(targetDirectory) && Directory.Exists(PreviousDirectory))
+        {
+            Directory.Move(PreviousDirectory, targetDirectory);
+        }
+    }
+
+    private void DeletePreviousIfPresent()
+    {
+        if (Directory.Exists(PreviousDirectory))
+        {
+            Directory.Delete(PreviousDirectory, recursive: true);
+        }
+    }
+
+    private void TryDeletePrevious()
+    {
+        try
+        {
+            DeletePreviousIfPresent();
+        }
+        catch (IOException)
+        {
+            // Keep the old directory as a recovery copy if the filesystem cannot remove it now.
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // A cleanup failure must not make a fully installed model unusable.
+        }
     }
 
     private async Task DownloadFileAsync(
@@ -121,6 +191,13 @@ public sealed class HttpLocalModelInstaller(HttpClient http, LocalModelManifest 
             int read;
             while ((read = await body.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
             {
+                if (read > file.SizeBytes - written)
+                {
+                    await output.DisposeAsync().ConfigureAwait(false);
+                    File.Delete(partPath);
+                    throw new InvalidDataException($"'{file.Path}' exceeded its expected size; the partial file was discarded.");
+                }
+
                 await output.WriteAsync(buffer.AsMemory(0, read), cancellationToken).ConfigureAwait(false);
                 written += read;
                 reporter.Report(alreadyDone + written, file.Path, force: false);
