@@ -10,6 +10,23 @@ namespace PsychologyApp.Application.Tests.ClinicalCare;
 
 public sealed class ClinicalCareServiceTests
 {
+    [Theory]
+    [InlineData(RiskLevel.Green)]
+    [InlineData(RiskLevel.Red)]
+    public async Task FutureAssessment_DoesNotPostponeTheNextCheck(RiskLevel risk)
+    {
+        var repo = new FakeClinicalCareRepository();
+        DateTime now = new(2026, 10, 30, 12, 0, 0, DateTimeKind.Utc);
+        repo.Assessments.Add(new RiskAssessmentDTO { AssessedAt = now.AddYears(1), RiskLevel = risk, Source = "test" });
+        var service = new ClinicalCareService(repo, new FakeUserProgressService(), new FixedTime(now));
+
+        Assert.True(await service.IsRiskCheckDueAsync(ClinicalCareService.DefaultRiskCheckInterval));
+        if (risk == RiskLevel.Red)
+        {
+            Assert.True(await service.ShouldRouteToCrisisHubAsync());
+        }
+    }
+
     [Fact]
     public async Task AssessRiskAsync_Red_SavesCrisisEscalation()
     {

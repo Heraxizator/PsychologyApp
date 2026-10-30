@@ -89,7 +89,9 @@ public sealed class ClinicalCareService(
             return true;
         }
 
-        return UtcNow - latest.AssessedAt > maxAge;
+        // A restored timestamp or a clock correction must not defer a check indefinitely.
+        DateTime now = UtcNow;
+        return latest.AssessedAt > now || now - latest.AssessedAt > maxAge;
     }
 
     public async Task<bool> ShouldRouteToCrisisHubAsync(CancellationToken cancellationToken = default)
