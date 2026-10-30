@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Abstractions.Integration;
+using PsychologyApp.Application.Articles;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Application.Models;
@@ -682,7 +683,7 @@ public sealed partial class CompanionDialogue(
 
         switch (reply.Kind)
         {
-            case ChatQuickReplyKinds.Practice when Enum.TryParse(reply.Payload, out TechniqueId id):
+            case ChatQuickReplyKinds.Practice when Enum.TryParse(reply.Payload, out TechniqueId id) && Enum.IsDefined(id):
                 return new CompanionReply(
                     [CompanionDialogueContent.PracticeStarted(english)],
                     [],
@@ -705,7 +706,7 @@ public sealed partial class CompanionDialogue(
             case ChatQuickReplyKinds.Rating when int.TryParse(reply.Payload, out int rating):
                 return RespondToRating(state, Math.Clamp(rating, 0, 10), emotion, theme);
 
-            case ChatQuickReplyKinds.Emotion when Enum.TryParse(reply.Payload, out CompanionEmotion picked):
+            case ChatQuickReplyKinds.Emotion when Enum.TryParse(reply.Payload, out CompanionEmotion picked) && Enum.IsDefined(picked):
                 CompanionState pickedState = state with { Emotion = picked.ToString(), UnknownStreak = 0 };
                 List<string> pickedMessages = [CompanionContent.Understood(picked, english)];
                 return pickedState.Turns >= 2
@@ -782,11 +783,12 @@ public sealed partial class CompanionDialogue(
             case { } plan when plan.StartsWith("plan:", StringComparison.Ordinal):
                 return AnswerPlan(state, plan["plan:".Length..], emotion, theme);
 
-            case { } test when test.StartsWith("test:", StringComparison.Ordinal):
+            case { } test when test is "test:phq9" or "test:gad7" or "test:pcl5":
                 return new CompanionReply(
                     [CompanionProtocolContent.TestNudgeTransition(english)], [], new DialogueAction(DialogueActionKind.OpenTest, TestId: test["test:".Length..]), state, emotion, theme);
 
-            case { } article when article.StartsWith("article:", StringComparison.Ordinal):
+            case { } article when article.StartsWith("article:", StringComparison.Ordinal)
+                && ArticleContent.Find(article["article:".Length..], english ? "en" : "ru") is not null:
                 return new CompanionReply(
                     [CompanionProtocolContent.ArticleTransition(english)], [], new DialogueAction(DialogueActionKind.OpenArticle, ArticleId: article["article:".Length..]), state, emotion, theme);
 

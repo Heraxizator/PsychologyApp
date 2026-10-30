@@ -24,6 +24,23 @@ public class CompanionDialogueTests
         d.Respond(state, new CompanionInput.QuickReply(new ChatQuickReply(kind, label, payload)));
 
     [Fact]
+    public void A_numeric_value_outside_the_practice_catalog_does_not_create_a_navigation_action()
+    {
+        CompanionReply reply = Tap(Create(), new CompanionState { Emotion = "Anxiety" }, ChatQuickReplyKinds.Practice, "Start", "999");
+
+        Assert.Null(reply.Action);
+        Assert.Null(reply.State.PendingPractice);
+
+        CompanionReply invalidEmotion = Tap(Create(), new CompanionState(), ChatQuickReplyKinds.Emotion, "Unknown", "999");
+        Assert.Equal(CompanionEmotion.Unknown.ToString(), invalidEmotion.State.Emotion);
+
+        CompanionReply invalidArticle = Tap(Create(), new CompanionState(), ChatQuickReplyKinds.Act, "Read", "article:missing");
+        Assert.Null(invalidArticle.Action);
+        CompanionReply invalidTest = Tap(Create(), new CompanionState(), ChatQuickReplyKinds.Act, "Take", "test:missing");
+        Assert.Null(invalidTest.Action);
+    }
+
+    [Fact]
     public void A_long_message_that_names_no_feeling_gets_the_choice_of_feelings_at_once()
     {
         CompanionDialogue dialogue = Create();
