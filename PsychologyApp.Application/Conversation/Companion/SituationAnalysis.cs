@@ -79,6 +79,9 @@ public sealed record SituationAnalysis(
     /// <summary>Emotions explicitly denied in the current message, so only those must not be carried forward.</summary>
     public IReadOnlyList<CompanionEmotion> NegatedEmotions { get; init; } = [];
 
+    /// <summary>Events explicitly denied in the current message, so a previous event is not carried forward as fact.</summary>
+    public IReadOnlyList<CompanionEvent> NegatedEvents { get; init; } = [];
+
     /// <summary>The words mention a hard event: abuse, an assault, an accident, war.</summary>
     public bool MentionsTrauma { get; init; }
 

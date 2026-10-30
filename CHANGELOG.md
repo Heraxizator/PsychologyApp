@@ -10,7 +10,9 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Short explicit emotion denials now reach the same context update as longer statements instead of being diverted to the unclear-message prompt. Not checked on a device.
 
-- Case events such as job loss, breakup and conflict now respect negation, so a denied event is not acknowledged as having happened. Not checked on a device.
+- Case events such as job loss, breakup and conflict now respect negation, so a denied event is not acknowledged as having happened or carried forward from earlier context. Not checked on a device.
+
+- Grief recognition respects negated death terms and requires a person after the ambiguous phrase “не стало”, so “не стало легче” is not read as bereavement. Not checked on a device.
 
 - Multiword emotion phrases now use the same short-range negation rules as single-word emotion terms. Not checked on a device.
 

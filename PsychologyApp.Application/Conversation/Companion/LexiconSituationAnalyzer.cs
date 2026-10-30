@@ -132,6 +132,14 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
                 .Select(pair => pair.Key)
                 .ToArray()
             : [];
+        CompanionEvent[] negatedEvents = tokens.Any(Negations.Contains)
+            ? Events
+                .Where(pair => pair.Value
+                    .Where(term => !term.Replace('-', ' ').Split(' ', StringSplitOptions.RemoveEmptyEntries).Any(Negations.Contains))
+                    .Any(term => HasNegatedMatch(term, tokens)))
+                .Select(pair => pair.Key)
+                .ToArray()
+            : [];
 
         Dictionary<CompanionEmotion, double> scores = [];
         Dictionary<CompanionEmotion, int> firstMention = [];
@@ -181,10 +189,10 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             firstMention[CompanionEmotion.Panic] = 0;
         }
 
-        bool hasLoss = LossTerms.Any(term => Matches(term, respectNegation: false));
+        bool hasLoss = LossTerms.Any(term => Matches(term, respectNegation: true));
         if (hasLoss)
         {
-            // A death is grief whatever else the words say; it also outweighs a stray "обида" or "тревога" from a different part of the message.
+            // A death outweighs a stray "обида" or "тревога" elsewhere, while an explicitly denied death is not treated as grief.
             scores[CompanionEmotion.Sadness] = scores.GetValueOrDefault(CompanionEmotion.Sadness) + 4;
             firstMention.TryAdd(CompanionEmotion.Sadness, 0);
         }
@@ -215,13 +223,13 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             .ToList();
         if (ranked.Count == 0 || ranked[0].Value < MinScore)
         {
-            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { MentionsTrauma = mentionsTrauma, NegatedEmotions = negatedEmotions };
+            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { MentionsTrauma = mentionsTrauma, NegatedEmotions = negatedEmotions, NegatedEvents = negatedEvents };
         }
 
         double top = ranked[0].Value;
         double second = ranked.Count > 1 ? ranked[1].Value : 0;
         CompanionEmotion secondary = ranked.Count > 1 && ranked[1].Value >= 2 && ranked[1].Value >= top * 0.6 ? ranked[1].Key : CompanionEmotion.Unknown;
-        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { IsFlashback = isFlashback, MentionsTrauma = mentionsTrauma, NegatedEmotions = negatedEmotions };
+        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { IsFlashback = isFlashback, MentionsTrauma = mentionsTrauma, NegatedEmotions = negatedEmotions, NegatedEvents = negatedEvents };
     }
 
     private const int PhraseWordGap = 3;

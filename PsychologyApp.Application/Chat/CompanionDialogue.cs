@@ -229,14 +229,14 @@ public sealed partial class CompanionDialogue(
         // "Just talk" typed after "get it off your chest, sort it out or calm down?" is that choice, not a new story.
         if (WordCount(text) <= 6 && CompanionCaseContent.ParseGoal(text, asked: previous.LastQuestionId == CompanionCaseContent.GoalQuestionId, previous.ContentTurns) is { } typedGoal)
         {
-            return RespondToGoal(UpdateEmotionContext(previous, single) with { Turns = previous.Turns + 1 }, typedGoal);
+            return RespondToGoal(UpdateCurrentContext(previous, single) with { Turns = previous.Turns + 1 }, typedGoal);
         }
 
         // "It is not the first time" answers "first time or again?": the follow-up that fits it, not a generic question.
         if (WordCount(text) <= 8 && CompanionCaseContent.ReadChoice(previous.LastQuestionId, text) is { } choice
             && CompanionCaseContent.FollowUp(previous.LastQuestionId, choice, english, force: true) is { } followUp)
         {
-            CompanionState answered = UpdateEmotionContext(previous, single).WithText(text) with { TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99) };
+            CompanionState answered = UpdateCurrentContext(previous, single).WithText(text) with { TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99) };
             return Reply([followUp], [], answered, ParseEmotion(answered.Emotion), ParseTheme(answered.Theme));
         }
 
@@ -388,7 +388,7 @@ public sealed partial class CompanionDialogue(
             TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99),
             AwaitingPostPracticeRating = false
         };
-        state = UpdateEmotionContext(state, single);
+        state = UpdateCurrentContext(state, single);
         CompanionEmotion emotion = ParseEmotion(state.Emotion);
         CompanionTheme? theme = ParseTheme(state.Theme);
 
@@ -521,11 +521,13 @@ public sealed partial class CompanionDialogue(
         || analysis.Event != CompanionEvent.None
         || analysis.Persons is { Count: > 0 };
 
-    private static CompanionState UpdateEmotionContext(CompanionState state, SituationAnalysis analysis)
+    private static CompanionState UpdateCurrentContext(CompanionState state, SituationAnalysis analysis)
     {
         CompanionEmotion previousEmotion = ParseEmotion(state.Emotion);
+        CompanionEvent previousEvent = CompanionCaseContent.ParseEvent(state.Event);
         bool emotionWasCleared = (state.EmotionExplicitlyCleared && previousEmotion == CompanionEmotion.Unknown)
             || analysis.NegatedEmotions.Contains(previousEmotion);
+        bool eventWasNegated = analysis.NegatedEvents.Contains(previousEvent) && analysis.Event != previousEvent;
         CompanionEmotion emotion = analysis.Emotion != CompanionEmotion.Unknown
             ? analysis.Emotion
             : emotionWasCleared ? CompanionEmotion.Unknown : previousEmotion;
@@ -533,7 +535,8 @@ public sealed partial class CompanionDialogue(
         return state with
         {
             Emotion = emotion.ToString(),
-            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && emotionWasCleared
+            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && emotionWasCleared,
+            Event = eventWasNegated ? null : state.Event
         };
     }
 
@@ -561,7 +564,7 @@ public sealed partial class CompanionDialogue(
             analysis = analyzer.Analyze(string.Join(' ', state.RecentTexts)) with { HasBodySymptoms = analysis.HasBodySymptoms, IsIntense = analysis.IsIntense, Persons = analysis.Persons };
         }
 
-        state = UpdateEmotionContext(state, analysis);
+        state = UpdateCurrentContext(state, analysis);
         CompanionEmotion emotion = ParseEmotion(state.Emotion);
         CompanionTheme? theme = analysis.Themes.Count > 0 ? analysis.Themes[0] : ParseTheme(state.Theme);
         CompanionPerson? person = analysis.Persons is { Count: > 0 } persons ? persons[0] : ParsePerson(state.Person);
