@@ -180,7 +180,15 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, ILogg
 #if ANDROID
         if (OperatingSystem.IsAndroidVersionAtLeast(33))
         {
-            Platform.CurrentActivity?.SetRecentsScreenshotEnabled(!IsEnabled);
+            try
+            {
+                Platform.CurrentActivity?.SetRecentsScreenshotEnabled(!IsEnabled);
+            }
+            catch (Exception ex)
+            {
+                // A failed recents-preview update must not block the lock screen or leave the app covered.
+                logger.LogWarning(ex, "Could not update the recent-apps preview");
+            }
         }
 #endif
     }
