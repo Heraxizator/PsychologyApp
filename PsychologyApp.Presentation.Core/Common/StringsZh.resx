@@ -4142,7 +4142,7 @@
     <value>离线</value>
   </data>
   <data name="CleanerNeedsInternet" xml:space="preserve">
-    <value>需要联网</value>
+    <value>在线</value>
   </data>
   <data name="DesignerStepPlaceholder" xml:space="preserve">
     <value>这一步要做什么</value>

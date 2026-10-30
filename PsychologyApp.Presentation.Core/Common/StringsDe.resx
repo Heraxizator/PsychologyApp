@@ -4142,7 +4142,7 @@
     <value>offline</value>
   </data>
   <data name="CleanerNeedsInternet" xml:space="preserve">
-    <value>braucht Internet</value>
+    <value>Online</value>
   </data>
   <data name="DesignerStepPlaceholder" xml:space="preserve">
     <value>Was in diesem Schritt zu tun ist</value>

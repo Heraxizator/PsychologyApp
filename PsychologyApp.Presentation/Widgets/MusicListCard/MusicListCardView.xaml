@@ -105,12 +105,19 @@
             </VerticalStackLayout>
             <!-- Only a prayer not on the phone yet is marked, in words: a grey tick on every row ("saved for offline") said nothing
                  without a label, and the exception is the one worth knowing before going offline. -->
-            <Label
+            <Border
                 Grid.Column="2"
                 IsVisible="{Binding NeedsInternet, Source={x:Reference Root}}"
-                Text="{Binding NeedsInternetText, Source={x:Reference Root}}"
-                Style="{StaticResource CaptionStyle}"
-                VerticalOptions="Center" />
+                Padding="8,4"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 10"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
+                VerticalOptions="Center">
+                <Label
+                    Text="{Binding NeedsInternetText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+            </Border>
         </Grid>
     </Border>
 </ContentView>

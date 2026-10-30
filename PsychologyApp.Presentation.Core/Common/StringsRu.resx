@@ -4148,7 +4148,7 @@
     <value>без интернета</value>
   </data>
   <data name="CleanerNeedsInternet" xml:space="preserve">
-    <value>нужен интернет</value>
+    <value>онлайн</value>
   </data>
   <data name="DesignerStepPlaceholder" xml:space="preserve">
     <value>Что сделать на этом шаге</value>

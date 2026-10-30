@@ -55,6 +55,7 @@ public partial class TechniqueTextFieldView : ContentView
         _dictation.Attach(MicButton, InputEditor.Unfocus);
         MicButton.IsVisible = VoiceDictation.IsAvailable;
         SemanticProperties.SetDescription(MicButton, AppStrings.PracticeVoiceStart);
+        ChipsHost.SizeChanged += (_, _) => UpdateChipWidths();
         AssistTitle.Text = AppStrings.PracticeAssistTitle;
         TitleLabel.IsVisible = false;
         Unloaded += (_, _) => _dictation.StopAsync().FireAndForget();
@@ -153,9 +154,7 @@ public partial class TechniqueTextFieldView : ContentView
             Label label = new() { Text = chip, Style = AppResources.Find<Style>("AnswerChipLabelStyle") };
             Border view = new() { Style = AppResources.Find<Style>("AnswerChipStyle"), Content = label };
             FlexLayout.SetShrink(view, 0);
-            view.MaximumWidthRequest = 320;
-            // Inside a FlexLayout the label is measured without a width limit and a long chip is cut off; a limit lets it wrap.
-            label.MaximumWidthRequest = 290;
+            label.LineBreakMode = LineBreakMode.WordWrap;
             SemanticProperties.SetDescription(view, chip);
             view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => OnChipTapped(chip, view)) });
             ChipsHost.Children.Add(view);
@@ -169,7 +168,22 @@ public partial class TechniqueTextFieldView : ContentView
         ChipsHost.Children.Add(_moreChip);
 
         ChipsHost.IsVisible = _chips.Count > 0;
+        UpdateChipWidths();
         RefreshChipSelection();
+    }
+
+    private void UpdateChipWidths()
+    {
+        if (ChipsHost.Width <= 0)
+            return;
+
+        // Leave room for each chip's trailing FlexLayout margin and wrap its text to the actual viewport.
+        double maximumWidth = Math.Min(320, Math.Max(0, ChipsHost.Width - 6));
+        foreach (var chip in _chips)
+        {
+            chip.View.MaximumWidthRequest = maximumWidth;
+            chip.Label.MaximumWidthRequest = maximumWidth;
+        }
     }
 
     /// <summary>

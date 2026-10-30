@@ -4142,7 +4142,7 @@
     <value>hors ligne</value>
   </data>
   <data name="CleanerNeedsInternet" xml:space="preserve">
-    <value>Internet requis</value>
+    <value>En ligne</value>
   </data>
   <data name="DesignerStepPlaceholder" xml:space="preserve">
     <value>Que faire à cette étape</value>
