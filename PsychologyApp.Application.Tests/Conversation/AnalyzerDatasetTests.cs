@@ -24,11 +24,14 @@ public class AnalyzerDatasetTests(ITestOutputHelper output)
         LexiconSituationAnalyzer analyzer = new();
         Item[] items = Load(file);
         List<string> misses = [];
+        Dictionary<string, (int Total, int Correct)> byLabel = [];
         int hits = 0;
 
         foreach (Item item in items)
         {
             string predicted = analyzer.Analyze(item.Text).Emotion.ToString();
+            (int total, int correct) = byLabel.GetValueOrDefault(item.Label);
+            byLabel[item.Label] = (total + 1, correct + (predicted == item.Label ? 1 : 0));
             if (predicted == item.Label)
             {
                 hits++;
@@ -41,6 +44,11 @@ public class AnalyzerDatasetTests(ITestOutputHelper output)
 
         double accuracy = (double)hits / items.Length;
         output.WriteLine($"{name}: {hits}/{items.Length} = {accuracy:P0}");
+        foreach (KeyValuePair<string, (int Total, int Correct)> pair in byLabel.OrderBy(pair => pair.Key))
+        {
+            output.WriteLine($"  {pair.Key}: recall {pair.Value.Correct}/{pair.Value.Total} = {(double)pair.Value.Correct / pair.Value.Total:P0}");
+        }
+
         misses.ForEach(output.WriteLine);
         return accuracy;
     }
@@ -89,12 +97,21 @@ public class AnalyzerDatasetTests(ITestOutputHelper output)
         Assert.True(accuracy >= 0.20, $"Third-set accuracy fell to {accuracy:P0}.");
     }
 
+    [Fact]
+    public void Fourth_final_set_accuracy_is_recorded_and_does_not_collapse()
+    {
+        double accuracy = Measure("nlu-fresh4.json", "Fourth final set (never tuned on)");
+
+        Assert.True(accuracy >= 0.20, $"Fourth-set accuracy fell to {accuracy:P0}.");
+    }
+
     [Theory]
     [InlineData("nlu-dataset.json")]
     [InlineData("nlu-heldout.json")]
     [InlineData("nlu-fresh.json")]
     [InlineData("nlu-fresh2.json")]
     [InlineData("nlu-fresh3.json")]
+    [InlineData("nlu-fresh4.json")]
     public void Datasets_are_well_formed(string file)
     {
         Item[] items = Load(file);

@@ -11,25 +11,38 @@ asks an open question and, after two unclear messages, offers a choice of feelin
 
 ## Measurements (`AnalyzerDatasetTests`, `tools/PsychologyApp.NluEval`)
 
-Two labelled sets, written by hand (RU + EN, colloquial phrasing):
+The analyzer tests use hand-labelled Russian and English examples. On 2026-10-30, the current lexicon produced these results:
 
-| Set | Purpose | Lexicon |
-|-----|---------|---------|
-| `nlu-dataset.json` (106) | development set, the lexicon was tuned on it | 99% (inflated; guards regressions only) |
-| `nlu-heldout.json` (53) | written afterwards, never tuned on | **24-28%** (honest estimate for unseen phrasing) |
+| Set | Examples | Accuracy | Purpose |
+|-----|---------|----------|---------|
+| `nlu-dataset.json` | 159 | 96% | Development set tuned alongside the lexicon; not an estimate of unseen wording |
+| `nlu-heldout.json` | 60 | 92% | Existing held-out set |
+| `nlu-fresh.json` | 110 | 96% | Earlier fresh set |
+| `nlu-fresh2.json` | 98 | 41% | Final set written after the third lexicon round |
+| `nlu-fresh3.json` | 100 | 59% | Set written before the bundled guesser was extended |
+| `nlu-fresh4.json` | 60 | 62% | Additional set newly included in automated evaluation |
 
-The first version of the lexicon scored 72% on the development set before it was tuned; on unseen phrasing the realistic figure is
-far lower. Word lists cannot cover how people actually write.
+Scores vary sharply by set, so the 92% on `nlu-heldout.json` must not be treated as general-purpose recognition accuracy.
+`nlu-fresh4.json` has particularly low recall for anxiety, anger and resentment; its examples were not used to add lexicon terms
+in this task. `AnalyzerDatasetTests` now reports recall per emotion as well as overall accuracy so a good total cannot hide a
+weak class.
+
+The conversation suite also exercises multi-turn user outcomes: correcting a feeling, declining an inferred goal, changing from
+listening to understanding, indirect requests, and the crisis route after a support preference has been chosen. These are
+synthetic examples, not clinical validation. Add independently written cases before tuning a category; do not turn individual
+test misses into lexicon terms one by one.
 
 ### Sentence embeddings (multilingual-e5-small, int8 ONNX, ~118 MB), nearest labelled example
 
-On the held-out set, 100 development messages as prototypes (`--test`):
+In an earlier experiment, on the then-current 53-message held-out set, 100 development messages as prototypes (`--test`):
 
 | Method | Held-out accuracy |
 |--------|-------------------|
 | Lexicon | 24% |
 | Embeddings, nearest example | 42% |
 | Lexicon, falling back to embeddings when it recognises nothing | 52% |
+
+That experiment predates the current datasets and cannot be compared directly with the table above.
 
 With few prototypes per class embeddings alone were weaker than the lexicon (43-68% on the development set depending on the number
 of prototypes); the gain comes from combining them. Embedding one message takes ~8 ms on a desktop CPU.
@@ -92,7 +105,7 @@ Measured on `nlu-fresh2.json` (98 messages written *after* the round and never t
 | Before the round | 37% |
 | After the round | **41%** |
 
-The two older sets (`nlu-heldout.json` 92%, `nlu-fresh.json` 97%) were read while writing the terms, so those numbers are inflated and only
+The two older sets (`nlu-heldout.json` 92%, `nlu-fresh.json` 96%) were read while writing the terms, so those numbers are inflated and only
 guard against regressions. The honest figure is the final set: +4 points. Word lists have reached their limit; the rest needs data
 (see "What would make it worthwhile" above).
 
@@ -144,5 +157,4 @@ Per set, the sets written after the lexicon was frozen (never read while writing
 74%; `nlu-fresh3.json` 59% -> 76%. The model and the gate were chosen on these same folds, so some optimism remains; the authorship caveat above still applies.
 
 Update (2026-10-30): the guesser now applies the shared `UtteranceText.Normalize` to training and user messages before counting words or building
-features. The measurements above predate this normalization change and have not been recalculated; treat them as a historical baseline, not a current
-accuracy estimate.
+features. The lexicon measurements above were recalculated after this change. The earlier embedding experiment remains a separate historical result.

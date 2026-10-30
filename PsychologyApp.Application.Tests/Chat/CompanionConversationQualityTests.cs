@@ -491,6 +491,109 @@ public class CompanionConversationQualityTests
     }
 
     [Fact]
+    public void AFirstTurnRequestToCalmDownGetsARelevantPractice()
+    {
+        List<Turn> chat = Talk("Хочу успокоиться перед разговором с начальником");
+
+        Assert.Equal("calm", chat[0].Reply.State.Goal);
+        Assert.True(chat[0].OffersPractice, chat[0].Text);
+    }
+
+    [Theory]
+    [InlineData(false, "Меня тревожит, что сын боится идти в школу", "Хочу понять, как успокоить сына перед уроками")]
+    [InlineData(true, "I'm worried because my son is afraid of school", "I want to understand how to calm my son before class")]
+    public void ARequestToUnderstandHowToCalmSomeoneElseIsNotTreatedAsSelfCalming(bool english, string first, string second)
+    {
+        List<Turn> chat = Talk(english, first, second);
+
+        Assert.Equal("understand", chat[1].Reply.State.Goal);
+        Assert.False(chat[1].OffersPractice, chat[1].Text);
+    }
+
+    [Fact]
+    public void ARequestToListenWinsOverANegatedWishToCalmDown()
+    {
+        List<Turn> chat = Talk(
+            "Мне тревожно из-за работы",
+            "Боюсь, что меня сократят",
+            "Не хочу успокаиваться — просто выслушай меня");
+
+        Assert.Equal("vent", chat[^1].Reply.State.Goal);
+        Assert.False(chat[^1].OffersPractice, chat[^1].Text);
+        Assert.DoesNotContain("?", chat[^1].Text);
+    }
+
+    [Fact]
+    public void ThePersonCanChangeFromVentingToUnderstandingMidConversation()
+    {
+        List<Turn> chat = Talk(
+            "Мне тревожно из-за работы",
+            "Боюсь, что меня сократят",
+            "Постоянно думаю о последствиях",
+            "просто выговориться",
+            "Теперь всё-таки хочу разобраться, что делать");
+
+        Assert.Equal("understand", chat[^1].Reply.State.Goal);
+        Assert.False(chat[^1].OffersPractice, chat[^1].Text);
+        Assert.EndsWith("?", chat[^1].Reply.Messages[^1]);
+    }
+
+    [Fact]
+    public void GoalShiftStillWorksWhenTheRejectedGoalIsNegated()
+    {
+        List<Turn> chat = Talk(
+            "Мне тревожно из-за работы",
+            "Боюсь, что меня сократят",
+            "Постоянно думаю о последствиях",
+            "просто выговориться",
+            "Не хочу успокаиваться, хочу разобраться, что делать");
+
+        Assert.Equal("understand", chat[^1].Reply.State.Goal);
+        Assert.False(chat[^1].OffersPractice, chat[^1].Text);
+    }
+
+    [Fact]
+    public void AListeningReplyVariesWithoutTurningIntoAQuestion()
+    {
+        string Reply(int seed)
+        {
+            CompanionDialogue dialogue = new(
+                new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), false, new Random(seed));
+            CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+            CompanionReply reply = dialogue.Respond(state, new CompanionInput.FreeText("Просто послушай меня"));
+            return string.Join(" ", reply.Messages);
+        }
+
+        string[] replies = Enumerable.Range(1, 8).Select(Reply).Distinct().ToArray();
+
+        Assert.True(replies.Length > 1, string.Join(" || ", replies));
+        Assert.All(replies, text => Assert.DoesNotContain("?", text));
+    }
+
+    [Fact]
+    public void AnEnglishRequestToBeHeardIsAcceptedOnTheOpeningTurn()
+    {
+        List<Turn> chat = Talk(true, "Just listen to me for a moment");
+
+        Assert.Equal("vent", chat[0].Reply.State.Goal);
+        Assert.False(chat[0].OffersPractice, chat[0].Text);
+        Assert.DoesNotContain("?", chat[0].Text);
+    }
+
+    [Fact]
+    public void CrisisRouteStillTakesPriorityAfterThePersonChoosesToVent()
+    {
+        CompanionDialogue dialogue = new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), false, new Random(11));
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+        state = dialogue.Respond(state, new CompanionInput.QuickReply(CompanionCaseContent.GoalChips(false)[0])).State;
+
+        CompanionReply crisis = dialogue.Respond(state, new CompanionInput.FreeText("Я не хочу больше жить"));
+
+        Assert.Equal(DialogueActionKind.OpenCrisisHub, crisis.Action?.Kind);
+        Assert.Empty(crisis.QuickReplies);
+    }
+
+    [Fact]
     public void ADecisionToActIsBackedNotAnsweredWithAPractice()
     {
         List<Turn> chat = Talk("Поругалась с мамой, она сказала что я неблагодарная", "мне обидно", "наверное, поговорю с ней");

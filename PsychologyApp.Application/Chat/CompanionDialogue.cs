@@ -227,7 +227,7 @@ public sealed partial class CompanionDialogue(
         SituationAnalysis single = analyzer.Analyze(text);
 
         // "Just talk" typed after "get it off your chest, sort it out or calm down?" is that choice, not a new story.
-        if (WordCount(text) <= 6 && CompanionCaseContent.ParseGoal(text, asked: previous.LastQuestionId == CompanionCaseContent.GoalQuestionId, previous.ContentTurns) is { } typedGoal)
+        if (WordCount(text) <= 12 && CompanionCaseContent.ParseGoal(text, asked: previous.LastQuestionId == CompanionCaseContent.GoalQuestionId) is { } typedGoal)
         {
             return RespondToGoal(UpdateCurrentContext(previous, single) with { Turns = previous.Turns + 1 }, typedGoal);
         }
@@ -1034,7 +1034,7 @@ public sealed partial class CompanionDialogue(
                 return AskNextQuestion(state, [CompanionCaseContent.GoalUnderstandReply(english)], emotion, theme);
 
             default:
-                return Reply([CompanionCaseContent.GoalVentReply(english)], [], state, emotion, theme);
+                return Reply([CompanionCaseContent.GoalVentReply(english, _random)], [], state, emotion, theme);
         }
     }
 

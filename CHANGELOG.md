@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- The offline companion now handles direct requests to be heard from the opening turn, respects negated or conflicting support goals, distinguishes a request about calming another person from a request for self-calming, and lets the person change the goal mid-chat. Listening acknowledgements have short variants. NLU evaluation now reports per-emotion recall, includes an additional 60-message set, and adds multi-turn regressions for goal changes and crisis priority. Psychologist review not performed.
+
 - Practice completion keeps answers and the post-practice check-in collapsed until requested, uses one continue action, and shows two guided phrases at first in technique fields. Not checked on a device.
 
 - Skeleton placeholders no longer run a continuous pulse while loading; stale fades are cancelled on state changes, and failures use the shared async error path. Not checked on a device.

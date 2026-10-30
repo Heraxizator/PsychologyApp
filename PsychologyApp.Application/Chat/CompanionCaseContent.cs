@@ -195,35 +195,143 @@ public static class CompanionCaseContent
 
     private static readonly string[] VentWords = ["выговор", "поговорить", "высказ", "излить", "послушай", "выслуш", "послуша", "чтоб кто-то", "чтобы кто-то", "просто рассказ", "get it off", "vent", "just talk", "let it out", "off my chest"];
     private static readonly string[] UnderstandWords = ["разобрат", "понять", "разбор", "что делать", "sort", "figure", "understand", "make sense", "what to do"];
-    private static readonly string[] CalmWords = ["успокоит", "расслабит", "полегч", "прийти в себя", "calm", "relax", "settle", "ease"];
+    private static readonly string[] CalmWords = ["успокоиться", "успокаиваться", "расслабиться", "полегч", "прийти в себя", "calm down", "calm myself", "relax", "settle", "ease"];
 
     private static readonly string[] WantPhrases = ["хочу", "хотела бы", "хотел бы", "хотела", "хотел", "нужно", "надо", "давай", "помоги", "i want", "i need", "help me", "let me", "can we"];
 
-    /// <summary>Reads a typed answer to the goal question; before that question was asked only an explicit wish ("I want to sort it out") counts, since "understand" and "calm" are everyday words.</summary>
-    public static string? ParseGoal(string text, bool asked, int contentTurns)
+    private static readonly System.Text.RegularExpressions.Regex GoalClauseSeparators = new(
+        "[,;.!?…\\r\\n]+",
+        System.Text.RegularExpressions.RegexOptions.CultureInvariant | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    private static readonly System.Text.RegularExpressions.Regex GoalTextDelimiters = new(
+        @"[^\p{L}\p{N}|]+",
+        System.Text.RegularExpressions.RegexOptions.CultureInvariant | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    private static readonly System.Text.RegularExpressions.Regex OtherPersonCalmingPattern = new(
+        @"(?:успокоить|calm(?:\s+down)?)\s+(?:его|ее|их|сына|дочь\w*|ребен\w*|мам\w*|пап\w*|друг\w*|подруг\w*|коллег\w*|партнер\w*|my\s+\w+|him|her|them|the\s+\w+)|(?:my\s+)?(?:son|daughter|child|friend|partner)\s+(?:(?:to|should|needs?\s+to)\s+)?calm(?:\s+down)?",
+        System.Text.RegularExpressions.RegexOptions.CultureInvariant | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    private static readonly Dictionary<string, System.Text.RegularExpressions.Regex> GoalTermPatterns =
+        VentWords.Concat(UnderstandWords).Concat(CalmWords).Concat(WantPhrases)
+            .Distinct(StringComparer.Ordinal)
+            .ToDictionary(term => term, CreateGoalTermPattern, StringComparer.Ordinal);
+
+    /// <summary>Reads an explicit support preference, including a typed answer to the goal question.</summary>
+    public static string? ParseGoal(string text, bool asked)
     {
-        string t = text.ToLowerInvariant();
-        if (!asked && (contentTurns < 1 || !WantPhrases.Any(t.Contains)))
+        string normalized = NormalizeGoalText(text);
+        if (normalized.Length == 0)
         {
             return null;
         }
 
-        if (CalmWords.Any(t.Contains))
+        // A request to listen is explicit even before the companion asks what kind of support is wanted.
+        if (ContainsGoalPhrase(normalized, DirectListeningRequests))
         {
-            return GoalCalm;
+            return GoalVent;
         }
 
-        if (UnderstandWords.Any(t.Contains))
+        if (!asked && !ContainsUnnegatedGoalTerm(normalized, WantPhrases))
+        {
+            return null;
+        }
+
+        bool wantsToVent = ContainsUnnegatedGoalTerm(normalized, VentWords);
+        bool wantsToUnderstand = ContainsUnnegatedGoalTerm(normalized, UnderstandWords);
+        bool wantsToCalm = ContainsUnnegatedGoalTerm(normalized, CalmWords)
+            && !MentionsCalmingSomeoneElse(normalized);
+
+        // An explicit wish to be heard is stronger than a conflicting wish to calm down; otherwise do not guess between goals.
+        if (wantsToVent)
+        {
+            return GoalVent;
+        }
+
+        if (wantsToUnderstand && wantsToCalm)
+        {
+            return null;
+        }
+
+        if (wantsToUnderstand)
         {
             return GoalUnderstand;
         }
 
-        return VentWords.Any(t.Contains) ? GoalVent : null;
+        return wantsToCalm ? GoalCalm : null;
     }
 
-    public static string GoalVentReply(bool english) => english
-        ? "Then I will just listen. No questions unless you want them: tell me what you need to say."
-        : "Тогда я просто слушаю. Без лишних вопросов: говорите всё, что нужно.";
+    private static readonly string[] DirectListeningRequests =
+    [
+        "просто послушай", "просто выслушай", "послушай меня", "выслушай меня",
+        "не надо советов", "не нужно советов", "не давай советов", "не хочу советов",
+        "без советов", "не предлагай решений", "не предлагай практику",
+        "just listen", "listen to me", "hear me out", "no advice", "dont give advice",
+        "dont give me advice", "no solutions", "just be here"
+    ];
+
+    private static string NormalizeGoalText(string text)
+    {
+        string clauses = GoalClauseSeparators.Replace(text.ToLowerInvariant().Replace('ё', 'е'), " | ");
+        return GoalTextDelimiters.Replace(clauses, " ").Trim();
+    }
+
+    private static bool ContainsGoalPhrase(string text, IEnumerable<string> phrases)
+    {
+        string padded = $" {text} ";
+        return phrases.Any(phrase => padded.Contains($" {NormalizeGoalText(phrase)} ", StringComparison.Ordinal));
+    }
+
+    private static bool ContainsUnnegatedGoalTerm(string text, IEnumerable<string> terms)
+    {
+        foreach (string term in terms)
+        {
+            foreach (System.Text.RegularExpressions.Match match in GoalTermPatterns[term].Matches(text))
+            {
+                string context = text[..match.Index];
+                int clauseStart = context.LastIndexOf('|');
+                if (clauseStart >= 0)
+                {
+                    context = context[(clauseStart + 1)..];
+                }
+
+                string[] preceding = context.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (!preceding.TakeLast(3).Any(word => word is "не" or "ни" or "нет" or "not" or "never" or "dont"))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static System.Text.RegularExpressions.Regex CreateGoalTermPattern(string term)
+    {
+        string[] parts = NormalizeGoalText(term).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string pattern = $@"(?<![\p{{L}}\p{{N}}]){string.Join(@"\s+", parts.Select(System.Text.RegularExpressions.Regex.Escape))}[\p{{L}}\p{{N}}]*(?![\p{{L}}\p{{N}}])";
+        return new System.Text.RegularExpressions.Regex(
+            pattern,
+            System.Text.RegularExpressions.RegexOptions.CultureInvariant | System.Text.RegularExpressions.RegexOptions.Compiled);
+    }
+
+    private static bool MentionsCalmingSomeoneElse(string text) => OtherPersonCalmingPattern.IsMatch(text);
+
+    public static string GoalVentReply(bool english, Random? random = null)
+    {
+        string[] variants = english
+            ? [
+                "Then I will just listen. No questions unless you want them: tell me what you need to say.",
+                "We do not have to solve anything right now. You can tell me what has been building up.",
+                "Okay. No advice or decisions for now; take your time and tell me what is on your mind."
+            ]
+            : [
+                "Тогда я просто слушаю. Без лишних вопросов: говорите всё, что нужно.",
+                "Сейчас не обязательно что-то решать. Можно просто рассказать, что накопилось.",
+                "Хорошо. Пока без советов и решений — рассказывайте в своём темпе."
+            ];
+
+        return variants[(random ?? Random.Shared).Next(variants.Length)];
+    }
 
     public static string GoalUnderstandReply(bool english) => english
         ? "Then let's go through it step by step."
