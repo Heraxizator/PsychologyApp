@@ -6,8 +6,6 @@ namespace PsychologyApp.Presentation.Shared.Navigation;
 public static class NavigationCoordinator
 {
     private static readonly SemaphoreSlim Gate = new(1, 1);
-    private static long _pushBlockedUntilUtcTicks;
-    private static readonly TimeSpan PushCooldown = TimeSpan.FromMilliseconds(350);
     private static ILogger? _logger;
 
     /// <summary>How long after a page opened a call for the same destination still counts as the same tap.</summary>
@@ -41,8 +39,6 @@ public static class NavigationCoordinator
             Gate.Wait(0);
         }
 
-        Volatile.Write(ref _pushBlockedUntilUtcTicks, 0);
-
         lock (DuplicateLock)
         {
             InFlight.Clear();
@@ -52,7 +48,7 @@ public static class NavigationCoordinator
 
     public static async Task RunAsync(Func<Task> navigate)
     {
-        _ = await RunCoreAsync(navigate, applyPushCooldown: false).ConfigureAwait(false);
+        _ = await RunCoreAsync(navigate).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -64,15 +60,15 @@ public static class NavigationCoordinator
     public static Task<NavigationRunStatus> RunPushAsync(Func<Task> navigate, [CallerMemberName] string? destination = null) =>
         RunGuardedAsync(
             destination,
-            () => RunCoreAsync(navigate, applyPushCooldown: true, waitForGate: true, gateWait: PushGateWait));
+            () => RunCoreAsync(navigate, waitForGate: true, gateWait: PushGateWait));
 
     /// <summary>
-    /// Single-shot push for test completion: no inter-push cooldown, longer gate wait, same double-tap guard.
+    /// Single-shot push for test completion: longer gate wait, same double-tap guard.
     /// </summary>
     public static Task<NavigationRunStatus> RunCompletionPushAsync(Func<Task> navigate, [CallerMemberName] string? destination = null) =>
         RunGuardedAsync(
             destination,
-            () => RunCoreAsync(navigate, applyPushCooldown: false, waitForGate: true, gateWait: CompletionGateWait));
+            () => RunCoreAsync(navigate, waitForGate: true, gateWait: CompletionGateWait));
 
     private static async Task<NavigationRunStatus> RunGuardedAsync(string? destination, Func<Task<NavigationRunStatus>> run)
     {
@@ -139,25 +135,10 @@ public static class NavigationCoordinator
 
     private static async Task<NavigationRunStatus> RunCoreAsync(
         Func<Task> navigate,
-        bool applyPushCooldown,
         bool waitForGate = false,
         TimeSpan? gateWait = null)
     {
         TimeSpan gateWaitDuration = gateWait ?? PushGateWait;
-
-        if (applyPushCooldown)
-        {
-            long now = DateTime.UtcNow.Ticks;
-            long blockedUntil = Volatile.Read(ref _pushBlockedUntilUtcTicks);
-            if (now < blockedUntil)
-            {
-                TimeSpan wait = TimeSpan.FromTicks(blockedUntil - now);
-                if (wait > TimeSpan.Zero)
-                {
-                    await Task.Delay(wait).ConfigureAwait(false);
-                }
-            }
-        }
 
         bool acquired = waitForGate
             ? await Gate.WaitAsync(gateWaitDuration).ConfigureAwait(false)
@@ -184,11 +165,6 @@ public static class NavigationCoordinator
         }
         finally
         {
-            if (applyPushCooldown)
-            {
-                Volatile.Write(ref _pushBlockedUntilUtcTicks, DateTime.UtcNow.Add(PushCooldown).Ticks);
-            }
-
             Gate.Release();
         }
     }
