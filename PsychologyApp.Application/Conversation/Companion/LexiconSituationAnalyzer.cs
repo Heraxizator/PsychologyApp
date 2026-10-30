@@ -10,9 +10,10 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 
     private static readonly HashSet<string> Negations = ["не", "нет", "ни", "no", "not", "never", "dont", "cant", "cannot"];
 
-    // A negation is still recognised across one of these ("не сильно тревожусь"), but not across an arbitrary word —
+    // A negation is still recognised across a short chain of these ("не чувствую себя очень тревожной"), but not across an arbitrary word —
     // normalization drops sentence punctuation, so an unbounded look-back would misread "Не знаю. Тревожусь" as negated.
-    private static readonly HashSet<string> NegationModifiers = ["сильно", "очень", "так", "особо", "слишком", "совсем", "прямо", "чувствую", "ощущаю", "really", "very", "so", "too", "that", "feel", "feeling"];
+    private static readonly HashSet<string> NegationModifiers = ["сильно", "очень", "так", "особо", "слишком", "совсем", "прямо", "чувствую", "ощущаю", "себя", "really", "very", "so", "too", "that", "feel", "feeling"];
+    private const int MaxNegationModifiers = 3;
 
     private sealed record Entry(int Weight, string[] Terms);
 
@@ -327,12 +328,23 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
     /// Не могу спать" and "тревожусь не могу спать" become indistinguishable and a look-ahead would misfire on the first.</summary>
     private static bool IsNegated(string[] tokens, int index)
     {
-        if (index >= 1 && Negations.Contains(tokens[index - 1]))
+        int modifiers = 0;
+        for (int position = index - 1; position >= 0 && modifiers <= MaxNegationModifiers; position--)
         {
-            return true;
+            if (Negations.Contains(tokens[position]))
+            {
+                return true;
+            }
+
+            if (!NegationModifiers.Contains(tokens[position]) || modifiers == MaxNegationModifiers)
+            {
+                break;
+            }
+
+            modifiers++;
         }
 
-        return index >= 2 && NegationModifiers.Contains(tokens[index - 1]) && Negations.Contains(tokens[index - 2]);
+        return false;
     }
 
     /// <summary>Matches a multi-word term even when up to <see cref="PhraseWordGap"/> extra words are inserted between
