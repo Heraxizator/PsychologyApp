@@ -406,8 +406,8 @@ public sealed partial class CompanionDialogue(
             Utterance.AsksToExplain => explanation is not null
                 ? Reply([explanation], [], state, emotion, theme)
                 : Reply([CompanionKnowledge.ExplainFallback(english)], CompanionKnowledge.TopicChips(english), state, emotion, theme),
-            Utterance.AsksWhy => Reply([CompanionKnowledge.Why(emotion, english)], [], state, emotion, theme),
-            Utterance.AsksIfNormal => Reply([CompanionKnowledge.Normal(emotion, english)], [], state, emotion, theme),
+            Utterance.AsksWhy => Reply([CompanionKnowledge.Why(emotion, english)], [], RememberMeaningfulContext(state, previous, text, single, emotion), emotion, theme),
+            Utterance.AsksIfNormal => Reply([CompanionKnowledge.Normal(emotion, english)], [], RememberMeaningfulContext(state, previous, text, single, emotion), emotion, theme),
             Utterance.AsksForAdvice when emotion != CompanionEmotion.Unknown => RespondToAdvice(state, previous, text, single, emotion, theme),
             Utterance.Acknowledge => Reply([CompanionSmallTalk.Acknowledge(previous.QuestionPending, english, _random)], [], state, emotion, theme),
             Utterance.Reaction => Reply([CompanionSmallTalk.Reaction(text, UtteranceClassifier.IsSadReaction(text), english, _random)], [], state, emotion, theme),
@@ -464,8 +464,20 @@ public sealed partial class CompanionDialogue(
 
     private CompanionReply RespondToAdvice(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion, CompanionTheme? theme)
     {
-        // An advice request can also tell us what happened; keep that context so the next turn does not start from zero.
-        state = state with
+        state = RememberMeaningfulContext(state, previous, text, analysis, emotion);
+
+        return Reply(
+            [CompanionKnowledge.WhatHelps(emotion, english), CompanionKnowledge.AdviceOffer(english)],
+            [CompanionKnowledge.PracticeChip(english), CompanionActContent.Understand(english)],
+            state,
+            emotion,
+            theme);
+    }
+
+    private CompanionState RememberMeaningfulContext(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion)
+    {
+        // A personal question can also tell us what happened; keep that context for a relevant follow-up.
+        return state with
         {
             RecentTexts = previous.WithText(text).RecentTexts,
             Emotion = emotion.ToString(),
@@ -475,13 +487,6 @@ public sealed partial class CompanionDialogue(
             Event = analysis.Event == CompanionEvent.None ? state.Event : analysis.Event.ToString(),
             FirstQuote = state.FirstQuote ?? QuoteExtractor.Pick(text, analyzer, emotion)
         };
-
-        return Reply(
-            [CompanionKnowledge.WhatHelps(emotion, english), CompanionKnowledge.AdviceOffer(english)],
-            [CompanionKnowledge.PracticeChip(english), CompanionActContent.Understand(english)],
-            state,
-            emotion,
-            theme);
     }
 
     /// <summary>A message this long that names no feeling is the person telling something the word lists did not catch: offer the choice of feelings

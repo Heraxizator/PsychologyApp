@@ -6,7 +6,7 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
-- When someone asks for advice while naming a feeling or situation, the reply still gives advice and now keeps that message in chat context for a relevant follow-up. Not checked on a device.
+- When someone asks for advice, why they feel something, or whether a feeling is normal while naming a feeling or situation, the reply keeps that message in chat context for a relevant follow-up. Not checked on a device.
 
 - If someone already describes a physical sensation, the chat skips the later generic question about where they feel it, so the next question can move the conversation forward. Not checked on a device.
 
