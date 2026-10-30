@@ -224,21 +224,22 @@ public sealed partial class CompanionDialogue(
             return RespondToQuickReply(previous, new ChatQuickReply(ChatQuickReplyKinds.Practice, string.Empty, offered));
         }
 
+        SituationAnalysis single = analyzer.Analyze(text);
+
         // "Just talk" typed after "get it off your chest, sort it out or calm down?" is that choice, not a new story.
         if (WordCount(text) <= 6 && CompanionCaseContent.ParseGoal(text, asked: previous.LastQuestionId == CompanionCaseContent.GoalQuestionId, previous.ContentTurns) is { } typedGoal)
         {
-            return RespondToGoal(previous with { Turns = previous.Turns + 1 }, typedGoal);
+            return RespondToGoal(UpdateEmotionContext(previous, single) with { Turns = previous.Turns + 1 }, typedGoal);
         }
 
         // "It is not the first time" answers "first time or again?": the follow-up that fits it, not a generic question.
         if (WordCount(text) <= 8 && CompanionCaseContent.ReadChoice(previous.LastQuestionId, text) is { } choice
             && CompanionCaseContent.FollowUp(previous.LastQuestionId, choice, english, force: true) is { } followUp)
         {
-            CompanionState answered = previous.WithText(text) with { TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99) };
-            return Reply([followUp], [], answered, ParseEmotion(previous.Emotion), ParseTheme(previous.Theme));
+            CompanionState answered = UpdateEmotionContext(previous, single).WithText(text) with { TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99) };
+            return Reply([followUp], [], answered, ParseEmotion(answered.Emotion), ParseTheme(answered.Theme));
         }
 
-        SituationAnalysis single = analyzer.Analyze(text);
         Utterance act = UtteranceClassifier.Classify(text, single.Emotion != CompanionEmotion.Unknown);
         if (act is Utterance.Yes or Utterance.No && !previous.QuestionPending)
         {
@@ -386,17 +387,8 @@ public sealed partial class CompanionDialogue(
             TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99),
             AwaitingPostPracticeRating = false
         };
-        CompanionEmotion previousEmotion = ParseEmotion(previous.Emotion);
-        bool emotionWasCleared = (previous.EmotionExplicitlyCleared && previousEmotion == CompanionEmotion.Unknown)
-            || single.NegatedEmotions.Contains(previousEmotion);
-        CompanionEmotion emotion = single.Emotion != CompanionEmotion.Unknown
-            ? single.Emotion
-            : emotionWasCleared ? CompanionEmotion.Unknown : ParseEmotion(state.Emotion);
-        state = state with
-        {
-            Emotion = emotion.ToString(),
-            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && emotionWasCleared
-        };
+        state = UpdateEmotionContext(state, single);
+        CompanionEmotion emotion = ParseEmotion(state.Emotion);
         CompanionTheme? theme = ParseTheme(state.Theme);
 
         // "yes" or "I don't know" to "how strong is it, 0 to 10?" is not an answer: help with the scale instead of moving on.
@@ -528,6 +520,22 @@ public sealed partial class CompanionDialogue(
         || analysis.Event != CompanionEvent.None
         || analysis.Persons is { Count: > 0 };
 
+    private static CompanionState UpdateEmotionContext(CompanionState state, SituationAnalysis analysis)
+    {
+        CompanionEmotion previousEmotion = ParseEmotion(state.Emotion);
+        bool emotionWasCleared = (state.EmotionExplicitlyCleared && previousEmotion == CompanionEmotion.Unknown)
+            || analysis.NegatedEmotions.Contains(previousEmotion);
+        CompanionEmotion emotion = analysis.Emotion != CompanionEmotion.Unknown
+            ? analysis.Emotion
+            : emotionWasCleared ? CompanionEmotion.Unknown : previousEmotion;
+
+        return state with
+        {
+            Emotion = emotion.ToString(),
+            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && emotionWasCleared
+        };
+    }
+
     /// <summary>A message this long that names no feeling is the person telling something the word lists did not catch: offer the choice of feelings
     /// right away instead of asking an open question that would make them tell it again (see docs/companion-understanding.md).</summary>
     private const int TellingWords = 8;
@@ -547,22 +555,19 @@ public sealed partial class CompanionDialogue(
         CompanionEmotion previousEmotion = ParseEmotion(previous.Emotion);
         bool previousEmotionWasNegated = analysis.NegatedEmotions.Contains(previousEmotion);
         bool emotionWasCleared = (previous.EmotionExplicitlyCleared && previousEmotion == CompanionEmotion.Unknown) || previousEmotionWasNegated;
-        if (analysis.Emotion == CompanionEmotion.Unknown && !emotionWasCleared && ParseEmotion(previous.Emotion) == CompanionEmotion.Unknown)
+        if (analysis.Emotion == CompanionEmotion.Unknown && !emotionWasCleared && previousEmotion == CompanionEmotion.Unknown)
         {
             analysis = analyzer.Analyze(string.Join(' ', state.RecentTexts)) with { HasBodySymptoms = analysis.HasBodySymptoms, IsIntense = analysis.IsIntense, Persons = analysis.Persons };
         }
 
-        CompanionEmotion emotion = analysis.Emotion != CompanionEmotion.Unknown
-            ? analysis.Emotion
-            : emotionWasCleared || analysis.NegatedEmotions.Contains(ParseEmotion(state.Emotion)) ? CompanionEmotion.Unknown : ParseEmotion(state.Emotion);
+        state = UpdateEmotionContext(state, analysis);
+        CompanionEmotion emotion = ParseEmotion(state.Emotion);
         CompanionTheme? theme = analysis.Themes.Count > 0 ? analysis.Themes[0] : ParseTheme(state.Theme);
         CompanionPerson? person = analysis.Persons is { Count: > 0 } persons ? persons[0] : ParsePerson(state.Person);
         string? quote = QuoteExtractor.Pick(text, analyzer, emotion);
 
         state = state with
         {
-            Emotion = emotion.ToString(),
-            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && emotionWasCleared,
             Theme = theme?.ToString(),
             Person = person?.ToString(),
             Secondary = analysis.Secondary.ToString(),
