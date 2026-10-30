@@ -24,7 +24,7 @@ public sealed class PracticeReminderAlarmReceiver : BroadcastReceiver
         }
 
         string title = intent.GetStringExtra(PracticeReminderConstants.ExtraTitle)
-            ?? PsychologyApp.Presentation.Shared.Common.AppStrings.PracticeReminderTitle;
+            ?? AppStrings.PracticeReminderTitle;
         string body = intent.GetStringExtra(PracticeReminderConstants.ExtraBody)
             ?? string.Empty;
 

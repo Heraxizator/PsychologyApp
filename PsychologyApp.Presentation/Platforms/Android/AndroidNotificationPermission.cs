@@ -16,13 +16,13 @@ internal static class AndroidNotificationPermission
         (Build.VERSION.SdkInt < BuildVersionCodes.Tiramisu
             || ContextCompat.CheckSelfPermission(context, global::Android.Manifest.Permission.PostNotifications)
                 == global::Android.Content.PM.Permission.Granted)
-        && NotificationManagerCompat.From(context).AreNotificationsEnabled();
+        && NotificationManagerCompat.From(context)?.AreNotificationsEnabled() == true;
 
     internal static async Task<bool> RequestIfNeededAsync(CancellationToken cancellationToken)
     {
         if (Build.VERSION.SdkInt < BuildVersionCodes.Tiramisu)
         {
-            return NotificationManagerCompat.From(Platform.AppContext).AreNotificationsEnabled();
+            return NotificationManagerCompat.From(Platform.AppContext)?.AreNotificationsEnabled() == true;
         }
 
         await RequestGate.WaitAsync(cancellationToken);

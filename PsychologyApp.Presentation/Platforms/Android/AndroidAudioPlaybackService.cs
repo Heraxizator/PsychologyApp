@@ -183,7 +183,7 @@ public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlayba
 
         if (!OperatingSystem.IsAndroidVersionAtLeast(26))
         {
-            AudioFocusRequest result = audio.RequestAudioFocus(this, Stream.Music, AudioFocus.Gain);
+            AudioFocusRequest result = audio.RequestAudioFocus(this, Android.Media.Stream.Music, AudioFocus.Gain);
             _legacyFocusRequested = result == AudioFocusRequest.Granted;
             return _legacyFocusRequested;
         }
