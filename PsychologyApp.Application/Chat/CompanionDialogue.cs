@@ -464,6 +464,11 @@ public sealed partial class CompanionDialogue(
 
     private CompanionReply RespondToAdvice(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion, CompanionTheme? theme)
     {
+        if (emotion == CompanionEmotion.Panic || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms))
+        {
+            return RespondToStatement(previous, text, analysis);
+        }
+
         state = RememberMeaningfulContext(state, previous, text, analysis, emotion);
 
         return Reply(
