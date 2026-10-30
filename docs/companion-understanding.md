@@ -102,9 +102,9 @@ shorter unclear messages keep the old two-step behaviour.
 
 ## A second opinion for what the lexicon misses (2026-10)
 
-`EmotionGuesser` is a naive Bayes classifier over character 3-5-grams, trained at first use (about 25 ms) from the 427 labelled messages in
-`Conversation/Companion/Data/emotion-training.json` (the four evaluation sets merged and de-duplicated). It runs only when the lexicon
-recognised nothing and the message is a story (at least 8 words, as before), and its answer is never assumed: the chat says "Sounds like X, is that
+`EmotionGuesser` is a naive Bayes classifier over character 3-5-grams, trained at first use from the labelled messages in
+`Conversation/Companion/Data/emotion-training.json` (the evaluation sets merged and de-duplicated). In a free-text statement it runs only when
+the lexicon recognised nothing and the message has at least five normalized words. Its answer is never assumed: the chat asks "Sounds like X, is that
 right? If not, pick what is closer." and puts X first among the feeling chips, so one tap confirms it.
 
 Leave-one-set-out (`EmotionGuesserTests`: train on three sets, ask about the fourth), with the gate of a lead of 20 (natural-log units) and at least
@@ -142,3 +142,7 @@ Model comparison, leave-one-set-out over five sets (527 messages; the lexicon al
 
 Per set, the sets written after the lexicon was frozen (never read while writing terms): `nlu-fresh2.json` lexicon 41% -> lexicon then guesser
 74%; `nlu-fresh3.json` 59% -> 76%. The model and the gate were chosen on these same folds, so some optimism remains; the authorship caveat above still applies.
+
+Update (2026-10-30): the guesser now applies the shared `UtteranceText.Normalize` to training and user messages before counting words or building
+features. The measurements above predate this normalization change and have not been recalculated; treat them as a historical baseline, not a current
+accuracy estimate.
