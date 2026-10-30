@@ -18,6 +18,8 @@ public class ChatServiceTests
         private readonly List<ChatMessageDTO> _messages = [];
         private long _sessionId;
         private long _messageId;
+        public Func<Task>? MemoryReadBarrier { get; set; }
+        public Action<long>? SessionRead { get; set; }
 
         public Task<long> CreateSessionAsync(string title, DateTime nowUtc, CancellationToken cancellationToken = default)
         {
@@ -29,8 +31,11 @@ public class ChatServiceTests
         public Task<IReadOnlyList<ChatSessionDTO>> GetSessionsAsync(CancellationToken cancellationToken = default) =>
             Task.FromResult<IReadOnlyList<ChatSessionDTO>>(_sessions.Values.OrderByDescending(s => s.UpdatedAt).ThenByDescending(s => s.Id).Select(Snapshot).ToList());
 
-        public Task<ChatSessionDTO?> GetSessionAsync(long sessionId, CancellationToken cancellationToken = default) =>
-            Task.FromResult(_sessions.TryGetValue(sessionId, out ChatSessionDTO? s) ? Snapshot(s) : null);
+        public Task<ChatSessionDTO?> GetSessionAsync(long sessionId, CancellationToken cancellationToken = default)
+        {
+            SessionRead?.Invoke(sessionId);
+            return Task.FromResult(_sessions.TryGetValue(sessionId, out ChatSessionDTO? s) ? Snapshot(s) : null);
+        }
 
         public Task UpdateSessionAsync(ChatSessionDTO session, CancellationToken cancellationToken = default)
         {
@@ -75,8 +80,16 @@ public class ChatServiceTests
             return Task.CompletedTask;
         }
 
-        public Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default) =>
-            Task.FromResult<IReadOnlyDictionary<string, string>>(new Dictionary<string, string>(_memory));
+        public async Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default)
+        {
+            IReadOnlyDictionary<string, string> snapshot = new Dictionary<string, string>(_memory);
+            if (MemoryReadBarrier is { } barrier)
+            {
+                await barrier();
+            }
+
+            return snapshot;
+        }
 
         public Task SetMemoryAsync(string key, string value, CancellationToken cancellationToken = default)
         {
@@ -728,6 +741,71 @@ public class ChatServiceTests
         ChatSessionDTO session = (await service.GetChatAsync(id))!;
         Assert.Equal(8, CompanionState.Deserialize(session.StateJson).Turns);
         Assert.Equal(8, (await service.GetMessagesAsync(id)).Count(m => m.Role == ChatRole.User));
+    }
+
+    [Fact]
+    public async Task Concurrent_trauma_exercises_in_different_chats_do_not_overwrite_each_others_notes()
+    {
+        ChatService service = CreateService();
+        long firstId = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(firstId, "Мне тревожно из-за работы");
+        long secondId = (await service.StartNewChatAsync()).Session.Id;
+
+        foreach (long id in new[] { firstId, secondId })
+        {
+            ChatSessionDTO session = (await _repository.GetSessionAsync(id))!;
+            session.StateJson = new CompanionState
+            {
+                Turns = 3,
+                Emotion = nameof(CompanionEmotion.Anxiety),
+                Protocol = CompanionTraumaContent.Triggers,
+                ProtocolStep = 2,
+                ProtocolNotes = ["тревожное место", "сердце колотится"],
+                TraumaAcknowledged = true
+            }.Serialize();
+            await _repository.UpdateSessionAsync(session);
+        }
+
+        TaskCompletionSource firstReadMemory = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource releaseMemoryReaders = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource secondTurnReadSession = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        int sessionReads = 0;
+        _repository.SessionRead = _ =>
+        {
+            if (Interlocked.Increment(ref sessionReads) == 2)
+            {
+                secondTurnReadSession.TrySetResult();
+            }
+        };
+        int reads = 0;
+        _repository.MemoryReadBarrier = () =>
+        {
+            int count = Interlocked.Increment(ref reads);
+            if (count == 1)
+            {
+                firstReadMemory.TrySetResult();
+            }
+
+            if (count == 2)
+            {
+                releaseMemoryReaders.TrySetResult();
+            }
+
+            return releaseMemoryReaders.Task;
+        };
+
+        Task bothTurns = Task.WhenAll(
+            service.SendTextAsync(firstId, "позвонила сестре"),
+            service.SendTextAsync(secondId, "написала подруге"));
+        await firstReadMemory.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        await secondTurnReadSession.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        releaseMemoryReaders.TrySetResult();
+        await bothTurns;
+
+        _repository.SessionRead = null;
+        _repository.MemoryReadBarrier = null;
+        TraumaNotes notes = TraumaNotes.Deserialize((await _repository.GetMemoryAsync()).GetValueOrDefault(ChatMemoryKeys.TraumaNotes));
+        Assert.Equal(2, notes.Triggers.Count);
     }
 
     [Fact]

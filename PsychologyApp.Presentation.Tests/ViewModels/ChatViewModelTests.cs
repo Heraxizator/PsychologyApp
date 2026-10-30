@@ -262,10 +262,40 @@ public sealed class ChatViewModelTests
             await VmTestHelpers.RunAsync(viewModel.SendCommand);
             await VmTestHelpers.WaitUntilAsync(() => reported.Count == 1);
             Assert.False(viewModel.IsTyping);
+            Assert.Equal("First", viewModel.DraftText);
+            Assert.DoesNotContain(viewModel.Messages, message => message.IsUser && message.Text == "First");
 
             viewModel.DraftText = "second";
             await VmTestHelpers.RunAsync(viewModel.SendCommand);
             await VmTestHelpers.WaitUntilAsync(() => viewModel.Messages.Any(m => m.Text == "back"), 5000);
+        }
+        finally
+        {
+            AsyncCommandExtensions.DefaultErrorHandler = previous;
+        }
+    }
+
+    [Fact]
+    public async Task AFailedQuickReplyRestoresItsChipAndRemovesTheUnsentBubble()
+    {
+        ChatQuickReply chip = new(ChatQuickReplyKinds.Emotion, "Anxiety", "Anxiety");
+        History(Message(ChatRole.Companion, "Pick a feeling", Now, chip));
+        _chat.Setup(c => c.SendQuickReplyAsync(5, chip, It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("db"));
+        List<Exception> reported = [];
+        Action<Exception>? previous = AsyncCommandExtensions.DefaultErrorHandler;
+        AsyncCommandExtensions.DefaultErrorHandler = reported.Add;
+        try
+        {
+            ChatViewModel viewModel = Create();
+            await viewModel.LoadAsync();
+
+            viewModel.QuickReplyCommand.Execute(chip);
+            await VmTestHelpers.WaitUntilAsync(() => reported.Count == 1);
+
+            Assert.Equal(chip, Assert.Single(viewModel.QuickReplies).Reply);
+            Assert.DoesNotContain(viewModel.Messages, message => message.IsUser && message.Text == chip.Label);
+            Assert.False(viewModel.IsTyping);
         }
         finally
         {

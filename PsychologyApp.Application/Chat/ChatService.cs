@@ -80,6 +80,8 @@ public sealed class ChatService(
     // the same state and the later save would silently erase the earlier turn. Turns of one chat therefore run one at a time.
     private readonly ConcurrentDictionary<long, SemaphoreSlim> _turnGates = new();
     private readonly SemaphoreSlim _newChatGate = new(1, 1);
+    // Memory keys span chats. A per-chat gate alone lets two chats read the same trauma notes/topic dates and overwrite one another.
+    private readonly SemaphoreSlim _memoryGate = new(1, 1);
 
     public Task<ChatTurnResult> StartNewChatAsync(CancellationToken cancellationToken = default) => StartChatAsync(topic: null, cancellationToken);
 
@@ -123,16 +125,24 @@ public sealed class ChatService(
         ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken).ConfigureAwait(false))!;
 
         CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true).ConfigureAwait(false);
-        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
-        CompanionState opening = WithMemory(new CompanionState(), memory);
-        // A chat on a topic starts with that topic: the step decided last time waits for an ordinary chat.
-        CompanionReply reply = topic is not null
-            ? dialogue.OpenTopic(opening, topic)
-            : dialogue.Open(opening with { OpenPlan = PlanToAskAbout(memory, now) }, previous);
-        session.StateJson = reply.State.Serialize();
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
+        await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+            CompanionState opening = WithMemory(new CompanionState(), memory);
+            // A chat on a topic starts with that topic: the step decided last time waits for an ordinary chat.
+            CompanionReply reply = topic is not null
+                ? dialogue.OpenTopic(opening, topic)
+                : dialogue.Open(opening with { OpenPlan = PlanToAskAbout(memory, now) }, previous);
+            session.StateJson = reply.State.Serialize();
+            IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
 
-        return new ChatTurnResult(session, added, null);
+            return new ChatTurnResult(session, added, null);
+        }
+        finally
+        {
+            _memoryGate.Release();
+        }
     }
 
     public Task<IReadOnlyList<ChatSessionDTO>> GetChatsAsync(CancellationToken cancellationToken = default) =>
@@ -228,27 +238,53 @@ public sealed class ChatService(
     public async Task SetUserNameAsync(string? name, CancellationToken cancellationToken = default)
     {
         string trimmed = (name ?? string.Empty).Trim();
-        if (trimmed.Length == 0)
+        await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
         {
-            await repository.DeleteMemoryAsync(ChatMemoryKeys.Name, cancellationToken).ConfigureAwait(false);
-            return;
-        }
+            if (trimmed.Length == 0)
+            {
+                await repository.DeleteMemoryAsync(ChatMemoryKeys.Name, cancellationToken).ConfigureAwait(false);
+                return;
+            }
 
-        await repository.SetMemoryAsync(ChatMemoryKeys.Name, trimmed.Length > MaxNameLength ? trimmed[..MaxNameLength] : trimmed, cancellationToken).ConfigureAwait(false);
+            await repository.SetMemoryAsync(ChatMemoryKeys.Name, trimmed.Length > MaxNameLength ? trimmed[..MaxNameLength] : trimmed, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _memoryGate.Release();
+        }
     }
 
     public async Task DeleteAllChatsAsync(CancellationToken cancellationToken = default)
     {
-        await repository.DeleteAllSessionsAsync(cancellationToken).ConfigureAwait(false);
-        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
-        foreach (string key in memory.Keys.Where(key => !ChatMemoryKeys.OutlivesChats(key)).ToList())
+        await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
         {
-            await repository.DeleteMemoryAsync(key, cancellationToken).ConfigureAwait(false);
+            await repository.DeleteAllSessionsAsync(cancellationToken).ConfigureAwait(false);
+            IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+            foreach (string key in memory.Keys.Where(key => !ChatMemoryKeys.OutlivesChats(key)).ToList())
+            {
+                await repository.DeleteMemoryAsync(key, cancellationToken).ConfigureAwait(false);
+            }
+        }
+        finally
+        {
+            _memoryGate.Release();
         }
     }
 
-    public Task ForgetMemoryAsync(CancellationToken cancellationToken = default) =>
-        repository.ClearMemoryAsync(cancellationToken);
+    public async Task ForgetMemoryAsync(CancellationToken cancellationToken = default)
+    {
+        await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            await repository.ClearMemoryAsync(cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _memoryGate.Release();
+        }
+    }
 
     /// <summary>What the companion knows from earlier chats: the name and the practice that helped most. Memory wins over the chat's own copy, so a renamed person is renamed everywhere.</summary>
     private static CompanionState WithMemory(CompanionState state, IReadOnlyDictionary<string, string> memory) =>
@@ -354,6 +390,24 @@ public sealed class ChatService(
             return new ChatTurnResult(session, [], null);
         }
 
+        await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await TakeTurnWithMemoryAsync(sessionId, userText, input, session, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _memoryGate.Release();
+        }
+    }
+
+    private async Task<ChatTurnResult> TakeTurnWithMemoryAsync(
+        long sessionId,
+        string userText,
+        CompanionInput input,
+        ChatSessionDTO session,
+        CancellationToken cancellationToken)
+    {
         IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
         CompanionState state = WithMemory(CompanionState.Deserialize(session.StateJson), memory);
         DateTime now = Now();

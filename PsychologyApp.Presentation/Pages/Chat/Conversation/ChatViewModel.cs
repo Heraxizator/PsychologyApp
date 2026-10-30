@@ -322,23 +322,62 @@ public sealed class ChatViewModel : BaseViewModel
         return TakeTurnAsync(text, () => _chat.SendTextAsync(_sessionId!.Value, text, CancellationToken.None));
     }
 
-    private Task SendQuickReplyAsync(ChatQuickReply reply)
+    private async Task SendQuickReplyAsync(ChatQuickReply reply)
     {
         // The value just given is what the next slider shows as "was N".
         int? picked = reply.Kind == ChatQuickReplyKinds.Rating && int.TryParse(reply.Payload, out int value) ? value : null;
-        Task turn = TakeTurnAsync(reply.Label, () => _chat.SendQuickReplyAsync(_sessionId!.Value, reply, CancellationToken.None));
-        RatingReference = picked ?? RatingReference;
-        return turn;
+        int? previousRating = RatingReference;
+        IReadOnlyList<ChatQuickReply> retryReplies = QuickReplies.Select(item => item.Reply).ToList();
+        RatingReference = picked ?? previousRating;
+        try
+        {
+            await TakeTurnAsync(reply.Label, () => _chat.SendQuickReplyAsync(_sessionId!.Value, reply, CancellationToken.None), retryReplies);
+        }
+        catch
+        {
+            RatingReference = previousRating;
+            throw;
+        }
     }
 
-    private async Task TakeTurnAsync(string userText, Func<Task<ChatTurnResult>> send)
+    private async Task TakeTurnAsync(
+        string userText,
+        Func<Task<ChatTurnResult>> send,
+        IReadOnlyList<ChatQuickReply>? retryReplies = null)
     {
-        Messages.Add(CreateBubble(userText, isUser: true, Now(), animate: true));
+        DateTime? previousCreatedUtc = _lastCreatedUtc;
+        bool? previousWasUser = _lastWasUser;
+        ChatBubble userBubble = CreateBubble(userText, isUser: true, Now(), animate: true);
+        Messages.Add(userBubble);
         SetQuickReplies([]);
         IsTyping = true;
 
         // The service awaits without ConfigureAwait(false), so understanding the message would run on the UI thread.
-        ChatTurnResult result = await Task.Run(send);
+        ChatTurnResult result;
+        try
+        {
+            result = await Task.Run(send);
+        }
+        catch
+        {
+            if (!_lifetime.IsCancellationRequested)
+            {
+                Messages.Remove(userBubble);
+                _lastCreatedUtc = previousCreatedUtc;
+                _lastWasUser = previousWasUser;
+                if (retryReplies is null)
+                {
+                    DraftText = userText;
+                }
+                else
+                {
+                    SetQuickReplies(retryReplies);
+                }
+            }
+
+            throw;
+        }
+
         if (_lifetime.IsCancellationRequested)
         {
             return;
