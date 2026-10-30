@@ -10,6 +10,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Closing the chat page no longer cancels a message that was already sent before it could be saved. Regression test added; not checked on a device.
 
+- Chat recovery clears unknown or out-of-range guided-exercise state, and ignores a chip for an unsupported exercise, so an obsolete exercise cannot keep repeating its questions. Regression test added; not checked on a device.
+
 - Journal CSV export removes its temporary file after sharing or failure. Risk assessments dated in the future no longer postpone the next check; red-risk routing stays available. Regression coverage added; not checked on a device.
 
 - Backup import rejects null required collections, rows, chat sessions and safety-plan contacts before writing any data, preventing damaged plans from breaking the safety screen. Null encoded fields in encrypted backups are reported as file-format errors. Regression tests added; not checked on a device.

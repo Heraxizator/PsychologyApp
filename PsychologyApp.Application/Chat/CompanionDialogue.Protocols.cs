@@ -82,8 +82,15 @@ public sealed partial class CompanionDialogue
         return state;
     }
 
-    private CompanionReply StartProtocol(CompanionState state, string protocol, CompanionEmotion emotion, CompanionTheme? theme) =>
-        AskProtocol(state with { Protocol = protocol, ProtocolStep = 0, ProtocolNotes = [], ProtocolBelief = null, ProtocolOffered = true, TurnsSinceOffer = 0 }, emotion, theme);
+    private CompanionReply StartProtocol(CompanionState state, string protocol, CompanionEmotion emotion, CompanionTheme? theme)
+    {
+        if (!CompanionState.HasValidProtocolState(protocol, step: 0, belief: null))
+        {
+            return CompanionReply.Empty(state);
+        }
+
+        return AskProtocol(state with { Protocol = protocol, ProtocolStep = 0, ProtocolNotes = [], ProtocolBelief = null, ProtocolOffered = true, TurnsSinceOffer = 0 }, emotion, theme);
+    }
 
     private CompanionReply AskProtocol(CompanionState state, CompanionEmotion emotion, CompanionTheme? theme)
     {

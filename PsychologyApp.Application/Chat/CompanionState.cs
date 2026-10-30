@@ -257,7 +257,7 @@ public sealed record CompanionState
         {
             using JsonDocument doc = JsonDocument.Parse(json);
             JsonElement r = doc.RootElement;
-            return new CompanionState
+            CompanionState state = new()
             {
                 Turns = Int(r, "turns") ?? 0,
                 Greetings = Int(r, "greetings") ?? 0,
@@ -317,6 +317,10 @@ public sealed record CompanionState
                 TopicCounted = Str(r, "topicCounted"),
                 PatternNoted = Bool(r, "patternNoted")
             };
+
+            return HasValidProtocolState(state.Protocol, state.ProtocolStep, state.ProtocolBelief)
+                ? state
+                : state with { Protocol = null, ProtocolStep = 0, ProtocolNotes = [], ProtocolBelief = null };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)
         {
@@ -359,6 +363,19 @@ public sealed record CompanionState
 
     private static bool Bool(JsonElement e, string name) =>
         e.TryGetProperty(name, out JsonElement p) && p.ValueKind == JsonValueKind.True;
+
+    internal static bool HasValidProtocolState(string? protocol, int step, int? belief) => protocol switch
+    {
+        CompanionProtocolContent.Think => step is >= 0 and <= CompanionProtocolContent.ThinkBeliefAfter
+            && (step <= CompanionProtocolContent.ThinkBeliefBefore || belief is >= 0 and <= 10),
+        CompanionProtocolContent.Deeper => step is >= 0 and < CompanionProtocolContent.DeeperSteps && belief is null,
+        CompanionProtocolContent.Solve => step is >= 0 and < CompanionProtocolContent.SolveSteps && belief is null,
+        CompanionTraumaContent.Impact => step is >= CompanionTraumaContent.ImpactDistress and <= CompanionTraumaContent.ImpactBeliefAfter
+            && (step <= CompanionTraumaContent.ImpactBeliefBefore || belief is >= 0 and <= 10),
+        CompanionTraumaContent.Triggers => step is >= 0 and < CompanionTraumaContent.TriggerSteps && belief is null,
+        null => true,
+        _ => false
+    };
 
     private static string[] Array(JsonElement e, string name) =>
         e.TryGetProperty(name, out JsonElement p) && p.ValueKind == JsonValueKind.Array

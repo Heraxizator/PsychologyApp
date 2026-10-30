@@ -25,6 +25,23 @@ public sealed class CompanionGuidedTests
     private static readonly CompanionState Anxious = new() { Turns = 3, Emotion = nameof(CompanionEmotion.Anxiety) };
 
     [Fact]
+    public void An_unknown_saved_protocol_is_cleared_instead_of_trapping_the_chat_in_repeated_questions()
+    {
+        CompanionState restored = CompanionState.Deserialize(
+            "{\"turns\":3,\"emotion\":\"Anxiety\",\"protocol\":\"retired\",\"protocolStep\":4,\"protocolNotes\":[\"old answer\"]}");
+
+        CompanionReply reply = Say(Create(), restored, "Меня снова тревожит собеседование");
+
+        Assert.Null(reply.State.Protocol);
+        Assert.Empty(reply.State.ProtocolNotes);
+        Assert.NotEmpty(reply.Messages);
+
+        CompanionReply invalidChip = Tap(Create(), Anxious, ChatQuickReplyKinds.Act, "protocol:retired");
+        Assert.Null(invalidChip.State.Protocol);
+        Assert.Null(invalidChip.Action);
+    }
+
+    [Fact]
     public void A_thought_is_checked_step_by_step_and_the_change_in_belief_is_named()
     {
         // The chat does the work of a thought record with the person: the summary must carry their own words and both ratings.
