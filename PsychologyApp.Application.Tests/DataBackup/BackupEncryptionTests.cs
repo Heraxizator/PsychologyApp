@@ -6,6 +6,20 @@ namespace PsychologyApp.Application.Tests.DataBackup;
 
 public sealed class BackupEncryptionTests
 {
+    [Theory]
+    [InlineData("Salt")]
+    [InlineData("Nonce")]
+    [InlineData("Tag")]
+    [InlineData("Data")]
+    public void NullEncodedFieldIsAFormatError(string field)
+    {
+        string file = "{\"Format\":\"" + BackupEncryption.FormatName
+            + "\",\"Version\":1,\"Kdf\":\"PBKDF2-SHA256\",\"Iterations\":600000,\""
+            + field + "\":null}";
+
+        Assert.Throws<BackupFormatException>(() => BackupEncryption.Decrypt(file, "correct horse battery"));
+    }
+
     private const string Plain = """{"formatVersion":2,"note":"мне было тяжело 😔"}""";
 
     [Fact]

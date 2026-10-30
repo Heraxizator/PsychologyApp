@@ -133,6 +133,12 @@ public static class BackupEncryption
             throw new BackupPassphraseException("A passphrase is needed to open this backup.");
         }
 
+        // Explicit JSON nulls bypass the DTO's non-nullable string annotations.
+        if (envelope.Salt is null || envelope.Nonce is null || envelope.Tag is null || envelope.Data is null)
+        {
+            throw new BackupFormatException("The encrypted backup is damaged.");
+        }
+
         byte[] salt, nonce, tag, cipher;
         try
         {

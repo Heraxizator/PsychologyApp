@@ -168,6 +168,23 @@ public sealed class BackupIntegrationTests : IAsyncLifetime
     }
 
     [Theory]
+    [InlineData("\"MoodEntries\": null")]
+    [InlineData("\"ChatSessions\": [null]")]
+    [InlineData("\"ChatSessions\": [{\"Session\":null}]")]
+    [InlineData("\"SafetyPlan\": {\"WarningSigns\":[\"warning\"],\"Contacts\":[null]}")]
+    [InlineData("\"SafetyPlan\": {\"Contacts\":[{\"Name\":null,\"Phone\":null}]}")]
+    public async Task Import_NullRequiredData_IsRejectedBeforeAnyWrites(string property)
+    {
+        await _target.GetRequiredService<IUserProgressService>().RecordMoodAsync(4, "existing", LongAgo);
+        string json = "{\"FormatVersion\":2," + property + "}";
+
+        await Assert.ThrowsAsync<BackupFormatException>(() => _target.GetRequiredService<IBackupService>().ImportAsync(json));
+
+        Assert.Equal("existing", Assert.Single(await _target.GetRequiredService<IUserProgressService>().GetMoodsAsync()).Note);
+        Assert.Null(await _target.GetRequiredService<IClinicalCareRepository>().GetSafetyPlanAsync());
+    }
+
+    [Theory]
     [InlineData("")]
     [InlineData("not json")]
     [InlineData("{\"FormatVersion\": 99}")]

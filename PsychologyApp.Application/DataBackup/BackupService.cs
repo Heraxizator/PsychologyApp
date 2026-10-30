@@ -144,7 +144,53 @@ public sealed class BackupService(
                 $"The backup format {backup.FormatVersion} is not supported (this version reads {AppBackupDTO.OldestSupportedFormatVersion}-{AppBackupDTO.CurrentFormatVersion}).");
         }
 
+        ValidateRequiredData(backup);
         return backup;
+    }
+
+    // Nullable annotations do not reject explicit JSON nulls or null array elements.
+    // Reject damaged required data before any repository can persist it.
+    private static void ValidateRequiredData(AppBackupDTO backup)
+    {
+        RequireItems(backup.MoodEntries);
+        RequireItems(backup.TestResults);
+        RequireItems(backup.Completions);
+        RequireItems(backup.SessionResults);
+        RequireItems(backup.ChatSessions);
+        RequireItems(backup.Techniques);
+        RequireItems(backup.Escalations);
+        RequireItems(backup.FavoriteQuoteTexts);
+        if (backup.ChatMemory is null)
+        {
+            throw new BackupFormatException("The backup contains missing required data.");
+        }
+        foreach (BackupChatSessionDTO chat in backup.ChatSessions)
+        {
+            if (chat.Session is null)
+            {
+                throw new BackupFormatException("The backup contains a missing chat session.");
+            }
+            RequireItems(chat.Messages);
+        }
+        if (backup.SafetyPlan is { } plan)
+        {
+            RequireItems(plan.WarningSigns);
+            RequireItems(plan.CopingStrategies);
+            RequireItems(plan.Reasons);
+            RequireItems(plan.Contacts);
+            if (plan.Contacts.Any(contact => contact.Name is null || contact.Phone is null))
+            {
+                throw new BackupFormatException("The backup contains an invalid safety plan contact.");
+            }
+        }
+    }
+
+    private static void RequireItems<T>(IReadOnlyList<T>? items)
+    {
+        if (items is null || items.Any(item => item is null))
+        {
+            throw new BackupFormatException("The backup contains missing required data.");
+        }
     }
 
     /// <summary>Drops rows a hand-edited or damaged file could not have come from the app with (no key, no date, impossible role).</summary>

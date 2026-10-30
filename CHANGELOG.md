@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Backup import rejects null required collections, rows, chat sessions and safety-plan contacts before writing any data, preventing damaged plans from breaking the safety screen. Null encoded fields in encrypted backups are reported as file-format errors. Regression tests added; not checked on a device.
+
 - Crisis detection now checks complete original notes in body check-ins, course reflections and exposure reports, so a signal after the storage length limit still leads to help. Added regression coverage for each affected field; not checked on a device.
 
 - Database operations now fail on queue timeout and respond to cancellation without bypassing unfinished predecessors, preserving exclusive saves and database recreation. Covered by timeout and cancellation regression tests; not checked on a device.
