@@ -189,7 +189,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             firstMention.TryAdd(CompanionEmotion.Sadness, 0);
         }
 
-        bool intense = IntensityTerms.Any(term => Matches(term, respectNegation: false));
+        bool intense = IntensityTerms.Any(term => Matches(term, respectNegation: true));
         // Most hits first; a tie goes to the theme mentioned first ("the kids all day, my husband at work" is about the family, not the job).
         IReadOnlyList<CompanionTheme> themes = Themes
             .Select(pair => (Theme: pair.Key, Hits: pair.Value.Count(term => Matches(term, respectNegation: false)), First: pair.Value.Select(term => IndexOf(term, normalized, tokens, offsets, respectNegation: false)).Where(at => at >= 0).DefaultIfEmpty(int.MaxValue).Min()))

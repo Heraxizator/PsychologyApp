@@ -14,6 +14,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Crisis recognition includes common past-tense Russian descriptions of self-harm, such as “резал себя” and “царапала себя”. Not checked on a device.
 
+- Intensity cues such as “very” and “сильно” now respect negation, so a denied intensity does not escalate an anxiety response. Not checked on a device.
+
 - The emotion guesser no longer proposes a feeling that the current message explicitly denies. Not checked on a device.
 
 - Conversational shortcuts, questions and advice requests now respect an explicit denial of the previous feeling instead of answering from stale emotional context. Not checked on a device.
