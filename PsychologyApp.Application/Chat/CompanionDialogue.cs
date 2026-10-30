@@ -517,6 +517,12 @@ public sealed partial class CompanionDialogue(
             state = state.WithAsked("onset");
         }
 
+        // The person has already named a physical sensation, so do not later ask where they feel it.
+        if (analysis.HasBodySymptoms && !state.AskedQuestions.Contains("body"))
+        {
+            state = state.WithAsked("body");
+        }
+
         // The person has already said what happened (a real sentence with a topic or a person in it): do not ask "what happened?" as the next question.
         if (WordCount(text) >= 5 && (analysis.Themes.Count > 0 || analysis.Persons is { Count: > 0 }))
         {
