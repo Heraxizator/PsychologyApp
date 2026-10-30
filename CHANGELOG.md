@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Advice replies now acknowledge the recognized feeling and situation first; messages about a loss or trauma follow the existing support path instead of generic advice and practice offers. Not checked on a device.
+
 - Emotion recognition now carries negation through a short chain of known modifiers (for example, “I don't feel very anxious”) without letting it cross unrelated words. Not checked on a device.
 
 - Personal-data erasure continues through accessible cache folders if one folder cannot be scanned, and skips directory links to keep the cleanup inside the app cache. Not checked on a device.

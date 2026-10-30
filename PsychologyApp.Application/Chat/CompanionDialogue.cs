@@ -468,15 +468,28 @@ public sealed partial class CompanionDialogue(
 
     private CompanionReply RespondToAdvice(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion, CompanionTheme? theme)
     {
-        if (emotion == CompanionEmotion.Panic || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms))
+        if (analysis.HasLoss || analysis.MentionsTrauma
+            || emotion == CompanionEmotion.Panic
+            || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms))
         {
             return RespondToStatement(previous, text, analysis);
         }
 
+        bool newEvent = analysis.Event != CompanionEvent.None && state.Event != analysis.Event.ToString();
         state = RememberMeaningfulContext(state, previous, text, analysis, emotion);
 
+        List<string> messages = [CompanionContent.Reflection(analysis with { Emotion = emotion }, english, _random)];
+        if (newEvent && emotion != CompanionEmotion.Guilt
+            && CompanionCaseContent.EventLine(analysis.Event, english, ParsePerson(state.Person)) is { } eventLine)
+        {
+            messages[0] = $"{messages[0]} {eventLine}";
+        }
+
+        messages.Add(CompanionKnowledge.WhatHelps(emotion, english));
+        messages.Add(CompanionKnowledge.AdviceOffer(english));
+
         return Reply(
-            [CompanionKnowledge.WhatHelps(emotion, english), CompanionKnowledge.AdviceOffer(english)],
+            messages,
             [CompanionKnowledge.PracticeChip(english), CompanionActContent.Understand(english)],
             state,
             emotion,
