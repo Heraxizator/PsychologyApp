@@ -9,12 +9,14 @@ namespace PsychologyApp.Presentation.Shared.UI.Components;
 /// </summary>
 public sealed class VoiceDictation
 {
+    private static readonly SemaphoreSlim ActiveGate = new(1, 1);
     private static VoiceDictation? _active;
 
     private readonly Func<string> _readText;
     private readonly Action<string> _writeText;
     private CancellationTokenSource? _listening;
     private TaskCompletionSource? _listenFinished;
+    private int _stopVersion;
 
     public VoiceDictation(Func<string> readText, Action<string> writeText)
     {
@@ -121,27 +123,56 @@ public sealed class VoiceDictation
 
     public async Task ToggleAsync()
     {
+        int startVersion = Volatile.Read(ref _stopVersion);
         if (IsListening)
         {
             await StopListeningAsync(cancel: false);
             return;
         }
 
-        if (_active is { } other && other != this)
+        CancellationTokenSource listening;
+        TaskCompletionSource listenFinished;
+        await ActiveGate.WaitAsync();
+        try
         {
-            await other.StopAsync();
+            if (startVersion != Volatile.Read(ref _stopVersion))
+            {
+                return;
+            }
+
+            // Another field can start while this input waits for the previous recogniser to stop.
+            if (IsListening)
+            {
+                await StopListeningAsync(cancel: false);
+                return;
+            }
+
+            if (_active is { } other && other != this)
+            {
+                await other.StopAsync();
+            }
+
+            if (startVersion != Volatile.Read(ref _stopVersion))
+            {
+                return;
+            }
+
+            listening = _listening = new CancellationTokenSource();
+            listenFinished = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            _listenFinished = listenFinished;
+            _active = this;
+        }
+        finally
+        {
+            ActiveGate.Release();
         }
 
-        _active = this;
-        _listening = new CancellationTokenSource();
-        TaskCompletionSource listenFinished = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        _listenFinished = listenFinished;
         UiHaptics.Tick();
         SetStatus(AppStrings.PracticeVoiceListening);
 
         try
         {
-            CancellationToken token = _listening.Token;
+            CancellationToken token = listening.Token;
             SpeechInputResult result = await Speech.ListenAsync(heard => SetStatus(heard), token);
             token.ThrowIfCancellationRequested();
             if (result.Status == SpeechInputStatus.Recognized)
@@ -178,7 +209,11 @@ public sealed class VoiceDictation
     }
 
     /// <summary>Stops listening without keeping the words, e.g. when the page closes.</summary>
-    public Task StopAsync() => StopListeningAsync(cancel: true);
+    public Task StopAsync()
+    {
+        Interlocked.Increment(ref _stopVersion);
+        return StopListeningAsync(cancel: true);
+    }
 
     private async Task StopListeningAsync(bool cancel)
     {

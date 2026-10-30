@@ -46,6 +46,9 @@ public partial class TechniqueTextFieldView : ContentView
     private readonly VoiceDictation _dictation;
     private readonly List<(string Chip, Border View, Label Label)> _chips = [];
     private readonly List<(string Phrase, Border View)> _phrases = [];
+    private Border? _assistMoreChip;
+    private Label? _assistMoreLabel;
+    private bool _assistExpanded;
 
     public TechniqueTextFieldView()
     {
@@ -195,6 +198,7 @@ public partial class TechniqueTextFieldView : ContentView
     private bool _chipsExpanded;
     private Border? _moreChip;
     private Label? _moreLabel;
+    private bool _voiceWasListening;
 
     /// <summary>The first few chips, every chosen one, and all of them once "More" was tapped.</summary>
     private void ApplyChipVisibility()
@@ -262,6 +266,9 @@ public partial class TechniqueTextFieldView : ContentView
     {
         AssistHost.Children.Clear();
         _phrases.Clear();
+        _assistExpanded = false;
+        _assistMoreChip = null;
+        _assistMoreLabel = null;
         foreach (string phrase in AssistSuggestions ?? [])
         {
             Label label = new()
@@ -282,15 +289,64 @@ public partial class TechniqueTextFieldView : ContentView
             view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => OnPhraseTapped(phrase, view)) });
             AssistHost.Children.Add(view);
             _phrases.Add((phrase, view));
-            if (UiAnimations.ShouldAnimate(AssistHost))
+        }
+
+        _assistMoreLabel = new Label
+        {
+            Style = AppResources.Find<Style>("AnswerChipLabelStyle"),
+            TextColor = AppResources.ThemedColor("PrimaryTextLight", "PrimaryTextDark", Colors.Gray)
+        };
+        _assistMoreChip = new Border
+        {
+            Style = AppResources.Find<Style>("AnswerChipStyle"),
+            Content = _assistMoreLabel,
+            HorizontalOptions = LayoutOptions.Start,
+            BackgroundColor = Colors.Transparent,
+            StrokeThickness = 1,
+            Stroke = new SolidColorBrush(AppResources.ThemedColor("Primary", "PrimaryTextDark", Colors.Gray))
+        };
+        _assistMoreChip.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(ExpandAssist) });
+        AssistHost.Children.Add(_assistMoreChip);
+
+        AssistSection.IsVisible = _phrases.Count > 0;
+        ApplyAssistVisibility();
+        if (UiAnimations.ShouldAnimate(AssistHost))
+        {
+            foreach ((string _, Border view) in _phrases.Take(AssistSuggestionsShownFirst))
             {
                 view.Opacity = 0;
                 view.FadeToAsync(1, UiAnimations.MediumDuration, Easing.CubicOut).FireAndForget();
             }
         }
 
-        AssistSection.IsVisible = _phrases.Count > 0;
         RefreshChipSelection();
+    }
+
+    private const int AssistSuggestionsShownFirst = 2;
+
+    private void ApplyAssistVisibility()
+    {
+        int hidden = 0;
+        for (int i = 0; i < _phrases.Count; i++)
+        {
+            bool show = _assistExpanded || i < AssistSuggestionsShownFirst;
+            _phrases[i].View.IsVisible = show;
+            hidden += show ? 0 : 1;
+        }
+
+        if (_assistMoreChip is not null && _assistMoreLabel is not null)
+        {
+            _assistMoreChip.IsVisible = hidden > 0;
+            _assistMoreLabel.Text = AppStrings.PracticeMoreChips(hidden);
+            SemanticProperties.SetDescription(_assistMoreChip, _assistMoreLabel.Text);
+        }
+    }
+
+    private void ExpandAssist()
+    {
+        _assistExpanded = true;
+        UiHaptics.Tick();
+        ApplyAssistVisibility();
     }
 
     private void OnPhraseTapped(string phrase, Border view)
@@ -337,22 +393,19 @@ public partial class TechniqueTextFieldView : ContentView
         MicIcon.TextColor = listening ? Colors.White : AppResources.ThemedColor("PrimaryTextLight", "PrimaryTextDark", Colors.Gray);
         SemanticProperties.SetDescription(MicButton, listening ? AppStrings.PracticeVoiceStop : AppStrings.PracticeVoiceStart);
 
-        if (listening && UiAnimations.ShouldAnimate(MicButton))
+        if (listening && !_voiceWasListening && UiAnimations.ShouldAnimate(MicButton))
         {
-            PulseAsync().FireAndForget();
+            VoiceStartAnimationAsync().FireAndForget();
         }
+
+        _voiceWasListening = listening;
     }
 
-    /// <summary>The microphone breathes while it listens, so it is clear that the phone is waiting for words.</summary>
-    private async Task PulseAsync()
+    /// <summary>A single bounded pulse marks recording without keeping an animation running during dictation.</summary>
+    private async Task VoiceStartAnimationAsync()
     {
-        while (_dictation.IsListening && UiAnimations.CanAnimate(MicButton))
-        {
-            await MicButton.ScaleToAsync(1.12, 420, Easing.SinInOut);
-            await MicButton.ScaleToAsync(1, 420, Easing.SinInOut);
-        }
-
-        MicButton.Scale = 1;
+        await MicButton.ScaleToAsync(1.12, 140, Easing.SinOut);
+        await MicButton.ScaleToAsync(1, 180, Easing.SinIn);
     }
 
     private void OnInputFocused(object? sender, FocusEventArgs e) =>

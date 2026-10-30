@@ -56,9 +56,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         });
         MorePracticeCommand = new AsyncCommand(MorePracticeAsync);
         NextPracticeCommand = new AsyncCommand(StartNextPracticeAsync);
-        OpenJournalCommand = new AsyncCommand(() => _navigationService.GoToJournalAsync());
         GoHomeCommand = new AsyncCommand(() => _navigationService.GoToRootAsync());
         CrisisCommand = new AsyncCommand(() => _navigationService.GoToCrisisHubAsync());
+        ToggleAnswersCommand = new Command(() => IsAnswersExpanded = !IsAnswersExpanded);
+        ToggleCheckInCommand = new Command(() => IsCheckInExpanded = !IsCheckInExpanded);
         LoadBeforeMoodAsync().FireAndForget();
         LoadSessionOutcomeAsync().FireAndForget();
         LoadNextPracticeAsync(completedItemKey).FireAndForget();
@@ -95,7 +96,6 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public string ActiveDaysLabelText => AppStrings.ProfileActiveDaysLabel;
     public bool HasActiveDays => ActiveDays > 0;
     public string MorePracticeText => AppStrings.PracticeMoreButton;
-    public string OpenJournalText => AppStrings.PracticeOpenJournalRow;
     public string GoHomeText => AppStrings.PracticeGoHomeButton;
     public string ReflectionQuestion => AppStrings.PracticeReflectionQuestion;
     public string ReflectionNotePlaceholder => AppStrings.PracticeReflectionNotePlaceholder;
@@ -137,8 +137,46 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public bool HasNextPractice
     {
         get => _hasNextPractice && !_isCrisis;
-        private set => SetProperty(ref _hasNextPractice, value);
+        private set
+        {
+            if (SetProperty(ref _hasNextPractice, value))
+            {
+                OnPropertyChanged(nameof(ShowMorePracticeAction));
+            }
+        }
     }
+
+    public bool ShowMorePracticeAction => !HasNextPractice;
+
+    private bool _isAnswersExpanded;
+    public bool IsAnswersExpanded
+    {
+        get => _isAnswersExpanded;
+        private set
+        {
+            if (SetProperty(ref _isAnswersExpanded, value))
+            {
+                OnPropertyChanged(nameof(AnswersToggleGlyph));
+            }
+        }
+    }
+
+    public string AnswersToggleGlyph => IsAnswersExpanded ? "−" : "+";
+
+    private bool _isCheckInExpanded;
+    public bool IsCheckInExpanded
+    {
+        get => _isCheckInExpanded;
+        private set
+        {
+            if (SetProperty(ref _isCheckInExpanded, value))
+            {
+                OnPropertyChanged(nameof(CheckInToggleGlyph));
+            }
+        }
+    }
+
+    public string CheckInToggleGlyph => IsCheckInExpanded ? "−" : "+";
 
     /// <summary>
     /// Practice answers and the note are where people write what they would not say in the chat; they get the same local
@@ -153,6 +191,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             if (SetProperty(ref _isCrisis, value))
             {
                 OnPropertyChanged(nameof(HasNextPractice));
+                OnPropertyChanged(nameof(ShowMorePracticeAction));
             }
         }
     }
@@ -238,9 +277,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public ICommand RecordMoodCommand { get; }
     public ICommand MorePracticeCommand { get; }
     public ICommand NextPracticeCommand { get; }
-    public ICommand OpenJournalCommand { get; }
     public ICommand GoHomeCommand { get; }
     public ICommand CrisisCommand { get; }
+    public ICommand ToggleAnswersCommand { get; }
+    public ICommand ToggleCheckInCommand { get; }
 
     protected override void RefreshLocalizedProperties()
     {
@@ -254,7 +294,6 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(ActiveDaysLabelText),
             nameof(HasActiveDays),
             nameof(MorePracticeText),
-            nameof(OpenJournalText),
             nameof(GoHomeText),
             nameof(ReflectionQuestion),
             nameof(ReflectionNotePlaceholder),

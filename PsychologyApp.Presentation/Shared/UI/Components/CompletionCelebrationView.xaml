@@ -66,6 +66,7 @@
                     Spacing="{StaticResource CompactSpacing}"
                     Padding="0,6,0,0">
                     <ui:ButtonView
+                        IsVisible="{TemplateBinding IsPrimaryActionVisible}"
                         BodyText="{TemplateBinding PrimaryActionText}"
                         TapCommand="{TemplateBinding PrimaryCommand}" />
                 </VerticalStackLayout>

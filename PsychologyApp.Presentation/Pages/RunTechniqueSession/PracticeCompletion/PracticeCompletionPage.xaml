@@ -28,6 +28,7 @@
                 StreakValueText="{Binding ActiveDaysValueText}"
                 StreakLabelText="{Binding ActiveDaysLabelText}"
                 HasStreak="{Binding HasActiveDays}"
+                IsPrimaryActionVisible="{Binding ShowMorePracticeAction}"
                 PrimaryActionText="{Binding MorePracticeText}"
                 PrimaryCommand="{Binding MorePracticeCommand}" />
 
@@ -48,11 +49,29 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- What was written in the practice, question by question: the thought and its balanced answer stay in sight. -->
+                <!-- Answers stay available, but do not add a long block to every completion screen. -->
                 <Border Style="{StaticResource BrandCardStyle}" IsVisible="{Binding HasAnswers}">
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="{Binding AnswersTitle}" Style="{StaticResource SectionTitleStyle}" />
-                        <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Answers}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12"
+                              SemanticProperties.Description="{Binding AnswersTitle}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleAnswersCommand}" />
+                            </Grid.GestureRecognizers>
+                            <Label
+                                Grid.Column="0"
+                                Text="{Binding AnswersTitle}"
+                                Style="{StaticResource SectionTitleStyle}"
+                                SemanticProperties.Description="{Binding AnswersTitle}" />
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding AnswersToggleGlyph}"
+                                Style="{StaticResource SectionTitleStyle}"
+                                SemanticProperties.Description="{Binding AnswersTitle}" />
+                        </Grid>
+                        <VerticalStackLayout
+                            IsVisible="{Binding IsAnswersExpanded}"
+                            Spacing="12"
+                            BindableLayout.ItemsSource="{Binding Answers}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="common:PracticeAnswer">
                                     <Grid ColumnDefinitions="4,*" ColumnSpacing="12">
@@ -91,61 +110,65 @@
                         <behaviors:ListItemRevealBehavior RevealIndex="1" />
                     </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
-                        <Label
-                            Text="{Binding SudsSectionTitle}"
-                            Style="{StaticResource SectionTitleStyle}" />
-                        <ui:RatingEntryView
-                            TitleText="{Binding PostSudsLabel}"
-                            BodyText="{Binding PostIntensityText, Mode=TwoWay}" />
-                        <tension:TensionReliefView
-                            IsVisible="{Binding HasSudsDelta}"
-                            Before="{Binding PreIntensityValue}"
-                            After="{Binding PostIntensityValue}" />
-                        <Border
-                            x:Name="SudsDeltaPill"
-                            Style="{StaticResource MetaPillStyle}"
-                            IsVisible="False"
-                            HorizontalOptions="Center">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12"
+                              SemanticProperties.Description="{Binding ReflectionQuestion}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleCheckInCommand}" />
+                            </Grid.GestureRecognizers>
                             <Label
-                                Text="{Binding SudsDeltaText}"
-                                Style="{StaticResource CaptionStyle}"
+                                Grid.Column="0"
+                                Text="{Binding ReflectionQuestion}"
+                                Style="{StaticResource SectionTitleStyle}"
+                                SemanticProperties.Description="{Binding ReflectionQuestion}" />
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding CheckInToggleGlyph}"
+                                Style="{StaticResource SectionTitleStyle}"
+                                SemanticProperties.Description="{Binding ReflectionQuestion}" />
+                        </Grid>
+                        <VerticalStackLayout IsVisible="{Binding IsCheckInExpanded}" Spacing="{StaticResource SectionSpacing}">
+                            <Label Text="{Binding SudsSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                            <ui:RatingEntryView
+                                TitleText="{Binding PostSudsLabel}"
+                                BodyText="{Binding PostIntensityText, Mode=TwoWay}" />
+                            <tension:TensionReliefView
+                                IsVisible="{Binding HasSudsDelta}"
+                                Before="{Binding PreIntensityValue}"
+                                After="{Binding PostIntensityValue}" />
+                            <Border
+                                x:Name="SudsDeltaPill"
+                                Style="{StaticResource MetaPillStyle}"
+                                IsVisible="False"
+                                HorizontalOptions="Center">
+                                <Label
+                                    Text="{Binding SudsDeltaText}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}"
+                                    HorizontalTextAlignment="Center" />
+                            </Border>
+                            <BoxView Style="{StaticResource SubtleDividerStyle}" Margin="{StaticResource FieldTopMargin}" />
+                            <Label Text="{Binding MoodSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                            <mood:MoodStripView
+                                QuestionText=""
+                                RecordMoodCommand="{Binding RecordMoodCommand}"
+                                SelectedMoodLevel="{Binding SelectedMoodLevel}" />
+                            <Label
+                                x:Name="MoodDeltaLabel"
+                                IsVisible="False"
+                                Text="{Binding MoodDeltaText}"
+                                Style="{StaticResource EmphasisBodyStyle}"
                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                 FontFamily="{StaticResource SemiBoldFontFamily}"
-                                HorizontalTextAlignment="Center" />
-                        </Border>
-
-                        <BoxView Style="{StaticResource SubtleDividerStyle}" Margin="{StaticResource FieldTopMargin}" />
-
-                        <Label
-                            Text="{Binding MoodSectionTitle}"
-                            Style="{StaticResource SectionTitleStyle}" />
-                        <mood:MoodStripView
-                            QuestionText="{Binding ReflectionQuestion}"
-                            RecordMoodCommand="{Binding RecordMoodCommand}"
-                            SelectedMoodLevel="{Binding SelectedMoodLevel}" />
-                        <Label
-                            x:Name="MoodDeltaLabel"
-                            IsVisible="False"
-                            Text="{Binding MoodDeltaText}"
-                            Style="{StaticResource EmphasisBodyStyle}"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            HorizontalTextAlignment="Center"
-                            Margin="{StaticResource FieldTopMargin}" />
-                        <ui:TextEntryView
-                            TitleText="{Binding ReflectionNotePlaceholder}"
-                            BodyText="{Binding ReflectionNote}"
-                            Margin="{StaticResource FieldTopMargin}" />
+                                HorizontalTextAlignment="Center"
+                                Margin="{StaticResource FieldTopMargin}" />
+                            <ui:TextEntryView
+                                TitleText="{Binding ReflectionNotePlaceholder}"
+                                BodyText="{Binding ReflectionNote}"
+                                Margin="{StaticResource FieldTopMargin}" />
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
-                <ui:SettingsLinkCardView
-                    Title="{Binding OpenJournalText}"
-                    IconName="Edit"
-                    TapCommand="{Binding OpenJournalCommand}">
-                    <ui:SettingsLinkCardView.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                    </ui:SettingsLinkCardView.Behaviors>
-                </ui:SettingsLinkCardView>
                 <ui:ButtonView
                     Variant="Secondary"
                     BodyText="{Binding GoHomeText}"

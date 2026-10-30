@@ -46,6 +46,9 @@ public partial class CompletionCelebrationView : ContentView
     public static readonly BindableProperty PrimaryActionTextProperty =
         BindableProperty.Create(nameof(PrimaryActionText), typeof(string), typeof(CompletionCelebrationView), string.Empty);
 
+    public static readonly BindableProperty IsPrimaryActionVisibleProperty =
+        BindableProperty.Create(nameof(IsPrimaryActionVisible), typeof(bool), typeof(CompletionCelebrationView), true);
+
     public static readonly BindableProperty SecondaryActionTextProperty =
         BindableProperty.Create(nameof(SecondaryActionText), typeof(string), typeof(CompletionCelebrationView), string.Empty);
 
@@ -101,6 +104,12 @@ public partial class CompletionCelebrationView : ContentView
     {
         get => (string)GetValue(PrimaryActionTextProperty);
         set => SetValue(PrimaryActionTextProperty, value);
+    }
+
+    public bool IsPrimaryActionVisible
+    {
+        get => (bool)GetValue(IsPrimaryActionVisibleProperty);
+        set => SetValue(IsPrimaryActionVisibleProperty, value);
     }
 
     public string SecondaryActionText
