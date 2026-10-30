@@ -52,8 +52,13 @@ public sealed class ChatInfoSummaryTests
     [InlineData(6, 6, "6")]
     [InlineData(5, null, "5")]
     [InlineData(null, 3, "3")]
-    public void Tension_rated_once_or_unchanged_shows_one_number(int? first, int? last, string expected) =>
-        Assert.Equal(expected, ChatInfoSummary.From(Session(new CompanionState(), first: first, last: last)).TensionText);
+    public void Tension_rated_once_or_unchanged_shows_one_number(int? first, int? last, string expected)
+    {
+        ChatInfoSummary summary = ChatInfoSummary.From(Session(new CompanionState(), first: first, last: last));
+
+        Assert.Equal(expected, summary.TensionText);
+        Assert.False(summary.IsEmpty);
+    }
 
     // A state the chat recognises but the page cannot name would show an empty "Feeling" row.
     [Fact]
@@ -76,4 +81,14 @@ public sealed class ChatInfoSummaryTests
     [Fact]
     public void An_unknown_practice_name_is_left_out_rather_than_guessed() =>
         Assert.Null(ChatInfoSummary.From(Session(new CompanionState { LastPractice = "Retired" })).Practice);
+
+    [Fact]
+    public void Invalid_restored_feeling_and_tension_values_are_not_shown()
+    {
+        ChatInfoSummary summary = ChatInfoSummary.From(Session(new CompanionState(), emotion: "999", first: 99, last: -1));
+
+        Assert.Null(summary.Emotion);
+        Assert.Null(summary.TensionText);
+        Assert.True(summary.IsEmpty);
+    }
 }

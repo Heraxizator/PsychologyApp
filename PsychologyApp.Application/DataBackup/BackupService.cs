@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Body;
 using PsychologyApp.Application.Chat;
+using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Application.Models;
 using System.Text.Json;
 
@@ -205,7 +206,7 @@ public sealed class BackupService(
         ChatSessions = backup.ChatSessions
             .Select(chat => new BackupChatSessionDTO
             {
-                Session = chat.Session,
+                Session = SanitizeChatSession(chat.Session),
                 Messages = chat.Messages.Where(m => Enum.IsDefined(m.Role) && m.CreatedAt != default).ToList()
             })
             .Where(chat => chat.Session.CreatedAt != default)
@@ -225,4 +226,22 @@ public sealed class BackupService(
         Reading = backup.Reading,
         Body = BodyService.Sanitize(backup.Body)
     };
+
+    private static ChatSessionDTO SanitizeChatSession(ChatSessionDTO session) => new()
+    {
+        Id = session.Id,
+        Title = session.Title,
+        CreatedAt = session.CreatedAt,
+        UpdatedAt = session.UpdatedAt,
+        Emotion = DefinedEnumName<CompanionEmotion>(session.Emotion),
+        Theme = DefinedEnumName<CompanionTheme>(session.Theme),
+        FirstIntensity = Intensity(session.FirstIntensity),
+        LastIntensity = Intensity(session.LastIntensity),
+        StateJson = session.StateJson
+    };
+
+    private static string? DefinedEnumName<TEnum>(string? name) where TEnum : struct, Enum =>
+        Enum.TryParse(name, out TEnum value) && Enum.IsDefined(value) ? value.ToString() : null;
+
+    private static int? Intensity(int? value) => value is >= 0 and <= 10 ? value : null;
 }

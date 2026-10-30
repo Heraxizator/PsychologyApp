@@ -123,7 +123,7 @@ public static class ChatStatistics
         List<EmotionStat> emotions = Emotions(chats);
 
         List<ChatSessionDTO> measured = chats
-            .Where(s => s.FirstIntensity is not null && s.LastIntensity is not null)
+            .Where(s => s.FirstIntensity is >= 0 and <= 10 && s.LastIntensity is >= 0 and <= 10)
             .OrderBy(s => s.CreatedAt)
             .ToList();
         List<TensionPoint> tension = measured

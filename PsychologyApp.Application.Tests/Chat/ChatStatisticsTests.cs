@@ -159,6 +159,22 @@ public class ChatStatisticsTests
         Assert.Equal(TechniqueId.Grounding, ChatMemoryKeys.MostHelped(memory));
     }
 
+    [Fact]
+    public void Out_of_range_tension_values_do_not_enter_profile_statistics()
+    {
+        CompanionProfile profile = Compute(
+        [
+            Chat(0, first: 99, last: 4),
+            Chat(1, first: 8, last: -1),
+            Chat(2, first: 8, last: 4)
+        ]);
+
+        Assert.Single(profile.Tension);
+        Assert.Equal(1, profile.TensionMeasured);
+        Assert.Equal(8, profile.Tension[0].Before);
+        Assert.Equal(1, profile.TensionImproved);
+    }
+
     [Theory]
     [InlineData(0, 0, 0.0, 5)]
     [InlineData(4, 0, 0.8, 1)]

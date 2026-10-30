@@ -569,7 +569,8 @@ public sealed class ChatService(
         // Heavy days that keep coming back are measured: earlier chats of two weeks that ended at 7 or more, and the questionnaires already taken.
         IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken).ConfigureAwait(false);
         DateTime since = Now() - HeavyWindow;
-        int heavyChats = sessions.Count(s => s.Id != currentSessionId && s.UpdatedAt >= since && (s.LastIntensity ?? s.FirstIntensity) >= HeavyTension);
+        int heavyChats = sessions.Count(s => s.Id != currentSessionId && s.UpdatedAt >= since
+            && (s.LastIntensity ?? s.FirstIntensity) is >= 0 and <= 10 and >= HeavyTension);
 
         Task<IReadOnlyDictionary<string, TestResultDTO>> takenTask = progress.GetLatestTestResultsAsync(["phq9", "gad7", "pcl5"], cancellationToken);
         Task<IReadOnlyList<QuotSeed>> quotesTask = quotes.LoadAllAsync(cancellationToken);

@@ -167,6 +167,37 @@ public sealed class BackupIntegrationTests : IAsyncLifetime
         Assert.Equal(2, (await chat.GetMessagesAsync(session.Id)).Count);
     }
 
+    [Fact]
+    public async Task Import_ChatDiscardsUndefinedFeelingsAndOutOfRangeTension()
+    {
+        AppBackupDTO backup = new()
+        {
+            ChatSessions = [new BackupChatSessionDTO
+            {
+                Session = new ChatSessionDTO
+                {
+                    Title = "chat",
+                    CreatedAt = LongAgo,
+                    UpdatedAt = LongAgo,
+                    Emotion = "999",
+                    Theme = "999",
+                    FirstIntensity = 99,
+                    LastIntensity = -1
+                },
+                Messages = [new ChatMessageDTO { Role = ChatRole.User, Text = "привет", CreatedAt = LongAgo }]
+            }]
+        };
+
+        await _target.GetRequiredService<IBackupService>().ImportAsync(
+            JsonSerializer.Serialize(backup, BackupJsonContext.Default.AppBackupDTO));
+
+        ChatSessionDTO session = Assert.Single(await _target.GetRequiredService<IChatRepository>().GetSessionsAsync());
+        Assert.Null(session.Emotion);
+        Assert.Null(session.Theme);
+        Assert.Null(session.FirstIntensity);
+        Assert.Null(session.LastIntensity);
+    }
+
     [Theory]
     [InlineData("\"MoodEntries\": null")]
     [InlineData("\"ChatSessions\": [null]")]

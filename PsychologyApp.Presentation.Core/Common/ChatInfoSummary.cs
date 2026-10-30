@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Chat;
+using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Domain.Practice;
 
 namespace PsychologyApp.Presentation.Shared.Common;
@@ -15,14 +16,17 @@ public sealed record ChatInfoSummary(string? Emotion, int? FirstTension, int? La
     public static ChatInfoSummary From(ChatSessionDTO session)
     {
         CompanionState state = CompanionState.Deserialize(session.StateJson);
-        string? emotion = string.IsNullOrWhiteSpace(session.Emotion) || session.Emotion == "Unknown" ? null : session.Emotion;
+        string? emotion = Enum.TryParse(session.Emotion, out CompanionEmotion parsedEmotion)
+            && Enum.IsDefined(parsedEmotion) && parsedEmotion != CompanionEmotion.Unknown
+                ? parsedEmotion.ToString()
+                : null;
         string? practice = state.HelpedPractices.LastOrDefault() ?? state.LastPractice ?? state.PendingPractice;
-        TechniqueId? practiceId = Enum.TryParse(practice, out TechniqueId id) ? id : null;
+        TechniqueId? practiceId = Enum.TryParse(practice, out TechniqueId id) && Enum.IsDefined(id) ? id : null;
         string? step = string.IsNullOrWhiteSpace(state.NewPlan) ? null : state.NewPlan.Trim();
-        return new ChatInfoSummary(emotion, session.FirstIntensity, session.LastIntensity, practiceId, step);
+        return new ChatInfoSummary(emotion, Intensity(session.FirstIntensity), Intensity(session.LastIntensity), practiceId, step);
     }
 
-    public bool IsEmpty => Emotion is null && FirstTension is null && Practice is null && Step is null;
+    public bool IsEmpty => Emotion is null && FirstTension is null && LastTension is null && Practice is null && Step is null;
 
     /// <summary>"7 → 4" when the tension was rated twice and moved, else the one rating; null when it was never rated.</summary>
     public string? TensionText => (FirstTension, LastTension) switch
@@ -32,4 +36,6 @@ public sealed record ChatInfoSummary(string? Emotion, int? FirstTension, int? La
         (null, { } last) => $"{last}",
         _ => null
     };
+
+    private static int? Intensity(int? value) => value is >= 0 and <= 10 ? value : null;
 }
