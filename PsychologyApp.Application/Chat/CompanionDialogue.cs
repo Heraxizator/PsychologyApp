@@ -386,7 +386,17 @@ public sealed partial class CompanionDialogue(
             TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99),
             AwaitingPostPracticeRating = false
         };
-        CompanionEmotion emotion = single.Emotion != CompanionEmotion.Unknown ? single.Emotion : ParseEmotion(state.Emotion);
+        CompanionEmotion previousEmotion = ParseEmotion(previous.Emotion);
+        bool emotionWasCleared = (previous.EmotionExplicitlyCleared && previousEmotion == CompanionEmotion.Unknown)
+            || single.NegatedEmotions.Contains(previousEmotion);
+        CompanionEmotion emotion = single.Emotion != CompanionEmotion.Unknown
+            ? single.Emotion
+            : emotionWasCleared ? CompanionEmotion.Unknown : ParseEmotion(state.Emotion);
+        state = state with
+        {
+            Emotion = emotion.ToString(),
+            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && emotionWasCleared
+        };
         CompanionTheme? theme = ParseTheme(state.Theme);
 
         // "yes" or "I don't know" to "how strong is it, 0 to 10?" is not an answer: help with the scale instead of moving on.
