@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Personal-data erasure continues through accessible cache folders if one folder cannot be scanned, and skips directory links to keep the cleanup inside the app cache. Not checked on a device.
+
 - A platform failure while hiding the Android recent-apps preview no longer prevents the app-lock check from continuing. Not checked on a device.
 
 - Switching voice input between fields now waits for the previous on-device recognition session to finish, preventing overlapping microphone sessions. Not checked on a device.

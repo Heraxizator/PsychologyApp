@@ -26,19 +26,62 @@ public sealed class PersonalDataEraser(IDatabaseInitializer database, ILogger<Pe
     private void DeleteFilesAndSettings()
     {
         DeleteQuietly(Path.Combine(FileSystem.AppDataDirectory, "logs"));
-        if (Directory.Exists(FileSystem.CacheDirectory))
-        {
-            foreach (string file in Directory.EnumerateFiles(FileSystem.CacheDirectory, "*", SearchOption.AllDirectories))
-            {
-                if (SharedFileNames.IsOwn(Path.GetFileName(file)))
-                {
-                    DeleteQuietly(file);
-                }
-            }
-        }
+        DeleteOwnCacheFiles();
 
         ClearPreferences();
         logger.LogInformation("All personal data was deleted; restarting");
+    }
+
+    private void DeleteOwnCacheFiles()
+    {
+        if (!Directory.Exists(FileSystem.CacheDirectory))
+        {
+            return;
+        }
+
+        Stack<string> directories = new();
+        directories.Push(FileSystem.CacheDirectory);
+        while (directories.Count > 0)
+        {
+            string directory = directories.Pop();
+            string[] entries;
+            try
+            {
+                entries = Directory.GetFileSystemEntries(directory);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                logger.LogWarning(ex, "A cache directory could not be scanned while erasing the data");
+                continue;
+            }
+
+            foreach (string entry in entries)
+            {
+                try
+                {
+                    FileAttributes attributes = File.GetAttributes(entry);
+                    if ((attributes & FileAttributes.Directory) != 0)
+                    {
+                        // Do not follow a link out of the app cache while searching for files to delete.
+                        if ((attributes & FileAttributes.ReparsePoint) == 0)
+                        {
+                            directories.Push(entry);
+                        }
+
+                        continue;
+                    }
+
+                    if (SharedFileNames.IsOwn(Path.GetFileName(entry)))
+                    {
+                        DeleteQuietly(entry);
+                    }
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+                {
+                    logger.LogWarning(ex, "A cache entry could not be inspected while erasing the data");
+                }
+            }
+        }
     }
 
     // A file that cannot be removed must not stop the rest: the database, which holds what matters, is already gone.
