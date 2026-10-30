@@ -19,6 +19,8 @@ public class ChatServiceTests
         private long _sessionId;
         private long _messageId;
         public Func<Task>? MemoryReadBarrier { get; set; }
+        public Func<long, Task>? SessionReadBarrier { get; set; }
+        public Func<Task>? SessionListBarrier { get; set; }
         public Action<long>? SessionRead { get; set; }
 
         public Task<long> CreateSessionAsync(string title, DateTime nowUtc, CancellationToken cancellationToken = default)
@@ -28,13 +30,27 @@ public class ChatServiceTests
             return Task.FromResult(id);
         }
 
-        public Task<IReadOnlyList<ChatSessionDTO>> GetSessionsAsync(CancellationToken cancellationToken = default) =>
-            Task.FromResult<IReadOnlyList<ChatSessionDTO>>(_sessions.Values.OrderByDescending(s => s.UpdatedAt).ThenByDescending(s => s.Id).Select(Snapshot).ToList());
+        public async Task<IReadOnlyList<ChatSessionDTO>> GetSessionsAsync(CancellationToken cancellationToken = default)
+        {
+            IReadOnlyList<ChatSessionDTO> snapshot = _sessions.Values.OrderByDescending(s => s.UpdatedAt).ThenByDescending(s => s.Id).Select(Snapshot).ToList();
+            if (SessionListBarrier is { } barrier)
+            {
+                await barrier();
+            }
 
-        public Task<ChatSessionDTO?> GetSessionAsync(long sessionId, CancellationToken cancellationToken = default)
+            return snapshot;
+        }
+
+        public async Task<ChatSessionDTO?> GetSessionAsync(long sessionId, CancellationToken cancellationToken = default)
         {
             SessionRead?.Invoke(sessionId);
-            return Task.FromResult(_sessions.TryGetValue(sessionId, out ChatSessionDTO? s) ? Snapshot(s) : null);
+            ChatSessionDTO? snapshot = _sessions.TryGetValue(sessionId, out ChatSessionDTO? s) ? Snapshot(s) : null;
+            if (SessionReadBarrier is { } barrier)
+            {
+                await barrier(sessionId);
+            }
+
+            return snapshot;
         }
 
         public Task UpdateSessionAsync(ChatSessionDTO session, CancellationToken cancellationToken = default)
@@ -735,6 +751,133 @@ public class ChatServiceTests
     }
 
     [Fact]
+    public async Task Deleting_a_chat_waits_for_an_in_flight_turn_then_removes_it()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        TaskCompletionSource memoryRead = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource releaseMemory = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _repository.MemoryReadBarrier = async () =>
+        {
+            memoryRead.SetResult();
+            await releaseMemory.Task;
+        };
+        Task<ChatTurnResult> send = service.SendTextAsync(id, "Сегодня было трудно");
+        try
+        {
+            await memoryRead.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Task delete = service.DeleteAsync(id);
+
+            Assert.False(delete.IsCompleted);
+            releaseMemory.SetResult();
+            await Task.WhenAll(send, delete);
+            Assert.Null(await _repository.GetSessionAsync(id));
+            Assert.Empty(await _repository.GetMessagesAsync(id));
+        }
+        finally
+        {
+            releaseMemory.TrySetResult();
+            _repository.MemoryReadBarrier = null;
+        }
+    }
+
+    [Fact]
+    public async Task Renaming_a_chat_waits_for_an_in_flight_turn_and_keeps_its_state()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        TaskCompletionSource memoryRead = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource releaseMemory = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _repository.MemoryReadBarrier = async () =>
+        {
+            memoryRead.SetResult();
+            await releaseMemory.Task;
+        };
+        Task<ChatTurnResult> send = service.SendTextAsync(id, "Сегодня было трудно");
+        try
+        {
+            await memoryRead.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Task rename = service.RenameAsync(id, "Новый заголовок");
+
+            Assert.False(rename.IsCompleted);
+            releaseMemory.SetResult();
+            await Task.WhenAll(send, rename);
+            ChatSessionDTO session = (await _repository.GetSessionAsync(id))!;
+            Assert.Equal("Новый заголовок", session.Title);
+            Assert.Equal(1, CompanionState.Deserialize(session.StateJson).Turns);
+        }
+        finally
+        {
+            releaseMemory.TrySetResult();
+            _repository.MemoryReadBarrier = null;
+        }
+    }
+
+    [Fact]
+    public async Task Delete_all_waits_until_an_in_flight_send_has_loaded_and_saved_its_turn()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        TaskCompletionSource sessionRead = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource releaseSessionRead = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _repository.SessionReadBarrier = async _ =>
+        {
+            sessionRead.SetResult();
+            await releaseSessionRead.Task;
+        };
+        Task<ChatTurnResult> send = service.SendTextAsync(id, "Сегодня было трудно");
+        try
+        {
+            await sessionRead.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Task deleteAll = service.DeleteAllChatsAsync();
+
+            Assert.False(deleteAll.IsCompleted);
+            releaseSessionRead.SetResult();
+            await Task.WhenAll(send, deleteAll);
+            Assert.Empty(await _repository.GetSessionsAsync());
+            Assert.Empty(await _repository.GetMessagesAsync(id));
+        }
+        finally
+        {
+            releaseSessionRead.TrySetResult();
+            _repository.SessionReadBarrier = null;
+        }
+    }
+
+    [Fact]
+    public async Task Delete_all_waits_until_an_in_flight_chat_start_finishes()
+    {
+        ChatService service = CreateService();
+        TaskCompletionSource sessionListRead = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource releaseSessionListRead = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        int reads = 0;
+        _repository.SessionListBarrier = async () =>
+        {
+            if (Interlocked.Increment(ref reads) == 1)
+            {
+                sessionListRead.SetResult();
+                await releaseSessionListRead.Task;
+            }
+        };
+        Task<ChatTurnResult> start = service.StartNewChatAsync();
+        try
+        {
+            await sessionListRead.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Task deleteAll = service.DeleteAllChatsAsync();
+
+            Assert.False(deleteAll.IsCompleted);
+            releaseSessionListRead.SetResult();
+            await Task.WhenAll(start, deleteAll);
+            Assert.Empty(await _repository.GetSessionsAsync());
+        }
+        finally
+        {
+            releaseSessionListRead.TrySetResult();
+            _repository.SessionListBarrier = null;
+        }
+    }
+
+    [Fact]
     public async Task A_recent_stress_test_result_is_referenced_when_the_companion_would_suggest_a_test()
     {
         ChatService service = CreateService();
@@ -805,15 +948,6 @@ public class ChatServiceTests
 
         TaskCompletionSource firstReadMemory = new(TaskCreationOptions.RunContinuationsAsynchronously);
         TaskCompletionSource releaseMemoryReaders = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        TaskCompletionSource secondTurnReadSession = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        int sessionReads = 0;
-        _repository.SessionRead = _ =>
-        {
-            if (Interlocked.Increment(ref sessionReads) == 2)
-            {
-                secondTurnReadSession.TrySetResult();
-            }
-        };
         int reads = 0;
         _repository.MemoryReadBarrier = () =>
         {
@@ -835,11 +969,9 @@ public class ChatServiceTests
             service.SendTextAsync(firstId, "позвонила сестре"),
             service.SendTextAsync(secondId, "написала подруге"));
         await firstReadMemory.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        await secondTurnReadSession.Task.WaitAsync(TimeSpan.FromSeconds(5));
         releaseMemoryReaders.TrySetResult();
         await bothTurns;
 
-        _repository.SessionRead = null;
         _repository.MemoryReadBarrier = null;
         TraumaNotes notes = TraumaNotes.Deserialize((await _repository.GetMemoryAsync()).GetValueOrDefault(ChatMemoryKeys.TraumaNotes));
         Assert.Equal(2, notes.Triggers.Count);

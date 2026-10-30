@@ -80,7 +80,7 @@ public sealed class ChatService(
     // the same state and the later save would silently erase the earlier turn. Turns of one chat therefore run one at a time.
     private readonly ConcurrentDictionary<long, SemaphoreSlim> _turnGates = new();
     private readonly SemaphoreSlim _newChatGate = new(1, 1);
-    // Memory keys span chats. A per-chat gate alone lets two chats read the same trauma notes/topic dates and overwrite one another.
+    // The session snapshot and cross-chat memory must be read and written with deletes/forgetting as one ordered operation.
     private readonly SemaphoreSlim _memoryGate = new(1, 1);
 
     public Task<ChatTurnResult> StartNewChatAsync(CancellationToken cancellationToken = default) => StartChatAsync(topic: null, cancellationToken);
@@ -93,7 +93,15 @@ public sealed class ChatService(
         await _newChatGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            return await StartNewChatCoreAsync(topic, cancellationToken).ConfigureAwait(false);
+            await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                return await StartNewChatCoreAsync(topic, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                _memoryGate.Release();
+            }
         }
         finally
         {
@@ -126,24 +134,16 @@ public sealed class ChatService(
         {
             ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken).ConfigureAwait(false))!;
             CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true).ConfigureAwait(false);
-            await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
-            {
-                IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
-                CompanionState opening = WithMemory(new CompanionState(), memory);
-                // A chat on a topic starts with that topic: the step decided last time waits for an ordinary chat.
-                CompanionReply reply = topic is not null
-                    ? dialogue.OpenTopic(opening, topic)
-                    : dialogue.Open(opening with { OpenPlan = PlanToAskAbout(memory, now) }, previous);
-                session.StateJson = reply.State.Serialize();
-                IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
+            IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+            CompanionState opening = WithMemory(new CompanionState(), memory);
+            // A chat on a topic starts with that topic: the step decided last time waits for an ordinary chat.
+            CompanionReply reply = topic is not null
+                ? dialogue.OpenTopic(opening, topic)
+                : dialogue.Open(opening with { OpenPlan = PlanToAskAbout(memory, now) }, previous);
+            session.StateJson = reply.State.Serialize();
+            IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
 
-                return new ChatTurnResult(session, added, null);
-            }
-            finally
-            {
-                _memoryGate.Release();
-            }
+            return new ChatTurnResult(session, added, null);
         }
         catch
         {
@@ -181,7 +181,15 @@ public sealed class ChatService(
         await gate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            return await CheckPracticeFollowUpCoreAsync(sessionId, cancellationToken).ConfigureAwait(false);
+            await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                return await CheckPracticeFollowUpCoreAsync(sessionId, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                _memoryGate.Release();
+            }
         }
         finally
         {
@@ -220,19 +228,55 @@ public sealed class ChatService(
 
     public async Task RenameAsync(long sessionId, string title, CancellationToken cancellationToken = default)
     {
-        ChatSessionDTO? session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
-        string trimmed = title.Trim();
-        if (session is null || trimmed.Length == 0)
+        SemaphoreSlim gate = _turnGates.GetOrAdd(sessionId, _ => new SemaphoreSlim(1, 1));
+        await gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
         {
-            return;
-        }
+            await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                ChatSessionDTO? session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
+                string trimmed = title.Trim();
+                if (session is null || trimmed.Length == 0)
+                {
+                    return;
+                }
 
-        session.Title = trimmed.Length > MaxTitleLength ? trimmed[..MaxTitleLength] : trimmed;
-        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
+                session.Title = trimmed.Length > MaxTitleLength ? trimmed[..MaxTitleLength] : trimmed;
+                await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                _memoryGate.Release();
+            }
+        }
+        finally
+        {
+            gate.Release();
+        }
     }
 
-    public Task DeleteAsync(long sessionId, CancellationToken cancellationToken = default) =>
-        repository.DeleteSessionAsync(sessionId, cancellationToken);
+    public async Task DeleteAsync(long sessionId, CancellationToken cancellationToken = default)
+    {
+        SemaphoreSlim gate = _turnGates.GetOrAdd(sessionId, _ => new SemaphoreSlim(1, 1));
+        await gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await repository.DeleteSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                _memoryGate.Release();
+            }
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
 
     public async Task<CompanionProfile> GetProfileAsync(CancellationToken cancellationToken = default)
     {
@@ -391,16 +435,18 @@ public sealed class ChatService(
 
     private async Task<ChatTurnResult> TakeTurnCoreAsync(long sessionId, string userText, CompanionInput input, CancellationToken cancellationToken)
     {
-        ChatSessionDTO session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false)
-            ?? throw new InvalidOperationException($"Chat {sessionId} does not exist.");
-        if (userText.Length == 0)
-        {
-            return new ChatTurnResult(session, [], null);
-        }
-
         await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
+            // The session snapshot must be read under the same gate as delete-all and memory changes. Otherwise a
+            // queued send can save its pre-delete snapshot after delete-all has already finished.
+            ChatSessionDTO session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false)
+                ?? throw new InvalidOperationException($"Chat {sessionId} does not exist.");
+            if (userText.Length == 0)
+            {
+                return new ChatTurnResult(session, [], null);
+            }
+
             return await TakeTurnWithMemoryAsync(sessionId, userText, input, session, cancellationToken).ConfigureAwait(false);
         }
         finally
