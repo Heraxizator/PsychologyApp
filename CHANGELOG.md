@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- The side menu is slightly shorter through tighter group spacing and heading margins; row size and visual styling are unchanged. Not checked on a device.
+
 - Explicitly denied emotions no longer inherit the previous emotion or bring it back from recent messages; a newly recognized or selected emotion starts a fresh active state. Not checked on a device.
 
 - Short explicit emotion denials now reach the same context update as longer statements instead of being diverted to the unclear-message prompt. Not checked on a device.

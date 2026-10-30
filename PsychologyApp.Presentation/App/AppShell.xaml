@@ -28,7 +28,7 @@
          fits on one screen: help and the settings sat below the edge, and the privacy line under the gesture bar. -->
     <Shell.FlyoutContent>
         <ScrollView VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout Padding="12,16,12,40" Spacing="2">
+            <VerticalStackLayout Padding="12,16,12,40" Spacing="1">
                 <VerticalStackLayout.Resources>
                     <!-- A row: a grey icon and its title, as in the settings; only help keeps its colour, so it is the one thing that stands
                          out. A tile of its own colour on every row made the menu a box of sweets. The plain look is the style, so the
@@ -80,7 +80,7 @@
                         </Border>
                     </DataTemplate>
                     <Style x:Key="MenuGroupTitleStyle" TargetType="Label" BasedOn="{StaticResource CaptionStyle}">
-                        <Setter Property="Margin" Value="12,10,12,2" />
+                        <Setter Property="Margin" Value="12,7,12,2" />
                     </Style>
                 </VerticalStackLayout.Resources>
 
@@ -112,17 +112,17 @@
                 </Border>
                 <BoxView HeightRequest="1" Margin="12,4,12,0" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
                 <Label x:Name="MenuMineTitle" Style="{StaticResource MenuGroupTitleStyle}" />
-                <VerticalStackLayout x:Name="MenuMine" Spacing="2" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <VerticalStackLayout x:Name="MenuMine" Spacing="1" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
                 <!-- Support before reading: in a hard minute a thought to lean on is nearer than an article. -->
                 <Label x:Name="MenuSupportTitle" Style="{StaticResource MenuGroupTitleStyle}" />
-                <VerticalStackLayout x:Name="MenuSupport" Spacing="2" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <VerticalStackLayout x:Name="MenuSupport" Spacing="1" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
                 <Label x:Name="MenuReadTitle" Style="{StaticResource MenuGroupTitleStyle}" />
-                <VerticalStackLayout x:Name="MenuRead" Spacing="2" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
-                <BoxView HeightRequest="1" Margin="12,6" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
-                <VerticalStackLayout x:Name="MenuApp" Spacing="2" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <VerticalStackLayout x:Name="MenuRead" Spacing="1" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <BoxView HeightRequest="1" Margin="12,3" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
+                <VerticalStackLayout x:Name="MenuApp" Spacing="1" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
 
                 <!-- A quiet reminder of the app's promise, and the version for a support request. -->
-                <HorizontalStackLayout Spacing="8" Margin="12,10,12,0">
+                <HorizontalStackLayout Spacing="8" Margin="12,8,12,0">
                     <ui:MaterialIconView IconName="Lock" IconSize="16" VerticalOptions="Start" Margin="0,2,0,0" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                     <Label x:Name="MenuFooterPrivacy" Style="{StaticResource CaptionStyle}" MaximumWidthRequest="230" />
                 </HorizontalStackLayout>
