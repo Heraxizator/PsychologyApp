@@ -147,6 +147,12 @@ public static class UtteranceClassifier
         "что мне теперь делать", "как с этим справляться", "как с этим справиться", "как справиться", "как справляться", "как с этим бороться", "как с этим жить", "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "any advice", "give me advice", "help me", "need help", "what can i do"
     ];
 
+    private static readonly string[] ExplicitAdviceTerms =
+    [
+        "что делать", "что мне делать", "посоветуй", "посоветуйте", "подскажи что", "подскажите что", "дай совет", "дайте совет", "что посоветуешь", "что посоветуете",
+        "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "any advice", "give me advice", "help me", "need help", "what can i do"
+    ];
+
     private static readonly string[] EntertainTerms = ["расскажи анекдот", "знаешь анекдот", "анекдот", "пошути", "умеешь шутить", "расскажи шутку", "мне скучно", "скучно", "нечем заняться", "tell me a joke", "know any jokes", "i am bored", "im bored", "tell a joke"];
 
     private static readonly string[] ExplainTerms =
@@ -378,6 +384,8 @@ public static class UtteranceClassifier
 
         return IsNoise(normalized) ? Utterance.Noise : Utterance.Statement;
     }
+
+    internal static bool IsExplicitAdviceRequest(string text) => ContainsAny(Normalize(text) + " ", ExplicitAdviceTerms);
 
     /// <summary>Messages with no letters or digits: "???" is "what?", "!!!" is strong feeling, anything else (dots, brackets, emoji) is a reaction.</summary>
     private static Utterance ClassifyMarks(string text)

@@ -411,7 +411,9 @@ public sealed partial class CompanionDialogue(
                 : Reply([CompanionKnowledge.ExplainFallback(english)], CompanionKnowledge.TopicChips(english), state, emotion, theme),
             Utterance.AsksWhy => Reply([CompanionKnowledge.Why(emotion, english)], [], RememberMeaningfulContext(state, previous, text, single, emotion), emotion, theme),
             Utterance.AsksIfNormal => Reply([CompanionKnowledge.Normal(emotion, english)], [], RememberMeaningfulContext(state, previous, text, single, emotion), emotion, theme),
-            Utterance.AsksForAdvice when emotion != CompanionEmotion.Unknown => RespondToAdvice(state, previous, text, single, emotion, theme),
+            Utterance.AsksForAdvice when emotion != CompanionEmotion.Unknown
+                && (state.Goal != CompanionCaseContent.GoalVent || UtteranceClassifier.IsExplicitAdviceRequest(text))
+                => RespondToAdvice(state, previous, text, single, emotion, theme),
             Utterance.Acknowledge => Reply([CompanionSmallTalk.Acknowledge(previous.QuestionPending, english, _random)], [], state, emotion, theme),
             Utterance.Reaction => Reply([CompanionSmallTalk.Reaction(text, UtteranceClassifier.IsSadReaction(text), english, _random)], [], state, emotion, theme),
             Utterance.Exclaims => Reply([CompanionSmallTalk.Exclaims(english, _random)], [], state, emotion, theme),

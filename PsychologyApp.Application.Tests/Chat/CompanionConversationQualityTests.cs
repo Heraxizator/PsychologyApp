@@ -21,7 +21,9 @@ public class CompanionConversationQualityTests
     {
         public string Text => string.Join(" ", Reply.Messages);
 
-        public bool OffersPractice => Reply.QuickReplies.Any(q => q.Kind == ChatQuickReplyKinds.Practice);
+        public bool OffersPractice => Reply.QuickReplies.Any(q =>
+            q.Kind == ChatQuickReplyKinds.Practice
+            || (q.Kind == ChatQuickReplyKinds.Act && q.Payload == "practice"));
 
         public bool AsksForScale => Reply.QuickReplies.Any(q => q.Kind == ChatQuickReplyKinds.Rating);
     }
@@ -232,11 +234,11 @@ public class CompanionConversationQualityTests
     }
 
     [Fact]
-    public void AnExplicitRequestStillGetsAPracticeAfterDecliningThem()
+    public void AnExplicitAdviceRequestCanOfferAPracticeAfterDecliningThem()
     {
         List<Turn> chat = Talk("Мне тревожно из-за работы", "Начальник давит на меня", "не хочу никаких практик", "Всё-таки что мне делать? Дай совет");
 
-        Assert.Contains("практик", chat[3].Text);
+        Assert.True(chat[3].OffersPractice, chat[3].Text);
     }
 
     [Fact]
@@ -417,6 +419,20 @@ public class CompanionConversationQualityTests
             Assert.False(t.OffersPractice, t.Text);
             Assert.False(t.AsksForScale, t.Text);
         });
+    }
+
+    [Fact]
+    public void SomeoneWhoWantsToVentCanStillAskForAdviceDirectly()
+    {
+        List<Turn> chat = Talk(
+            "Мне тревожно из-за работы",
+            "Боюсь, что меня сократят на этой неделе",
+            "Постоянно об этом думаю",
+            "просто выговориться",
+            "Всё-таки скажи, что мне делать");
+
+        Assert.Equal("vent", chat[3].Reply.State.Goal);
+        Assert.True(chat[4].OffersPractice, chat[4].Text);
     }
 
     [Fact]
