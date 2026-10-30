@@ -15,8 +15,8 @@ public sealed class DebugFileLoggerProvider : ILoggerProvider
 
     private readonly string _filePath;
     private readonly LogLevel _minimumLevel;
-    private readonly Channel<string> _lines = Channel.CreateUnbounded<string>(
-        new UnboundedChannelOptions { SingleReader = true });
+    private readonly Channel<string> _lines = Channel.CreateBounded<string>(
+        new BoundedChannelOptions(1024) { SingleReader = true, FullMode = BoundedChannelFullMode.DropOldest });
 
     /// <summary>Where Release builds keep warnings and errors, for the "share the error log" action.</summary>
     public static string ErrorLogPath => Path.Combine(FileSystem.AppDataDirectory, "logs", "app-errors.log");
@@ -118,12 +118,15 @@ public sealed class DebugFileLoggerProvider : ILoggerProvider
                 return;
             }
 
-            string line =
-                $"[{DateTimeOffset.Now:yyyy-MM-dd HH:mm:ss.fff}] {logLevel} {categoryName}: {formatter(state, exception)}";
+            string messageTemplate = state is IReadOnlyList<KeyValuePair<string, object?>> values
+                ? values.FirstOrDefault(static value => value.Key == "{OriginalFormat}").Value as string ?? $"Event {eventId.Id}"
+                : eventId.Name ?? $"Event {eventId.Id}";
+            string line = $"[{DateTimeOffset.Now:yyyy-MM-dd HH:mm:ss.fff}] {logLevel} {categoryName}: {messageTemplate}";
 
+            // Rendered values and exception messages can contain a person's text; keep the technical template and exception type only.
             if (exception is not null)
             {
-                line += Environment.NewLine + exception;
+                line += $" [{exception.GetType().Name}]";
             }
 
             lines.TryWrite(line);
