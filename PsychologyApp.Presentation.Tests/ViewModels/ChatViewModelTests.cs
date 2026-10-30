@@ -170,6 +170,30 @@ public sealed class ChatViewModelTests
         Assert.True(viewModel.Messages[1].Animate);
     }
 
+    [Fact]
+    public async Task ClosingThePageDoesNotCancelAnAlreadySentMessage()
+    {
+        History();
+        TaskCompletionSource<CancellationToken> requestStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource<ChatTurnResult> turn = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _chat.Setup(c => c.SendTextAsync(5, It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns((long _, string _, CancellationToken cancellationToken) =>
+            {
+                requestStarted.TrySetResult(cancellationToken);
+                return turn.Task;
+            });
+        ChatViewModel viewModel = Create();
+        await viewModel.LoadAsync();
+        viewModel.DraftText = "I feel anxious";
+
+        viewModel.SendCommand.Execute(null);
+        CancellationToken sendToken = await requestStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        viewModel.Close();
+
+        Assert.False(sendToken.IsCancellationRequested);
+        turn.SetResult(Turn(null, "I hear you"));
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData("   ")]

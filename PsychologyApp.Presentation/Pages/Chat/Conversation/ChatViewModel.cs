@@ -259,7 +259,7 @@ public sealed class ChatViewModel : BaseViewModel
             if (_opener is { } opener)
             {
                 _opener = null;
-                await TakeTurnAsync(opener, () => _chat.SendTextAsync(id, opener, _lifetime.Token));
+                await TakeTurnAsync(opener, () => _chat.SendTextAsync(id, opener, CancellationToken.None));
             }
         }
         catch (OperationCanceledException)
@@ -319,14 +319,14 @@ public sealed class ChatViewModel : BaseViewModel
         }
 
         DraftText = string.Empty;
-        return TakeTurnAsync(text, () => _chat.SendTextAsync(_sessionId!.Value, text, _lifetime.Token));
+        return TakeTurnAsync(text, () => _chat.SendTextAsync(_sessionId!.Value, text, CancellationToken.None));
     }
 
     private Task SendQuickReplyAsync(ChatQuickReply reply)
     {
         // The value just given is what the next slider shows as "was N".
         int? picked = reply.Kind == ChatQuickReplyKinds.Rating && int.TryParse(reply.Payload, out int value) ? value : null;
-        Task turn = TakeTurnAsync(reply.Label, () => _chat.SendQuickReplyAsync(_sessionId!.Value, reply, _lifetime.Token));
+        Task turn = TakeTurnAsync(reply.Label, () => _chat.SendQuickReplyAsync(_sessionId!.Value, reply, CancellationToken.None));
         RatingReference = picked ?? RatingReference;
         return turn;
     }
@@ -339,6 +339,11 @@ public sealed class ChatViewModel : BaseViewModel
 
         // The service awaits without ConfigureAwait(false), so understanding the message would run on the UI thread.
         ChatTurnResult result = await Task.Run(send);
+        if (_lifetime.IsCancellationRequested)
+        {
+            return;
+        }
+
         Title = HeaderTitle(result.Session.Title);
 
         // NewMessages[0] is the user's own message, which is already on screen.
