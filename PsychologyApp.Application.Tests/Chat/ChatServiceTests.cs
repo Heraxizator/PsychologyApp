@@ -599,6 +599,20 @@ public class ChatServiceTests
     }
 
     [Fact]
+    public async Task Forgetting_memory_does_not_restore_the_name_from_an_existing_chat_state()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Меня зовут Аня");
+
+        await service.ForgetMemoryAsync();
+        ChatTurnResult thanks = await service.SendTextAsync(id, "Спасибо");
+
+        Assert.DoesNotContain("Аня", string.Join(" ", thanks.NewMessages.Select(message => message.Text)));
+        Assert.Null((await service.GetProfileAsync()).UserName);
+    }
+
+    [Fact]
     public async Task Deleting_all_chats_also_removes_what_was_taken_from_them()
     {
         // "All conversations will be deleted. Your name and preferences will stay": the person's own words kept in the memory

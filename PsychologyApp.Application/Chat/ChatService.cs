@@ -254,8 +254,10 @@ public sealed class ChatService(
     private static CompanionState WithMemory(CompanionState state, IReadOnlyDictionary<string, string> memory) =>
         state with
         {
-            UserName = memory.TryGetValue(ChatMemoryKeys.Name, out string? name) && !string.IsNullOrWhiteSpace(name) ? name : state.UserName,
-            PreferredPractice = ChatMemoryKeys.MostHelped(memory)?.ToString() ?? state.PreferredPractice,
+            // The memory store is the authority for these cross-chat facts. Falling back to the session copy
+            // resurrects a name or preference after the person explicitly forgets it.
+            UserName = memory.TryGetValue(ChatMemoryKeys.Name, out string? name) && !string.IsNullOrWhiteSpace(name) ? name : null,
+            PreferredPractice = ChatMemoryKeys.MostHelped(memory)?.ToString(),
             TraumaNotes = memory.TryGetValue(ChatMemoryKeys.TraumaNotes, out string? notes) ? notes : null
         };
 
