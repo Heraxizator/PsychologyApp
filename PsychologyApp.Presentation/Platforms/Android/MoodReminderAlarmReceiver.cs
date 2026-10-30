@@ -17,6 +17,12 @@ public sealed class MoodReminderAlarmReceiver : BroadcastReceiver
             return;
         }
 
+        if (!AndroidNotificationPermission.CanPost(context))
+        {
+            ReminderSyncWork.Run<IMoodReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
+            return;
+        }
+
         string title = intent.GetStringExtra(MoodReminderConstants.ExtraTitle)
             ?? AppStrings.MoodReminderTitle;
         string body = intent.GetStringExtra(MoodReminderConstants.ExtraBody)
@@ -35,6 +41,7 @@ public sealed class MoodReminderAlarmReceiver : BroadcastReceiver
 
         Notification? notification = builder.Build();
         NotificationManagerCompat.From(context)?.Notify(MoodReminderConstants.NotificationId, notification);
+        tapIntent.Dispose();
 
         ReminderSyncWork.Run<IMoodReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
     }

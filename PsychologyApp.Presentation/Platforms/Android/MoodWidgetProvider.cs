@@ -35,7 +35,18 @@ public sealed class MoodWidgetProvider : AppWidgetProvider
             return;
         }
 
-        appWidgetManager.UpdateAppWidget(appWidgetIds, Build(context));
+        List<PendingIntent> pendingIntents = [];
+        try
+        {
+            appWidgetManager.UpdateAppWidget(appWidgetIds, Build(context, pendingIntents));
+        }
+        finally
+        {
+            foreach (PendingIntent pendingIntent in pendingIntents)
+            {
+                pendingIntent.Dispose();
+            }
+        }
     }
 
     /// <summary>Redraws placed widgets, so their texts follow a language switch in the app.</summary>
@@ -45,11 +56,22 @@ public sealed class MoodWidgetProvider : AppWidgetProvider
         int[]? ids = manager?.GetAppWidgetIds(new ComponentName(context, Java.Lang.Class.FromType(typeof(MoodWidgetProvider))));
         if (manager is not null && ids is { Length: > 0 })
         {
-            manager.UpdateAppWidget(ids, Build(context));
+            List<PendingIntent> pendingIntents = [];
+            try
+            {
+                manager.UpdateAppWidget(ids, Build(context, pendingIntents));
+            }
+            finally
+            {
+                foreach (PendingIntent pendingIntent in pendingIntents)
+                {
+                    pendingIntent.Dispose();
+                }
+            }
         }
     }
 
-    private static RemoteViews Build(Context context)
+    private static RemoteViews Build(Context context, List<PendingIntent> pendingIntents)
     {
         // A widget update can start the process without the app window, where the language provider is not set yet.
         if (AppStrings.LanguageProvider is null)
@@ -64,12 +86,16 @@ public sealed class MoodWidgetProvider : AppWidgetProvider
             int faceId = FaceIds[level - 1];
             views.SetTextViewText(faceId, AppStrings.MoodEmojiFor(level));
             views.SetContentDescription(faceId, AppStrings.MoodWidgetLevel(level));
-            views.SetOnClickPendingIntent(faceId, OpenApp(context, MoodWidgetConstants.ActionMood, level));
+            PendingIntent moodIntent = OpenApp(context, MoodWidgetConstants.ActionMood, level);
+            pendingIntents.Add(moodIntent);
+            views.SetOnClickPendingIntent(faceId, moodIntent);
         }
 
         views.SetTextViewText(Resource.Id.mood_widget_practice, $"{AppStrings.MoodWidgetPractice} →");
         views.SetContentDescription(Resource.Id.mood_widget_practice, AppStrings.MoodWidgetPractice);
-        views.SetOnClickPendingIntent(Resource.Id.mood_widget_practice, OpenApp(context, MoodWidgetConstants.ActionPractice, 0));
+        PendingIntent practiceIntent = OpenApp(context, MoodWidgetConstants.ActionPractice, 0);
+        pendingIntents.Add(practiceIntent);
+        views.SetOnClickPendingIntent(Resource.Id.mood_widget_practice, practiceIntent);
         return views;
     }
 

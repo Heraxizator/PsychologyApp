@@ -19,10 +19,15 @@ adb shell am start -W -n "$COMPONENT" | tee start.txt
 TOTAL=$(grep -oE "TotalTime: [0-9]+" start.txt | grep -oE "[0-9]+")
 echo "cold start: ${TOTAL:-unknown} ms (limit $MAX_START_MS)"
 
-adb shell monkey -p "$PKG" --throttle 300 --pct-syskeys 0 -s 7 2000 > monkey.txt 2>&1
+STATUS=0
+if ! adb shell monkey -p "$PKG" --throttle 300 --pct-syskeys 0 -s 7 2000 > monkey.txt 2>&1; then
+  echo "FAIL: monkey could not complete the interaction run"; STATUS=1
+fi
+if ! grep -q "Events injected: 2000" monkey.txt; then
+  echo "FAIL: monkey did not inject all 2000 events"; STATUS=1
+fi
 adb logcat -d > logcat.txt
 
-STATUS=0
 if [ -z "$TOTAL" ] || [ "$TOTAL" -ge "$MAX_START_MS" ]; then
   echo "FAIL: cold start missing or slower than ${MAX_START_MS} ms"; STATUS=1
 fi

@@ -3,7 +3,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using AndroidX.Core.App;
-using AndroidX.Core.Content;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.Platforms.Android;
@@ -12,29 +12,8 @@ public sealed class AndroidChatReminderScheduler : IChatReminderScheduler
 {
     public bool IsSupported => true;
 
-    public Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default)
-    {
-        if (Build.VERSION.SdkInt < BuildVersionCodes.Tiramisu)
-        {
-            return Task.CompletedTask;
-        }
-
-        Context context = Platform.AppContext;
-        if (ContextCompat.CheckSelfPermission(context, global::Android.Manifest.Permission.PostNotifications)
-            == global::Android.Content.PM.Permission.Granted)
-        {
-            return Task.CompletedTask;
-        }
-
-        Activity? activity = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Handler?.PlatformView as Activity;
-        if (activity is null)
-        {
-            return Task.CompletedTask;
-        }
-
-        ActivityCompat.RequestPermissions(activity, [global::Android.Manifest.Permission.PostNotifications], requestCode: 9004);
-        return Task.CompletedTask;
-    }
+    public Task<bool> RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
+        AndroidNotificationPermission.RequestIfNeededAsync(cancellationToken);
 
     public void Cancel()
     {
@@ -72,18 +51,10 @@ public sealed class AndroidChatReminderScheduler : IChatReminderScheduler
         }
 
         NotificationManager? notificationManager = context.GetSystemService(Context.NotificationService) as NotificationManager;
-        if (notificationManager?.GetNotificationChannel(ChatReminderConstants.ChannelId) is not null)
-        {
-            return;
-        }
-
         var channel = new NotificationChannel(
             ChatReminderConstants.ChannelId,
-            "Chat reminders",
-            NotificationImportance.Default)
-        {
-            Description = "Reminders to check in with the companion"
-        };
+            AppStrings.ChatReminderTitle,
+            NotificationImportance.Default);
         notificationManager?.CreateNotificationChannel(channel);
     }
 

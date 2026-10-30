@@ -79,6 +79,26 @@ public sealed class MoodReminderCoordinatorTests
     }
 
     [Fact]
+    public async Task SyncAsync_CancelsWhenNotificationPermissionIsDenied()
+    {
+        var store = new InMemoryUserPreferencesStore();
+        store.Save(new UserPreferencesState
+        {
+            HasCompletedOnboarding = true,
+            MoodRemindersEnabled = true,
+            MoodReminderHour = 20
+        });
+
+        var scheduler = new RecordingMoodReminderScheduler(permissionGranted: false);
+        var coordinator = new MoodReminderCoordinator(new Mock<IUserProgressService>().Object, store, scheduler);
+
+        await coordinator.SyncAsync();
+
+        Assert.True(scheduler.WasCancelled);
+        Assert.False(scheduler.WasScheduled);
+    }
+
+    [Fact]
     public void SettingsPresenter_BuildState_PersistsMoodReminderFields()
     {
         var presenter = new PsychologyApp.Presentation.Features.ManageProfile.SettingsPreferencesPresenter();
@@ -112,7 +132,7 @@ public sealed class MoodReminderCoordinatorTests
         Assert.Equal(20, built.MoodReminderHour);
     }
 
-    private sealed class RecordingMoodReminderScheduler : IMoodReminderScheduler
+    private sealed class RecordingMoodReminderScheduler(bool permissionGranted = true) : IMoodReminderScheduler
     {
         public bool IsSupported => true;
         public bool WasScheduled { get; private set; }
@@ -121,8 +141,8 @@ public sealed class MoodReminderCoordinatorTests
         public string? LastBody { get; private set; }
         public DateTime? LastFireAt { get; private set; }
 
-        public Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
-            Task.CompletedTask;
+        public Task<bool> RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult(permissionGranted);
 
         public void Schedule(DateTime fireAtLocal, string title, string body)
         {

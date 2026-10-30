@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Android reminders now recalculate after system time and time-zone changes, and after seasonal offset changes on Android API 37+. Scheduling waits for the notification permission result, delivery is skipped when Android blocks notifications, and channel names use the app language. Notification and home-screen widget tap handles are released after delivery or update. Audio playback now respects an audio-focus denial, including on Android versions before 8.0. Crisis-line country detection falls back to the system region on devices without telephony support and uses the pre-Android-7 locale API where needed. The Android smoke run now fails if Monkey cannot complete all 2,000 interactions. Not checked on a device.
+
 - The offline companion now handles direct requests to be heard from the opening turn, respects negated or conflicting support goals, distinguishes a request about calming another person from a request for self-calming, and lets the person change the goal mid-chat. Listening acknowledgements have short variants. NLU evaluation now reports per-emotion recall, includes an additional 60-message set, and adds multi-turn regressions for goal changes and crisis priority. Psychologist review not performed.
 
 - Practice completion keeps answers and the post-practice check-in collapsed until requested, uses one continue action, and shows two guided phrases at first in technique fields. Not checked on a device.

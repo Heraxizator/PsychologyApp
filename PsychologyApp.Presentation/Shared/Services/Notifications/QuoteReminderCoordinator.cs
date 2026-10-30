@@ -26,7 +26,11 @@ public sealed class QuoteReminderCoordinator(
 
     private async Task SyncScheduledAsync(UserPreferencesState state, CancellationToken cancellationToken)
     {
-        await scheduler.RequestPermissionIfNeededAsync(cancellationToken);
+        if (!await scheduler.RequestPermissionIfNeededAsync(cancellationToken))
+        {
+            scheduler.Cancel();
+            return;
+        }
 
         DateTime? nextFireLocal = QuoteReminderPolicy.ResolveNextFireLocal(
             state.QuoteRemindersEnabled,

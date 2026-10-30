@@ -22,7 +22,11 @@ public sealed class ChatReminderCoordinator(
             return;
         }
 
-        await scheduler.RequestPermissionIfNeededAsync(cancellationToken);
+        if (!await scheduler.RequestPermissionIfNeededAsync(cancellationToken))
+        {
+            scheduler.Cancel();
+            return;
+        }
 
         DateTime? lastActivityUtc = await GetLastChatActivityUtcAsync(cancellationToken);
         DateTime? nextFireLocal = ChatReminderPolicy.ResolveNextFireLocal(

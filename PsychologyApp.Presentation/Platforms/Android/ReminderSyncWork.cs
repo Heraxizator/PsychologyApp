@@ -12,6 +12,8 @@ namespace PsychologyApp.Presentation.Platforms.Android;
 /// </summary>
 internal static class ReminderSyncWork
 {
+    internal const string ActionTimeZoneOffsetChanged = "android.intent.action.TIMEZONE_OFFSET_CHANGED";
+
     internal static void Run<TCoordinator>(BroadcastReceiver receiver, Func<TCoordinator, Task> sync)
         where TCoordinator : class
     {
@@ -32,7 +34,17 @@ internal static class ReminderSyncWork
             }
             finally
             {
-                pending?.Finish();
+                if (pending is not null)
+                {
+                    try
+                    {
+                        pending.Finish();
+                    }
+                    finally
+                    {
+                        pending.Dispose();
+                    }
+                }
             }
         });
     }

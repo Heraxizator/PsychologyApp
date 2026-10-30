@@ -24,7 +24,7 @@ public sealed class PracticeReminderAlarmReceiver : BroadcastReceiver
         }
 
         string title = intent.GetStringExtra(PracticeReminderConstants.ExtraTitle)
-            ?? "Psychology App";
+            ?? PsychologyApp.Presentation.Shared.Common.AppStrings.PracticeReminderTitle;
         string body = intent.GetStringExtra(PracticeReminderConstants.ExtraBody)
             ?? string.Empty;
 
@@ -34,6 +34,11 @@ public sealed class PracticeReminderAlarmReceiver : BroadcastReceiver
 
     private static void ShowNotification(Context context, TechniqueId techniqueId, string title, string body)
     {
+        if (!AndroidNotificationPermission.CanPost(context))
+        {
+            return;
+        }
+
         AndroidPracticeReminderScheduler.EnsureNotificationChannel(context);
 
         PendingIntent tapIntent = AndroidPracticeReminderScheduler.CreateTapPendingIntent(context, techniqueId);

@@ -33,7 +33,11 @@ public sealed class MoodReminderCoordinator(
     {
         if (askPermission)
         {
-            await scheduler.RequestPermissionIfNeededAsync(cancellationToken);
+            if (!await scheduler.RequestPermissionIfNeededAsync(cancellationToken))
+            {
+                scheduler.Cancel();
+                return;
+            }
         }
 
         List<DateTime> checkInsLocal = await LoadCheckInsLocalAsync(cancellationToken);

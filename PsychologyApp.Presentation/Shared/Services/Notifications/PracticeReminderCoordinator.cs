@@ -28,7 +28,11 @@ public sealed class PracticeReminderCoordinator(
             return;
         }
 
-        await scheduler.RequestPermissionIfNeededAsync(cancellationToken);
+        if (!await scheduler.RequestPermissionIfNeededAsync(cancellationToken))
+        {
+            scheduler.Cancel();
+            return;
+        }
 
         DateTime? lastPracticeUtc = await progress.GetLastTechniqueCompletionDateAsync(cancellationToken);
         DateTime nowLocal = DateTime.Now;

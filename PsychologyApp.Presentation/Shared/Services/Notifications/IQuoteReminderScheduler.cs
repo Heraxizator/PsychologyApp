@@ -4,7 +4,7 @@ public interface IQuoteReminderScheduler
 {
     bool IsSupported { get; }
 
-    Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default);
+    Task<bool> RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default);
 
     void Schedule(DateTime fireAtLocal, string title, string body);
 

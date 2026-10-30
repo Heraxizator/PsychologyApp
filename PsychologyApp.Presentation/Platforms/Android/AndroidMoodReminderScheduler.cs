@@ -3,7 +3,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using AndroidX.Core.App;
-using AndroidX.Core.Content;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.Platforms.Android;
@@ -12,29 +12,8 @@ public sealed class AndroidMoodReminderScheduler : IMoodReminderScheduler
 {
     public bool IsSupported => true;
 
-    public Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default)
-    {
-        if (Build.VERSION.SdkInt < BuildVersionCodes.Tiramisu)
-        {
-            return Task.CompletedTask;
-        }
-
-        Context context = Platform.AppContext;
-        if (ContextCompat.CheckSelfPermission(context, global::Android.Manifest.Permission.PostNotifications)
-            == global::Android.Content.PM.Permission.Granted)
-        {
-            return Task.CompletedTask;
-        }
-
-        Activity? activity = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Handler?.PlatformView as Activity;
-        if (activity is null)
-        {
-            return Task.CompletedTask;
-        }
-
-        ActivityCompat.RequestPermissions(activity, [global::Android.Manifest.Permission.PostNotifications], requestCode: 9003);
-        return Task.CompletedTask;
-    }
+    public Task<bool> RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
+        AndroidNotificationPermission.RequestIfNeededAsync(cancellationToken);
 
     public void Cancel()
     {
@@ -72,18 +51,10 @@ public sealed class AndroidMoodReminderScheduler : IMoodReminderScheduler
         }
 
         NotificationManager? notificationManager = context.GetSystemService(Context.NotificationService) as NotificationManager;
-        if (notificationManager?.GetNotificationChannel(MoodReminderConstants.ChannelId) is not null)
-        {
-            return;
-        }
-
         var channel = new NotificationChannel(
             MoodReminderConstants.ChannelId,
-            "Mood reminders",
-            NotificationImportance.Default)
-        {
-            Description = "Daily mood check-in reminders"
-        };
+            AppStrings.MoodReminderTitle,
+            NotificationImportance.Default);
         notificationManager?.CreateNotificationChannel(channel);
     }
 

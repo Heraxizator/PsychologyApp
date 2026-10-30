@@ -17,6 +17,7 @@ public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlayba
     private MediaPlayer? _player;
     private TaskCompletionSource? _prepared;
     private AudioFocusRequestClass? _focusRequest;
+    private bool _legacyFocusRequested;
     private bool _isPrepared;
     private bool _isPlaying;
 
@@ -162,16 +163,34 @@ public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlayba
 
     private void Start()
     {
-        RequestFocus();
+        if (!RequestFocus())
+        {
+            _isPlaying = false;
+            PlaybackFailed?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
         _player?.Start();
         _isPlaying = true;
     }
 
-    private void RequestFocus()
+    private bool RequestFocus()
     {
-        if (!OperatingSystem.IsAndroidVersionAtLeast(26) || _focusRequest is not null || AudioService() is not { } audio)
+        if (AudioService() is not { } audio)
         {
-            return;
+            return false;
+        }
+
+        if (!OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            AudioFocusRequest result = audio.RequestAudioFocus(this, Stream.Music, AudioFocus.Gain);
+            _legacyFocusRequested = result == AudioFocusRequest.Granted;
+            return _legacyFocusRequested;
+        }
+
+        if (_focusRequest is not null)
+        {
+            return true;
         }
 
         AudioFocusRequestClass request = new AudioFocusRequestClass.Builder(AudioFocus.Gain)
@@ -181,19 +200,39 @@ public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlayba
                 .Build()!)
             .SetOnAudioFocusChangeListener(this)
             .Build()!;
+        if (audio.RequestAudioFocus(request) != AudioFocusRequest.Granted)
+        {
+            request.Dispose();
+            return false;
+        }
+
         _focusRequest = request;
-        audio.RequestAudioFocus(request);
+        return true;
     }
 
     private void AbandonFocus()
     {
         if (_focusRequest is null || !OperatingSystem.IsAndroidVersionAtLeast(26))
         {
+            if (_legacyFocusRequested)
+            {
+                AudioService()?.AbandonAudioFocus(this);
+                _legacyFocusRequested = false;
+            }
+
             return;
         }
 
-        AudioService()?.AbandonAudioFocusRequest(_focusRequest);
+        AudioFocusRequestClass request = _focusRequest;
         _focusRequest = null;
+        try
+        {
+            AudioService()?.AbandonAudioFocusRequest(request);
+        }
+        finally
+        {
+            request.Dispose();
+        }
     }
 
     private static AudioManager? AudioService() =>

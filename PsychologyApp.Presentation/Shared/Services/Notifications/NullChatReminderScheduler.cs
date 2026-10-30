@@ -4,8 +4,8 @@ public sealed class NullChatReminderScheduler : IChatReminderScheduler
 {
     public bool IsSupported => false;
 
-    public Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
-        Task.CompletedTask;
+    public Task<bool> RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
+        Task.FromResult(false);
 
     public void Cancel()
     {

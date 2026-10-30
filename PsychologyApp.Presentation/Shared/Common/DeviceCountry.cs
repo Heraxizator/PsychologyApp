@@ -17,20 +17,31 @@ public static class DeviceCountry
         try
         {
 #if ANDROID
-            var context = Android.App.Application.Context;
-            if (context.GetSystemService(Android.Content.Context.TelephonyService) is Android.Telephony.TelephonyManager telephony)
+            try
             {
-                foreach (string? iso in new[] { telephony.NetworkCountryIso, telephony.SimCountryIso })
+                var context = Android.App.Application.Context;
+                if (context.GetSystemService(Android.Content.Context.TelephonyService) is Android.Telephony.TelephonyManager telephony)
                 {
-                    if (!string.IsNullOrWhiteSpace(iso))
+                    foreach (string? iso in new[] { telephony.NetworkCountryIso, telephony.SimCountryIso })
                     {
-                        return iso.ToUpperInvariant();
+                        if (!string.IsNullOrWhiteSpace(iso))
+                        {
+                            return iso.ToUpperInvariant();
+                        }
                     }
                 }
             }
+            catch (Exception telephonyError)
+            {
+                // Tablets and Wi-Fi-only devices may not implement telephony country APIs; use the system region below.
+                BestEffort.Report(telephonyError);
+            }
 
             // The system locale, not the app's: the app switches its own culture to the chosen interface language.
-            string? region = Android.Content.Res.Resources.System?.Configuration?.Locales.Get(0)?.Country;
+            Android.Content.Res.Configuration? configuration = Android.Content.Res.Resources.System?.Configuration;
+            string? region = OperatingSystem.IsAndroidVersionAtLeast(24)
+                ? configuration?.Locales.Get(0)?.Country
+                : configuration?.Locale?.Country;
             return string.IsNullOrWhiteSpace(region) ? null : region.ToUpperInvariant();
 #else
             return System.Globalization.RegionInfo.CurrentRegion.TwoLetterISORegionName;

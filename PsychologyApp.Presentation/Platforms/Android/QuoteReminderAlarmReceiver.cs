@@ -17,6 +17,12 @@ public sealed class QuoteReminderAlarmReceiver : BroadcastReceiver
             return;
         }
 
+        if (!AndroidNotificationPermission.CanPost(context))
+        {
+            ReminderSyncWork.Run<IQuoteReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
+            return;
+        }
+
         string title = intent.GetStringExtra(QuoteReminderConstants.ExtraTitle)
             ?? AppStrings.QuoteReminderTitle;
         string body = intent.GetStringExtra(QuoteReminderConstants.ExtraBody)
@@ -35,6 +41,7 @@ public sealed class QuoteReminderAlarmReceiver : BroadcastReceiver
 
         Notification? notification = builder.Build();
         NotificationManagerCompat.From(context)?.Notify(QuoteReminderConstants.NotificationId, notification);
+        tapIntent.Dispose();
 
         ReminderSyncWork.Run<IQuoteReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
     }

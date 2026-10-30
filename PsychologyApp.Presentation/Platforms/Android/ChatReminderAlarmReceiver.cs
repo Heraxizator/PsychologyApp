@@ -17,6 +17,12 @@ public sealed class ChatReminderAlarmReceiver : BroadcastReceiver
             return;
         }
 
+        if (!AndroidNotificationPermission.CanPost(context))
+        {
+            ReminderSyncWork.Run<IChatReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
+            return;
+        }
+
         string title = intent.GetStringExtra(ChatReminderConstants.ExtraTitle)
             ?? AppStrings.ChatReminderTitle;
         string body = intent.GetStringExtra(ChatReminderConstants.ExtraBody)
@@ -35,6 +41,7 @@ public sealed class ChatReminderAlarmReceiver : BroadcastReceiver
 
         Notification? notification = builder.Build();
         NotificationManagerCompat.From(context)?.Notify(ChatReminderConstants.NotificationId, notification);
+        tapIntent.Dispose();
 
         ReminderSyncWork.Run<IChatReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
     }

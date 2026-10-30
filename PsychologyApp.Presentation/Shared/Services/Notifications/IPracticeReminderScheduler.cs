@@ -6,7 +6,7 @@ public interface IPracticeReminderScheduler
 {
     bool IsSupported { get; }
 
-    Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default);
+    Task<bool> RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default);
 
     void Cancel();
 
