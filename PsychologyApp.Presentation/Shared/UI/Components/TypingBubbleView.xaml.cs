@@ -7,6 +7,7 @@ public partial class TypingBubbleView : ContentView
 {
     private const uint StepMs = 220;
     private const double Dim = 0.35;
+    private const int AnimationPasses = 2;
 
     public static readonly BindableProperty IsRunningProperty = BindableProperty.Create(
         nameof(IsRunning),
@@ -43,10 +44,13 @@ public partial class TypingBubbleView : ContentView
 
     private void Stop()
     {
-        _animation?.Cancel();
+        CancellationTokenSource? animation = _animation;
         _animation = null;
+        animation?.Cancel();
+        animation?.Dispose();
         foreach (VisualElement dot in new VisualElement[] { Dot1, Dot2, Dot3 })
         {
+            dot.CancelAnimations();
             dot.Opacity = Dim;
         }
     }
@@ -54,12 +58,21 @@ public partial class TypingBubbleView : ContentView
     private async Task AnimateAsync(CancellationToken cancellationToken)
     {
         VisualElement[] dots = [Dot1, Dot2, Dot3];
-        while (!cancellationToken.IsCancellationRequested)
+        for (int pass = 0; pass < AnimationPasses && !cancellationToken.IsCancellationRequested; pass++)
         {
             foreach (VisualElement dot in dots)
             {
-                await dot.FadeTo(1, StepMs);
-                await dot.FadeTo(Dim, StepMs);
+                await dot.FadeToAsync(1, StepMs);
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                await dot.FadeToAsync(Dim, StepMs);
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
             }
         }
     }

@@ -5,12 +5,11 @@ using PsychologyApp.Presentation.Shared.Common;
 namespace PsychologyApp.Presentation.Shared.UI.Components;
 
 /// <summary>
-/// Grey placeholders in the shape of what is about to appear (cards, rows, chat bubbles, a profile) while a screen loads. They breathe softly
-/// (opacity only, no sliding, so it is cheap) and stand still when reduced motion is on. Screen readers hear one word, "Loading", not a list of boxes.
+/// Grey placeholders in the shape of what is about to appear (cards, rows, chat bubbles, a profile) while a screen loads. They stay still
+/// to avoid running an animation for as long as a load takes. Screen readers hear one word, "Loading", not a list of boxes.
 /// </summary>
 public sealed class SkeletonView : ContentView
 {
-    private const string AnimationName = "skeleton-pulse";
     private const double CardRadius = 16;
 
     public static readonly BindableProperty KindProperty = BindableProperty.Create(
@@ -32,7 +31,7 @@ public sealed class SkeletonView : ContentView
         Loaded += (_, _) =>
         {
             Rebuild();
-            UpdateMotion();
+            UpdateVisualState();
             if (Microsoft.Maui.Controls.Application.Current is { } app)
             {
                 app.RequestedThemeChanged += OnThemeChanged;
@@ -67,12 +66,22 @@ public sealed class SkeletonView : ContentView
         set => SetValue(IsActiveProperty, value);
     }
 
-    private async void OnActiveChanged(bool active)
+    private void OnActiveChanged(bool active) => OnActiveChangedAsync(active).FireAndForget();
+
+    private async Task OnActiveChangedAsync(bool active)
     {
+        bool wasVisible = IsVisible;
+        this.CancelAnimations();
+
         if (active)
         {
             Opacity = 1;
             IsVisible = true;
+            if (wasVisible)
+            {
+                UpdateVisualState();
+            }
+
             return;
         }
 
@@ -82,7 +91,6 @@ public sealed class SkeletonView : ContentView
             return;
         }
 
-        this.AbortAnimation(AnimationName);
         await this.FadeToAsync(0, UiAnimations.ExitRevealDuration, Easing.CubicIn);
         if (!IsActive)
         {
@@ -95,29 +103,26 @@ public sealed class SkeletonView : ContentView
         base.OnPropertyChanged(propertyName);
         if (propertyName == IsVisibleProperty.PropertyName)
         {
-            UpdateMotion();
+            UpdateVisualState();
         }
     }
 
-    private void UpdateMotion()
+    private void UpdateVisualState()
     {
-        this.AbortAnimation(AnimationName);
         if (!IsVisible || Handler is null || ReduceMotion.IsEnabled)
         {
             Opacity = IsVisible ? 0.85 : 1;
             return;
         }
 
-        AnimationLayer.Enter(this);
-        new Animation(t => Opacity = 1 - 0.45 * Math.Sin(t * Math.PI), 0, 1, Easing.Linear)
-            .Commit(this, AnimationName, 16, 1200, Easing.Linear, repeat: () => true);
+        Opacity = 0.85;
     }
 
     private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(Rebuild);
 
     private void StopMotion()
     {
-        this.AbortAnimation(AnimationName);
+        this.CancelAnimations();
         Opacity = 1;
         AnimationLayer.Exit(this);
     }
