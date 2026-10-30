@@ -61,6 +61,39 @@ public sealed class QuoteSearchControllerTests
     }
 
     [Fact]
+    public async Task ClearQuery_CancelsAnInFlightSearch()
+    {
+        QuoteFeedState feedState = new();
+        feedState.SetFeedItems([CreateFeedItem("Feed quote")]);
+        TaskCompletionSource<CancellationToken> searchStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource<IReadOnlyList<QuotSeed>> pendingResults = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource searchCleared = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        Mock<IQuoteSearchService> searchService = new();
+        searchService
+            .Setup(s => s.SearchCatalogAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Returns((string _, int _, CancellationToken cancellationToken) =>
+            {
+                searchStarted.TrySetResult(cancellationToken);
+                return pendingResults.Task.WaitAsync(cancellationToken);
+            });
+
+        QuoteSearchController controller = CreateController(
+            feedState,
+            searchService.Object,
+            onSearchCleared: searchCleared.SetResult);
+        controller.Query = "test";
+        CancellationToken searchToken = await searchStarted.Task.WaitAsync(TimeSpan.FromSeconds(3));
+
+        controller.Query = string.Empty;
+        await searchCleared.Task.WaitAsync(TimeSpan.FromSeconds(3));
+
+        Assert.True(searchToken.IsCancellationRequested);
+        Assert.Single(feedState.DisplayItems);
+        Assert.Equal("Feed quote", feedState.DisplayItems[0].Text);
+        pendingResults.TrySetResult([new QuotSeed("A", "Stale result", "wisdom")]);
+    }
+
+    [Fact]
     public async Task RapidQueryChanges_OnlyLatestSearchIsApplied()
     {
         QuoteFeedState feedState = new();

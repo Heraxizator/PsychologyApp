@@ -97,9 +97,14 @@ public sealed class QuoteSearchController
     {
         if (!IsSearching)
         {
-            SetSearchInFlight(false);
+            CancelPendingSearch();
             await UiThread.RunAsync(() =>
             {
+                if (IsSearching)
+                {
+                    return;
+                }
+
                 _feedState.RestoreFeedDisplay();
                 _onSearchCleared();
                 _onStateChanged();
@@ -131,6 +136,11 @@ public sealed class QuoteSearchController
 
             await UiThread.RunAsync(() =>
             {
+                if (token.IsCancellationRequested || !string.Equals(query, _query, StringComparison.Ordinal))
+                {
+                    return;
+                }
+
                 _feedState.DisplayItems.ReplaceRange(results);
                 _onStateChanged();
             });
