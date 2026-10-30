@@ -10,6 +10,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Multiword emotion phrases now use the same short-range negation rules as single-word emotion terms. Not checked on a device.
 
+- Phrase recognition no longer skips across an internal negation, and recognizes common trailing negations such as “тревоги нет”. Not checked on a device.
+
 - Physical-symptom recognition now requires an active sensation and respects negation, so a bare body-part mention or a denied symptom does not escalate ordinary anxiety. Not checked on a device.
 
 - Advice replies now acknowledge the recognized feeling and situation first; messages about a loss or trauma follow the existing support path instead of generic advice and practice offers. Not checked on a device.

@@ -9,6 +9,8 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
     private const double MinScore = 1.0;
 
     private static readonly HashSet<string> Negations = ["не", "нет", "ни", "без", "no", "not", "never", "dont", "cant", "cannot"];
+    private static readonly HashSet<string> PostfixNegations = ["нет", "нету", "отсутствует", "отсутствуют", "absent"];
+    private static readonly HashSet<string> PostfixNegationModifiers = ["совсем", "почти", "вообще", "практически", "совершенно", "at", "all"];
 
     // A negation is still recognised across a short chain of these ("не чувствую себя очень тревожной"), but not across an arbitrary word —
     // normalization drops sentence punctuation, so an unbounded look-back would misread "Не знаю. Тревожусь" as negated.
@@ -248,7 +250,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
                 continue;
             }
 
-            if (respectNegation && IsNegated(tokens, i))
+            if (respectNegation && (IsNegated(tokens, i) || IsNegatedAfter(tokens, i)))
             {
                 continue;
             }
@@ -359,6 +361,24 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         return false;
     }
 
+    private static bool IsNegatedAfter(string[] tokens, int index)
+    {
+        for (int position = index + 1; position < tokens.Length && position <= index + 2; position++)
+        {
+            if (PostfixNegations.Contains(tokens[position]))
+            {
+                return true;
+            }
+
+            if (!PostfixNegationModifiers.Contains(tokens[position]))
+            {
+                break;
+            }
+        }
+
+        return false;
+    }
+
     private static bool HasNegatedMatch(string term, string[] tokens)
     {
         string[] words = term.Replace('-', ' ').Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -373,10 +393,12 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             bool firstMatches = exact
                 ? tokens[start] == words[0]
                 : tokens[start].StartsWith(words[0], StringComparison.Ordinal) || (words.Length == 1 && IsNearPrefixMatch(tokens[start], words[0]));
-            if (!firstMatches || !IsNegated(tokens, start))
+            if (!firstMatches)
             {
                 continue;
             }
+
+            bool negatedBefore = IsNegated(tokens, start);
 
             int cursor = start;
             bool matched = true;
@@ -402,7 +424,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
                 cursor = next;
             }
 
-            if (matched)
+            if (matched && (negatedBefore || IsNegatedAfter(tokens, cursor)))
             {
                 return true;
             }
@@ -441,6 +463,11 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
                         next = k;
                         break;
                     }
+
+                    if (Negations.Contains(tokens[k]))
+                    {
+                        break;
+                    }
                 }
 
                 if (next < 0)
@@ -452,7 +479,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
                 cursor = next;
             }
 
-            if (matched)
+            if (matched && (!respectNegation || !IsNegatedAfter(tokens, cursor)))
             {
                 return offsets[start];
             }
