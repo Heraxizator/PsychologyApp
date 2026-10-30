@@ -6,9 +6,27 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Practice completion keeps answers and the post-practice check-in collapsed until requested, uses one continue action, and shows two guided phrases at first in technique fields. Not checked on a device.
+
+- Skeleton placeholders no longer run a continuous pulse while loading; stale fades are cancelled on state changes, and failures use the shared async error path. Not checked on a device.
+
+- The chat typing indicator uses two bounded animation passes and cancels active dot fades when it stops or unloads. Not checked on a device.
+
+- Advice replies avoid repeating the practice offer already present as a quick reply; the companion clarifies the person’s goal before offering an unrequested practice. Not checked on a device.
+
 - The side menu is slightly shorter through tighter group spacing and heading margins; row size and visual styling are unchanged. Not checked on a device.
 
-- Local error logs retain the technical message template and exception type without writing formatted values or exception messages that could contain personal text. Not checked on a device.
+- Database keys now require exactly 64 hexadecimal characters, including rejection of a trailing newline. Not checked on a device.
+
+- Database access now requires a key provider, encrypted databases must open with their stored key, and a missing or malformed key is refused instead of replaced. New keys are created only for a new or plaintext database. Not checked on a device.
+
+- Local-model installs verify staged SHA-256 values before reuse, cap streamed files at the manifest size, and promote replacements with rollback recovery instead of deleting the previous model first. The installed marker no longer hides missing or truncated files, and a same-sized file from an older model version cannot be installed as new. Not checked on a device.
+
+- Concurrent dictation starts now serialize ownership of the shared on-device recognizer, and a stop while waiting cancels that pending start. Not checked on a device.
+
+- Encrypted backup import rejects non-standard oversized salts before key derivation and clears the temporary encoded passphrase buffer. Not checked on a device.
+
+- Debug and error logs retain technical message templates and exception types without forwarding exception messages to platform debug output; the synchronous crash entry also stays bounded. Not checked on a device.
 
 - Explicitly denied emotions no longer inherit the previous emotion or bring it back from recent messages; a newly recognized or selected emotion starts a fresh active state. Not checked on a device.
 
