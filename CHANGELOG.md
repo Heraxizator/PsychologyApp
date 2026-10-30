@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- When someone asks for advice while naming a feeling or situation, the reply still gives advice and now keeps that message in chat context for a relevant follow-up. Not checked on a device.
+
 - If someone already describes a physical sensation, the chat skips the later generic question about where they feel it, so the next question can move the conversation forward. Not checked on a device.
 
 - Restored chat state, feelings, practice counters and tension ratings now discard undefined or out-of-range values, so damaged data cannot show invalid practices, distort the profile or affect future offers. The chat info page also keeps a conversation with only a final tension rating visible. A failed journal write no longer saves a chat reply that says the mood was logged. Chat start, follow-up, rename, delete, send and delete-all now share the same write queue where needed, so session updates cannot resurrect or overwrite data during deletion. Delete-all now removes derived memory and conversations in one SQLite transaction while keeping the name and practice counters. Regression tests added; not checked on a device.

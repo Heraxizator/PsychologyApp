@@ -408,12 +408,7 @@ public sealed partial class CompanionDialogue(
                 : Reply([CompanionKnowledge.ExplainFallback(english)], CompanionKnowledge.TopicChips(english), state, emotion, theme),
             Utterance.AsksWhy => Reply([CompanionKnowledge.Why(emotion, english)], [], state, emotion, theme),
             Utterance.AsksIfNormal => Reply([CompanionKnowledge.Normal(emotion, english)], [], state, emotion, theme),
-            Utterance.AsksForAdvice when emotion != CompanionEmotion.Unknown => Reply(
-                [CompanionKnowledge.WhatHelps(emotion, english), CompanionKnowledge.AdviceOffer(english)],
-                [CompanionKnowledge.PracticeChip(english), CompanionActContent.Understand(english)],
-                state,
-                emotion,
-                theme),
+            Utterance.AsksForAdvice when emotion != CompanionEmotion.Unknown => RespondToAdvice(state, previous, text, single, emotion, theme),
             Utterance.Acknowledge => Reply([CompanionSmallTalk.Acknowledge(previous.QuestionPending, english, _random)], [], state, emotion, theme),
             Utterance.Reaction => Reply([CompanionSmallTalk.Reaction(text, UtteranceClassifier.IsSadReaction(text), english, _random)], [], state, emotion, theme),
             Utterance.Exclaims => Reply([CompanionSmallTalk.Exclaims(english, _random)], [], state, emotion, theme),
@@ -465,6 +460,28 @@ public sealed partial class CompanionDialogue(
             Utterance.No => Reply([CompanionCaseContent.FollowUp(previous.LastQuestionId, yes: false, english) ?? CompanionActContent.NoProbe(english, _random)], [], state, emotion, theme),
             _ => CompanionReply.Empty(state)
         };
+    }
+
+    private CompanionReply RespondToAdvice(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion, CompanionTheme? theme)
+    {
+        // An advice request can also tell us what happened; keep that context so the next turn does not start from zero.
+        state = state with
+        {
+            RecentTexts = previous.WithText(text).RecentTexts,
+            Emotion = emotion.ToString(),
+            Theme = analysis.Themes.Count > 0 ? analysis.Themes[0].ToString() : state.Theme,
+            Person = analysis.Persons is { Count: > 0 } persons ? persons[0].ToString() : state.Person,
+            Secondary = analysis.Secondary == CompanionEmotion.Unknown ? state.Secondary : analysis.Secondary.ToString(),
+            Event = analysis.Event == CompanionEvent.None ? state.Event : analysis.Event.ToString(),
+            FirstQuote = state.FirstQuote ?? QuoteExtractor.Pick(text, analyzer, emotion)
+        };
+
+        return Reply(
+            [CompanionKnowledge.WhatHelps(emotion, english), CompanionKnowledge.AdviceOffer(english)],
+            [CompanionKnowledge.PracticeChip(english), CompanionActContent.Understand(english)],
+            state,
+            emotion,
+            theme);
     }
 
     /// <summary>A message this long that names no feeling is the person telling something the word lists did not catch: offer the choice of feelings
