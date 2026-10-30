@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Switching voice input between fields now waits for the previous on-device recognition session to finish, preventing overlapping microphone sessions. Not checked on a device.
+
 - Personal questions, advice requests, and refusals of exercises keep any stated feeling or situation in context for relevant follow-ups. Advice requests with a concrete topic but no recognized feeling get a context-aware follow-up instead of a generic prompt; panic and intense anxiety with physical symptoms use the existing urgent support response. Not checked on a device.
 
 - If someone already describes a physical sensation, the chat skips the later generic question about where they feel it, so the next question can move the conversation forward. Not checked on a device.

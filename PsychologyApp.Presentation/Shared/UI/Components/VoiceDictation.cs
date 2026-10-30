@@ -14,6 +14,7 @@ public sealed class VoiceDictation
     private readonly Func<string> _readText;
     private readonly Action<string> _writeText;
     private CancellationTokenSource? _listening;
+    private TaskCompletionSource? _listenFinished;
 
     public VoiceDictation(Func<string> readText, Action<string> writeText)
     {
@@ -122,7 +123,7 @@ public sealed class VoiceDictation
     {
         if (IsListening)
         {
-            await Speech.StopAsync();
+            await StopListeningAsync(cancel: false);
             return;
         }
 
@@ -133,6 +134,8 @@ public sealed class VoiceDictation
 
         _active = this;
         _listening = new CancellationTokenSource();
+        TaskCompletionSource listenFinished = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _listenFinished = listenFinished;
         UiHaptics.Tick();
         SetStatus(AppStrings.PracticeVoiceListening);
 
@@ -164,13 +167,37 @@ public sealed class VoiceDictation
             BestEffort.Report(ex);
             SetStatus(AppStrings.PracticeVoiceUnavailable, stopped: true);
         }
+        finally
+        {
+            listenFinished.TrySetResult();
+            if (ReferenceEquals(_listenFinished, listenFinished))
+            {
+                _listenFinished = null;
+            }
+        }
     }
 
     /// <summary>Stops listening without keeping the words, e.g. when the page closes.</summary>
-    public Task StopAsync()
+    public Task StopAsync() => StopListeningAsync(cancel: true);
+
+    private async Task StopListeningAsync(bool cancel)
     {
-        _listening?.Cancel();
-        return Speech.StopAsync();
+        Task? finished = _listenFinished?.Task;
+        if (_listening is null && finished is null)
+        {
+            return;
+        }
+
+        if (cancel)
+        {
+            _listening?.Cancel();
+        }
+
+        await Speech.StopAsync();
+        if (finished is not null)
+        {
+            await finished;
+        }
     }
 
     private void SetStatus(string text, bool stopped = false)
