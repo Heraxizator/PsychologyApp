@@ -442,7 +442,9 @@ public sealed partial class CompanionDialogue(
                 state,
                 emotion,
                 theme),
-            Utterance.AsksForAdvice => Reply([CompanionActContent.Advice(english)], [], state, emotion, theme),
+            Utterance.AsksForAdvice => single.Event != CompanionEvent.None || single.Themes.Count > 0 || single.Persons is { Count: > 0 }
+                ? RespondToStatement(previous, text, single)
+                : Reply([CompanionActContent.Advice(english)], [], state, emotion, theme),
             Utterance.AsksAboutCompanion => Reply([CompanionActContent.AboutCompanion(english)], [], state, emotion, theme),
             Utterance.ComplainsAboutCompanion => Reply(
                 [CompanionActContent.Complaint(english)],
