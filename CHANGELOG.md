@@ -14,6 +14,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Failed chat sends restore the unsent text or quick reply and remove the temporary bubble. Shared chat memory updates are serialized across conversations so concurrent trauma notes and recurring-topic dates are not overwritten. Regression tests added; not checked on a device.
 
+- Crisis wording passed through a text-bearing exercise chip now triggers the same help route as typed text. Regression test added; not checked on a device.
+
 - Journal CSV export removes its temporary file after sharing or failure. Risk assessments dated in the future no longer postpone the next check; red-risk routing stays available. Regression coverage added; not checked on a device.
 
 - Backup import rejects null required collections, rows, chat sessions and safety-plan contacts before writing any data, preventing damaged plans from breaking the safety screen. Null encoded fields in encrypted backups are reported as file-format errors. Regression tests added; not checked on a device.

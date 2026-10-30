@@ -121,6 +121,18 @@ public sealed class CompanionGuidedTests
     }
 
     [Fact]
+    public void Crisis_words_in_a_textual_exercise_chip_also_open_help()
+    {
+        CompanionDialogue dialogue = Create();
+        CompanionReply started = Tap(dialogue, Anxious, ChatQuickReplyKinds.Act, "protocol:solve");
+
+        CompanionReply reply = Tap(dialogue, started.State, ChatQuickReplyKinds.Act, "say:Я хочу покончить с собой");
+
+        Assert.Equal(DialogueActionKind.OpenCrisisHub, reply.Action?.Kind);
+        Assert.Empty(reply.QuickReplies);
+    }
+
+    [Fact]
     public void The_person_can_stop_an_exercise_at_any_step()
     {
         CompanionDialogue dialogue = Create();

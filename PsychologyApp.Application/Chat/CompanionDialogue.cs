@@ -207,13 +207,7 @@ public sealed partial class CompanionDialogue(
 
         if (crisisDetector.IsCrisis(text))
         {
-            return new CompanionReply(
-                [CompanionContent.Crisis(english)],
-                [],
-                new DialogueAction(DialogueActionKind.OpenCrisisHub),
-                previous,
-                ParseEmotion(previous.Emotion),
-                null);
+            return CrisisReply(previous);
         }
 
         // Inside a guided exercise every answer belongs to it, until it ends or the person stops it.
@@ -678,6 +672,14 @@ public sealed partial class CompanionDialogue(
         CompanionEmotion emotion = ParseEmotion(state.Emotion);
         CompanionTheme? theme = ParseTheme(state.Theme);
 
+        if (reply.Kind == ChatQuickReplyKinds.Act
+            && reply.Payload is { } payload
+            && payload.StartsWith("say:", StringComparison.Ordinal)
+            && crisisDetector.IsCrisis(FixWrongLayout(payload["say:".Length..])))
+        {
+            return CrisisReply(state);
+        }
+
         switch (reply.Kind)
         {
             case ChatQuickReplyKinds.Practice when Enum.TryParse(reply.Payload, out TechniqueId id):
@@ -1111,6 +1113,14 @@ public sealed partial class CompanionDialogue(
         CompanionEmotion emotion,
         CompanionTheme? theme) =>
         new(messages, quick, null, state, emotion, theme);
+
+    private CompanionReply CrisisReply(CompanionState state) => new(
+        [CompanionContent.Crisis(english)],
+        [],
+        new DialogueAction(DialogueActionKind.OpenCrisisHub),
+        state,
+        ParseEmotion(state.Emotion),
+        null);
 
     private static ChatQuickReply PracticeReply(string techniqueId, string label) =>
         new(ChatQuickReplyKinds.Practice, label, techniqueId);
