@@ -141,7 +141,11 @@ public sealed partial class CompanionDialogue(
         }
 
         // The id belongs to the question asked in this very reply; one carried over from earlier turns would misread the next "yes".
-        string? lastQuestionId = reply.State.LastQuestionId == state.LastQuestionId ? null : reply.State.LastQuestionId;
+        bool repeatedQuestion = state.LastQuestion is { } lastQuestion && reply.Messages.LastOrDefault() == lastQuestion;
+        bool retryingAfterUnclearInput = state.QuestionPending && reply.State.UnclearStreak > state.UnclearStreak;
+        string? lastQuestionId = reply.State.LastQuestionId == state.LastQuestionId && !repeatedQuestion && !retryingAfterUnclearInput
+            ? null
+            : reply.State.LastQuestionId;
         return reply with { State = reply.State with { RecentReplies = Remember(state.RecentReplies, reply.Messages), LastQuestionId = lastQuestionId } };
     }
 
@@ -241,6 +245,17 @@ public sealed partial class CompanionDialogue(
         }
 
         Utterance act = UtteranceClassifier.Classify(text, single.Emotion != CompanionEmotion.Unknown);
+        if (previous.LastQuestionId == "recap" && IsTypedRecapCorrection(text))
+        {
+            act = Utterance.No;
+        }
+
+        if (act == Utterance.AsksForAdvice && previous.Goal == CompanionCaseContent.GoalVent
+            && !UtteranceClassifier.IsExplicitAdviceRequest(text))
+        {
+            act = Utterance.Statement;
+        }
+
         if (act is Utterance.Yes or Utterance.No && !previous.QuestionPending)
         {
             act = Utterance.Acknowledge;
@@ -323,6 +338,12 @@ public sealed partial class CompanionDialogue(
     {
         string trimmed = text.Trim().TrimEnd('.', '!');
         return trimmed.Length is >= 1 and <= 3 && trimmed.All(char.IsDigit);
+    }
+
+    private static bool IsTypedRecapCorrection(string text)
+    {
+        string normalized = text.Trim().TrimEnd('.', '!', '?', '…').Trim().ToLowerInvariant().Replace('ё', 'е');
+        return normalized is "не совсем" or "не совсем так" or "not quite";
     }
 
     private CompanionReply RespondToUnclear(CompanionState previous)
@@ -434,7 +455,9 @@ public sealed partial class CompanionDialogue(
             Utterance.AsksHowAreYou => Reply([CompanionSmallTalk.HowAreYou(english, _random)], [], state, emotion, theme),
             Utterance.AsksName => Reply([CompanionSmallTalk.Name(english)], [], state with { NamePending = true }, emotion, theme),
             Utterance.AsksCapabilities => Reply([CompanionSmallTalk.Capabilities(english)], CompanionSmallTalk.CapabilityReplies(english), state, emotion, theme),
-            Utterance.AsksToRepeat => Reply([CompanionSmallTalk.Repeat(previous.LastQuestion, english, _random)], [], state, emotion, theme),
+            Utterance.AsksToRepeat => previous.LastQuestion is { } lastQuestion
+                ? Reply([CompanionSmallTalk.RepeatLead(english, _random), lastQuestion], [], state, emotion, theme)
+                : Reply([CompanionSmallTalk.Repeat(null, english, _random)], [], state, emotion, theme),
             Utterance.SkipsQuestion => AskNextQuestion(state, [CompanionSmallTalk.Skipped(english, _random)], emotion, theme),
             Utterance.Greeting => Reply([CompanionSmallTalk.GreetingReply(Hour(), english, _random, state.UserName)], [], state, emotion, theme),
             Utterance.Thanks => Reply(
@@ -442,7 +465,12 @@ public sealed partial class CompanionDialogue(
                 [CompanionActContent.Continue(english), CompanionActContent.Enough(english), .. JournalChipIfFitting(state, emotion)],
                 state, emotion, theme),
             Utterance.Goodbye => Reply([CompanionSmallTalk.Goodbye(state.UserName, english)], JournalChipIfFitting(state, emotion), state, emotion, theme),
-            Utterance.DontKnow => Reply([CompanionActContent.DontKnow(english)], EmotionReplies(), state with { UnknownStreak = 0 }, emotion, theme),
+            Utterance.DontKnow => Reply(
+                [SoftenDontKnowAfterSpecificQuestion(previous) ? CompanionActContent.DontKnowAfterQuestion(english) : CompanionActContent.DontKnow(english)],
+                SoftenDontKnowAfterSpecificQuestion(previous) ? [] : EmotionReplies(),
+                state with { UnknownStreak = 0 },
+                emotion,
+                theme),
             Utterance.RefusesToTalk => Reply(
                 [CompanionActContent.Refuses(english)],
                 [CompanionActContent.BodyPractice(english), CompanionActContent.TalkOther(english), CompanionActContent.Enough(english)],
@@ -453,12 +481,7 @@ public sealed partial class CompanionDialogue(
                 ? RespondToStatement(previous, text, single)
                 : Reply([CompanionActContent.Advice(english)], [], state, emotion, theme),
             Utterance.AsksAboutCompanion => Reply([CompanionActContent.AboutCompanion(english)], [], state, emotion, theme),
-            Utterance.ComplainsAboutCompanion => Reply(
-                [CompanionActContent.Complaint(english)],
-                [CompanionActContent.Vent(english), CompanionActContent.Understand(english), CompanionActContent.BodyPractice(english)],
-                state,
-                emotion,
-                theme),
+            Utterance.ComplainsAboutCompanion => RespondToComplaint(state, previous, text, single, emotion, theme),
             Utterance.ProvokesOrInsultsCompanion => Reply(
                 [CompanionSmallTalk.Boundary(english, _random)],
                 [CompanionActContent.Continue(english), CompanionActContent.Enough(english)],
@@ -473,7 +496,7 @@ public sealed partial class CompanionDialogue(
 
     private CompanionReply RespondToAdvice(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion, CompanionTheme? theme)
     {
-        if (analysis.HasLoss || analysis.MentionsTrauma
+        if (analysis.HasLoss || state.GriefShared || analysis.MentionsTrauma
             || emotion == CompanionEmotion.Panic
             || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms))
         {
@@ -483,13 +506,21 @@ public sealed partial class CompanionDialogue(
         bool newEvent = analysis.Event != CompanionEvent.None && state.Event != analysis.Event.ToString();
         state = RememberMeaningfulContext(state, previous, text, analysis, emotion);
 
-        List<string> messages = [CompanionContent.Reflection(analysis with { Emotion = emotion }, english, _random)];
+        List<string> messages = [];
+        string? quote = QuoteExtractor.Pick(text, analyzer, emotion);
+        if (quote is not null && text.TrimEnd('.', '!', '?', '…', ' ') != quote)
+        {
+            messages.Add(CompanionDialogueContent.QuoteLine(quote, english, _random));
+        }
+
+        string reflection = CompanionContent.Reflection(analysis with { Emotion = emotion }, english, _random);
         if (newEvent && emotion != CompanionEmotion.Guilt
             && CompanionCaseContent.EventLine(analysis.Event, english, ParsePerson(state.Person)) is { } eventLine)
         {
-            messages[0] = $"{messages[0]} {eventLine}";
+            reflection = $"{reflection} {eventLine}";
         }
 
+        messages.Add(reflection);
         messages.Add(CompanionKnowledge.WhatHelps(emotion, english));
 
         return Reply(
@@ -498,6 +529,31 @@ public sealed partial class CompanionDialogue(
             state,
             emotion,
             theme);
+    }
+
+    private CompanionReply RespondToComplaint(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion, CompanionTheme? theme)
+    {
+        if (!HasUserContext(analysis))
+        {
+            return Reply(
+                [CompanionActContent.Complaint(english)],
+                [CompanionActContent.Vent(english), CompanionActContent.Understand(english), CompanionActContent.BodyPractice(english)],
+                state,
+                emotion,
+                theme);
+        }
+
+        // When a complaint also contains a personal disclosure, answer the disclosure and keep the correction for the repair.
+        CompanionReply contextual = RespondToStatement(previous, text, analysis);
+        if (contextual.Messages.Count == 0)
+        {
+            return contextual;
+        }
+
+        return contextual with
+        {
+            Messages = [contextual.Messages[0], CompanionActContent.ComplaintAcknowledgement(english), .. contextual.Messages.Skip(1)]
+        };
     }
 
     private CompanionState RememberMeaningfulContext(CompanionState state, CompanionState previous, string text, SituationAnalysis analysis, CompanionEmotion emotion)
@@ -731,7 +787,7 @@ public sealed partial class CompanionDialogue(
         if (known && state.ContentTurns >= 4 && state.Turns - state.LastRecapTurn >= (state.Goal == CompanionCaseContent.GoalUnderstand ? 3 : RecapEveryTurns))
         {
             messages.Add(CompanionActContent.Recap(emotion, theme, person, state.FirstIntensity, state.LastIntensity, english));
-            return Reply(messages, CompanionActContent.RecapReplies(english), state with { LastRecapTurn = state.Turns }, emotion, theme);
+            return Reply(messages, CompanionActContent.RecapReplies(english), state with { LastRecapTurn = state.Turns, LastQuestionId = "recap" }, emotion, theme);
         }
 
         if (known && state.ContentTurns >= 3 && state.TurnsSinceOffer >= 3)
@@ -1259,6 +1315,12 @@ public sealed partial class CompanionDialogue(
         state.QuestionPending
         && state.LastQuestion is { } question
         && (question.Contains("от 0 до 10", StringComparison.Ordinal) || question.Contains("from 0 to 10", StringComparison.Ordinal));
+
+    // Open invitations still offer feeling choices after repeated uncertainty; a specific unanswered question should be easy to skip.
+    private static bool SoftenDontKnowAfterSpecificQuestion(CompanionState state) =>
+        state.QuestionPending
+        && state.LastQuestionId is not null
+        && state.LastQuestionId is not ("more" or "open1" or "open2" or "open3");
 
     /// <summary>"7", "7/10", "около 6", "about 4": a typed answer to the tension question. Anything longer is a story, not a number.</summary>
     private static bool TryParseRating(string text, out int rating)

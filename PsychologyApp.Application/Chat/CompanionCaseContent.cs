@@ -166,6 +166,11 @@ public static class CompanionCaseContent
                 : (english ? "Then it matters even more that you are saying it here. What would help you get through today?" : "Тогда тем важнее, что вы говорите об этом здесь. Что помогло бы вам пережить сегодняшний день?");
         }
 
+        if (questionId == "recap")
+        {
+            return yes ? CompanionActContent.RecapYes(english) : CompanionActContent.RecapNo(english);
+        }
+
         if (questionId.StartsWith("e:", StringComparison.Ordinal) && Enum.TryParse(questionId[2..], out CompanionEvent kind) && Enum.IsDefined(kind) && Texts.TryGetValue(kind, out EventText? t))
         {
             // "Yes" to "what worries you most: money, the future or others?" answers nothing: ask for the choice, do not pretend it was understood.
@@ -264,9 +269,9 @@ public static class CompanionCaseContent
     [
         "просто послушай", "просто выслушай", "послушай меня", "выслушай меня",
         "не надо советов", "не нужно советов", "не давай советов", "не хочу советов",
-        "без советов", "не предлагай решений", "не предлагай практику",
+        "без советов", "не предлагай решений", "не предлагай практику", "не говори мне что делать", "не говорите мне что делать",
         "just listen", "listen to me", "hear me out", "no advice", "dont give advice",
-        "dont give me advice", "no solutions", "just be here"
+        "dont give me advice", "dont tell me what to do", "do not tell me what to do", "no solutions", "just be here"
     ];
 
     private static string NormalizeGoalText(string text)
@@ -404,10 +409,11 @@ public static class CompanionCaseContent
         return bank[random.Next(bank.Length)];
     }
 
-    private static readonly string[] RepeatedCues = ["не первый", "повторя", "часто", "постоянно", "опять", "снова", "каждый раз", "всегда", "not the first", "again", "keeps", "always", "often"];
+    private static readonly string[] RepeatedCues = ["не первый", "повторя", "часто", "постоянно", "опять", "снова", "каждый раз", "всегда", "уже было", "бывало раньше", "случалось раньше", "такое случалось", "второй раз", "пару раз", "несколько раз", "дважды", "not the first", "again", "keeps", "always", "often", "happened before", "has happened before", "second time", "twice", "a few times", "several times", "more than once"];
+    private static readonly string[] NotRepeatedCues = ["не повторяется", "не повторялось", "не повторялся", "не повторялась", "не было повторений", "не было такого раньше", "такого раньше не случалось", "не случалось раньше", "has not happened before", "hasnt happened before", "has never happened", "never happened before"];
     private static readonly string[] FirstTimeCues = ["впервые", "первый раз", "первый случай", "раньше не", "first time", "never before"];
-    private static readonly string[] LongCues = ["давно", "месяц", "недел", "годами", "долго", "long time", "months", "weeks", "years"];
-    private static readonly string[] RecentCues = ["недавно", "вчера", "на днях", "с недавних", "recently", "yesterday", "lately"];
+    private static readonly string[] LongCues = ["давно", "месяц", "недел", "год", "полгода", "годами", "долго", "long time", "months", "weeks", "year", "years"];
+    private static readonly string[] RecentCues = ["недавно", "не так давно", "не очень давно", "вчера", "на днях", "с недавних", "recently", "yesterday", "lately", "not long ago", "not too long ago"];
 
     /// <summary>
     /// A short answer to a "this or that" question ("it is not the first time", "for a long time") read as the yes or the no of that question,
@@ -419,9 +425,24 @@ public static class CompanionCaseContent
         switch (questionId)
         {
             case "e:Conflict":
-                return RepeatedCues.Any(t.Contains) ? true : FirstTimeCues.Any(t.Contains) ? false : null;
+                if (NotRepeatedCues.Any(t.Contains))
+                {
+                    return false;
+                }
+
+                if (RepeatedCues.Any(t.Contains))
+                {
+                    return true;
+                }
+
+                return FirstTimeCues.Any(t.Contains) ? false : null;
             case "e:Sleeplessness":
-                return RecentCues.Any(t.Contains) ? false : LongCues.Any(t.Contains) ? true : null;
+                if (RecentCues.Any(t.Contains))
+                {
+                    return false;
+                }
+
+                return LongCues.Any(t.Contains) ? true : null;
             default:
                 return null;
         }

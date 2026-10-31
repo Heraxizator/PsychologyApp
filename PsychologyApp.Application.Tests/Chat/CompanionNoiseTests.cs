@@ -142,7 +142,7 @@ public class CompanionNoiseTests
         CompanionReply reply = Say(d, asked, "???");
 
         Assert.DoesNotContain("улыб", string.Join(' ', reply.Messages));
-        Assert.Matches("^(Простите, спрошу ещё раз|Повторю вопрос)", reply.Messages[0]);
+        Assert.Matches("^(Простите, повторю вопрос|Спрошу ещё раз)", reply.Messages[0]);
     }
 
     [Fact]

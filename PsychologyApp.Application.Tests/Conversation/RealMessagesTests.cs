@@ -1,4 +1,5 @@
 using System.Text.Json;
+using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
 using Xunit;
@@ -14,17 +15,17 @@ namespace PsychologyApp.Application.Tests.Conversation;
 /// </summary>
 public class RealMessagesTests(ITestOutputHelper output)
 {
-    private sealed record Item(string Lang, string Label, string Text);
+    private sealed record Item(string Lang, string Label, string Text, string? Intent = null);
 
     private static Item[] LoadAll()
     {
-        string dir = Path.Combine(AppContext.BaseDirectory, "Data", "real");
+        string dir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Conversation", "Data", "real"));
         if (!Directory.Exists(dir))
         {
             return [];
         }
 
-        return [.. Directory.GetFiles(dir, "*.json").SelectMany(f =>
+        return [.. Directory.GetFiles(dir, "*.json").OrderBy(f => f, StringComparer.Ordinal).SelectMany(f =>
             JsonSerializer.Deserialize<Item[]>(File.ReadAllText(f), new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [])];
     }
 
@@ -32,11 +33,18 @@ public class RealMessagesTests(ITestOutputHelper output)
     public void Every_real_crisis_message_raises_the_helpline_card()
     {
         Item[] crisis = [.. LoadAll().Where(i => i.Label == "Crisis")];
-        KeywordCrisisDetector detector = new();
-        string[] missed = [.. crisis.Where(i => !detector.IsCrisis(i.Text)).Select(i => i.Text)];
+        if (crisis.Length == 0)
+        {
+            output.WriteLine("No consented real crisis cases found; evaluation skipped.");
+            return;
+        }
 
-        output.WriteLine($"Crisis messages: {crisis.Length}, missed: {missed.Length}");
-        missed.ToList().ForEach(output.WriteLine);
+        KeywordCrisisDetector detector = new();
+        int[] missed = [.. crisis.Select((item, index) => (item, index))
+            .Where(pair => !detector.IsCrisis(pair.item.Text))
+            .Select(pair => pair.index + 1)];
+
+        output.WriteLine($"Consented crisis cases: {crisis.Length}, missed: {missed.Length}; case numbers: {string.Join(", ", missed)}.");
         Assert.Empty(missed);
     }
 
@@ -46,6 +54,7 @@ public class RealMessagesTests(ITestOutputHelper output)
         Item[] items = [.. LoadAll().Where(i => i.Label != "Crisis")];
         if (items.Length == 0)
         {
+            output.WriteLine("No consented real emotion cases found; evaluation skipped.");
             return;
         }
 
@@ -53,8 +62,9 @@ public class RealMessagesTests(ITestOutputHelper output)
         EmotionGuesser guesser = EmotionGuesser.Bundled;
         int lexicon = 0;
         int combined = 0;
-        foreach (Item item in items)
+        for (int index = 0; index < items.Length; index++)
         {
+            Item item = items[index];
             CompanionEmotion read = analyzer.Analyze(item.Text).Emotion;
             lexicon += read.ToString() == item.Label ? 1 : 0;
             CompanionEmotion final = read != CompanionEmotion.Unknown ? read : guesser.Guess(item.Text)?.Emotion ?? CompanionEmotion.Unknown;
@@ -62,10 +72,51 @@ public class RealMessagesTests(ITestOutputHelper output)
             combined += right ? 1 : 0;
             if (!right)
             {
-                output.WriteLine($"[{item.Label} -> {final}] {item.Text}");
+                output.WriteLine($"Emotion mismatch at case {index + 1}: expected {item.Label}, got {final}.");
             }
         }
 
         output.WriteLine($"Real messages: {items.Length}; lexicon {(double)lexicon / items.Length:P0}; lexicon + guesser {(double)combined / items.Length:P0}");
+    }
+
+    [Fact]
+    public void Real_intent_accuracy_is_checked_without_logging_message_text()
+    {
+        Item[] items = [.. LoadAll().Where(i => !string.IsNullOrWhiteSpace(i.Intent))];
+        if (items.Length == 0)
+        {
+            output.WriteLine("No consented real intent cases found; evaluation skipped.");
+            return;
+        }
+
+        LexiconSituationAnalyzer analyzer = new();
+        List<(int Index, string Expected, string Actual)> misses = [];
+        Dictionary<string, (int Total, int Correct)> byIntent = new(StringComparer.Ordinal);
+        for (int index = 0; index < items.Length; index++)
+        {
+            Item item = items[index];
+            string expected = item.Intent!;
+            bool hasFeeling = analyzer.Analyze(item.Text).Emotion != CompanionEmotion.Unknown;
+            string actual = UtteranceClassifier.Classify(item.Text, hasFeeling).ToString();
+            byIntent.TryGetValue(expected, out (int Total, int Correct) counts);
+            byIntent[expected] = (counts.Total + 1, counts.Correct + (actual == expected ? 1 : 0));
+            if (actual != expected)
+            {
+                misses.Add((index + 1, expected, actual));
+            }
+        }
+
+        foreach ((string intent, (int total, int correct)) in byIntent.OrderBy(pair => pair.Key, StringComparer.Ordinal))
+        {
+            output.WriteLine($"Intent {intent}: {correct}/{total} correct.");
+        }
+
+        output.WriteLine($"Real intent cases: {items.Length}; misses: {misses.Count}.");
+        foreach ((int index, string expected, string actual) in misses)
+        {
+            output.WriteLine($"Intent mismatch at case {index}: expected {expected}, got {actual}.");
+        }
+
+        Assert.Empty(misses);
     }
 }

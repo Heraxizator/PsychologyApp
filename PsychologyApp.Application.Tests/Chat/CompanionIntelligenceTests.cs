@@ -25,20 +25,56 @@ public class UtteranceClassifierTests
     [InlineData("Не знаю", Utterance.DontKnow)]
     [InlineData("хз", Utterance.DontKnow)]
     [InlineData("i dont know", Utterance.DontKnow)]
+    [InlineData("наверное", Utterance.DontKnow)]
+    [InlineData("возможно", Utterance.DontKnow)]
+    [InlineData("может быть", Utterance.DontKnow)]
+    [InlineData("скорее всего", Utterance.DontKnow)]
+    [InlineData("maybe", Utterance.DontKnow)]
+    [InlineData("probably", Utterance.DontKnow)]
+    [InlineData("perhaps", Utterance.DontKnow)]
+    [InlineData("I guess", Utterance.DontKnow)]
     [InlineData("Не хочу об этом говорить", Utterance.RefusesToTalk)]
     [InlineData("i'd rather not", Utterance.RefusesToTalk)]
     [InlineData("Что мне делать?", Utterance.AsksForAdvice)]
     [InlineData("посоветуй что-нибудь", Utterance.AsksForAdvice)]
+    [InlineData("Мне нужен совет", Utterance.AsksForAdvice)]
+    [InlineData("Не знаю, что делать, посоветуй", Utterance.AsksForAdvice)]
+    [InlineData("Не знаю, что делать, помоги", Utterance.AsksForAdvice)]
+    [InlineData("Не знаю, что делать", Utterance.AsksForAdvice)]
+    [InlineData("Не говори мне, что делать", Utterance.Statement)]
+    [InlineData("I don't know what to do", Utterance.AsksForAdvice)]
+    [InlineData("Don't tell me what to do", Utterance.Statement)]
     [InlineData("what should I do", Utterance.AsksForAdvice)]
+    [InlineData("I need some advice", Utterance.AsksForAdvice)]
+    [InlineData("Начальник опять накричал на меня при коллегах. Подскажите, как мне быть?", Utterance.AsksForAdvice)]
+    [InlineData("My manager shouted at me in front of everyone again. Could you give me advice?", Utterance.AsksForAdvice)]
+    [InlineData("Как думаешь, стоит ли мне поговорить с мамой?", Utterance.AsksForAdvice)]
+    [InlineData("Есть ли смысл ещё раз поговорить с мамой?", Utterance.AsksForAdvice)]
+    [InlineData("Is it worth trying to talk to my manager again?", Utterance.AsksForAdvice)]
+    [InlineData("Как лучше поступить с начальником?", Utterance.AsksForAdvice)]
+    [InlineData("Что бы ты посоветовал сделать?", Utterance.AsksForAdvice)]
+    [InlineData("What would you do in my shoes?", Utterance.AsksForAdvice)]
+    [InlineData("How should I handle this situation?", Utterance.AsksForAdvice)]
+    [InlineData("Do you think I should stay in this relationship?", Utterance.AsksForAdvice)]
     [InlineData("Ты кто?", Utterance.AsksAboutCompanion)]
     [InlineData("ты человек или бот?", Utterance.AsksAboutCompanion)]
     [InlineData("are you a bot?", Utterance.AsksAboutCompanion)]
     [InlineData("Ты меня не понимаешь", Utterance.ComplainsAboutCompanion)]
+    [InlineData("Ты мне не помогаешь", Utterance.ComplainsAboutCompanion)]
     [InlineData("это бесполезно", Utterance.ComplainsAboutCompanion)]
     [InlineData("да", Utterance.Yes)]
     [InlineData("наверное, да", Utterance.Yes)]
+    [InlineData("может быть, да", Utterance.Yes)]
+    [InlineData("I think so", Utterance.Yes)]
+    [InlineData("скорее да", Utterance.Yes)]
     [InlineData("нет", Utterance.No)]
     [InlineData("вряд ли", Utterance.No)]
+    [InlineData("наверное, нет", Utterance.No)]
+    [InlineData("скорее нет", Utterance.No)]
+    [InlineData("maybe not", Utterance.No)]
+    [InlineData("probably not", Utterance.No)]
+    [InlineData("I don't think so", Utterance.No)]
+    [InlineData("I guess not", Utterance.No)]
     public void Recognises_what_the_person_is_doing(string text, Utterance expected) =>
         Assert.Equal(expected, UtteranceClassifier.Classify(text, hasFeeling: false));
 
@@ -48,8 +84,19 @@ public class UtteranceClassifierTests
     [InlineData("Пока я не знаю, как объяснить, но мне плохо")]
     [InlineData("Спасибо за вопрос, но я так устал, что просто нет сил")]
     [InlineData("Не могу перестать думать о разговоре")]
+    [InlineData("Я нормально справляюсь с тревогой, но к вечеру устаю")]
+    [InlineData("Мне совсем ничего не помогает")]
+    [InlineData("Таблетки не помогают, я так устала")]
     public void Ordinary_statements_are_not_mistaken_for_social_phrases(string text) =>
         Assert.Equal(Utterance.Statement, UtteranceClassifier.Classify(text, hasFeeling: true));
+
+    [Theory]
+    [InlineData("Начальник спросил, что делать с проектом, а я тревожусь", Utterance.Statement)]
+    [InlineData("Мне тревожно, подскажи", Utterance.AsksForAdvice)]
+    [InlineData("My manager asked me, ‘What should I do?’ and I feel anxious", Utterance.Statement)]
+    [InlineData("Мне тревожно, что делать?", Utterance.AsksForAdvice)]
+    public void Advice_intent_requires_a_question_or_direct_request_when_a_feeling_is_present(string text, Utterance expected) =>
+        Assert.Equal(expected, UtteranceClassifier.Classify(text, hasFeeling: true));
 
     [Fact]
     public void Social_phrases_next_to_a_feeling_stay_statements() =>
@@ -168,6 +215,18 @@ public class CompanionIntelligenceTests
     }
 
     [Fact]
+    public void UncertaintyAloneDoesNotCountAsYesToAQuestion()
+    {
+        CompanionDialogue d = Create();
+        CompanionState asked = Say(d, new CompanionState(), "Муж опять кричал на меня, мне обидно").State;
+
+        CompanionReply uncertain = Say(d, asked, "возможно");
+
+        Assert.Contains("оставить этот вопрос", uncertain.Messages[0]);
+        Assert.DoesNotContain("запускает такие ссоры", uncertain.Messages[0]);
+    }
+
+    [Fact]
     public void A_bare_yes_without_a_pending_question_is_a_backchannel_not_a_story()
     {
         CompanionReply reply = Say(Create(), new CompanionState(), "да");
@@ -223,6 +282,9 @@ public class CompanionIntelligenceTests
         Assert.Equal(["yes", "no"], recap.QuickReplies.Select(q => q.Payload));
         Assert.Contains("изменить в первую очередь", Tap(d, recap.State, ChatQuickReplyKinds.Recap, "Да, верно", "yes").Messages[0]);
         Assert.Contains("поправляете", Tap(d, recap.State, ChatQuickReplyKinds.Recap, "Не совсем", "no").Messages[0]);
+        Assert.Contains("изменить в первую очередь", Say(d, recap.State, "Да").Messages[0]);
+        Assert.Contains("поправляете", Say(d, recap.State, "Нет, не совсем").Messages[0]);
+        Assert.Contains("поправляете", Say(d, recap.State, "Не совсем").Messages[0]);
     }
 
     [Fact]

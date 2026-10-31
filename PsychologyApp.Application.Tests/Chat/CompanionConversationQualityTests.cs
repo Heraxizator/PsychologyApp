@@ -67,6 +67,17 @@ public class CompanionConversationQualityTests
     }
 
     [Fact]
+    public void AskingForAdviceAfterALossKeepsTheGriefSupportPath()
+    {
+        List<Turn> chat = Talk("Мой отец умер вчера", "Что мне делать?");
+
+        Assert.True(chat[1].Reply.State.GriefShared);
+        Assert.False(chat[1].OffersPractice, chat[1].Text);
+        Assert.False(chat[1].AsksForScale, chat[1].Text);
+        Assert.Contains("Я рядом", chat[1].Text);
+    }
+
+    [Fact]
     public void FearOfDeathIsNotTreatedAsGrief()
     {
         List<Turn> chat = Talk("Я очень боюсь смерти, не могу об этом не думать");
@@ -92,6 +103,30 @@ public class CompanionConversationQualityTests
         Assert.DoesNotContain("самое тяжёлое", chat[1].Text);
         Assert.Contains("Здорово", chat[1].Text + chat[1].Reply.State.Emotion, StringComparison.Ordinal);
         Assert.False(chat[1].AsksForScale);
+    }
+
+    [Fact]
+    public void SayingYouAreCopingNormallyIsNotMisreadAsAQuestionAboutNormality()
+    {
+        List<Turn> chat = Talk("Я нормально справляюсь с тревогой, но к вечеру устаю");
+
+        Assert.Equal(CompanionEmotion.Anxiety.ToString(), chat[0].Reply.State.Emotion);
+        Assert.DoesNotContain("обычная человеческая реакция", chat[0].Text);
+        Assert.DoesNotContain("сломан", chat[0].Text);
+    }
+
+    [Theory]
+    [InlineData(false, "Ты меня не понимаешь, я сильно тревожусь из-за разговора с начальником", "не попал", "тревож")]
+    [InlineData(true, "You don't understand me, I'm still anxious about talking to my manager", "missed what you needed", "worries you")]
+    public void AComplaintThatAlsoNamesTheProblemGetsAContextualReplyAndAnAcknowledgedRepair(bool english, string message, string repair, string contextualPhrase)
+    {
+        List<Turn> chat = Talk(english, message);
+
+        Assert.Equal(CompanionEmotion.Anxiety.ToString(), chat[0].Reply.State.Emotion);
+        Assert.Contains(chat[0].User, chat[0].Reply.State.RecentTexts);
+        Assert.Contains(contextualPhrase, chat[0].Text, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(repair, chat[0].Text, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("Что было бы полезнее сейчас", chat[0].Text);
     }
 
     [Fact]
@@ -153,6 +188,20 @@ public class CompanionConversationQualityTests
         Assert.True(chat[1].AsksForScale);
         Assert.True(chat[2].AsksForScale);
         Assert.Contains("Достаточно примерно", chat[2].Text);
+    }
+
+    [Theory]
+    [InlineData(false, "Меня уволили сегодня", "Не знаю", "оставить этот вопрос")]
+    [InlineData(true, "I lost my job today", "I don't know", "leave that question aside")]
+    public void DontKnowAfterASpecificQuestionGetsALowPressurePivot(bool english, string story, string answer, string expected)
+    {
+        List<Turn> chat = Talk(english, story, answer);
+
+        Assert.Contains(expected, chat[1].Text, StringComparison.OrdinalIgnoreCase);
+        Assert.Empty(chat[1].Reply.QuickReplies);
+        Assert.False(chat[1].Reply.State.QuestionPending);
+        Assert.DoesNotContain("что из этого ближе", chat[1].Text, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("which of these is closest", chat[1].Text, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -239,6 +288,35 @@ public class CompanionConversationQualityTests
         List<Turn> chat = Talk("Мне тревожно из-за работы", "Начальник давит на меня", "не хочу никаких практик", "Всё-таки что мне делать? Дай совет");
 
         Assert.True(chat[3].OffersPractice, chat[3].Text);
+    }
+
+    [Fact]
+    public void AdviceRequestAtTheEndOfAStoryIsNotLostBecauseTheStoryIsLong()
+    {
+        List<Turn> chat = Talk("Начальник опять накричал на меня при коллегах. Подскажите, как мне быть?");
+
+        Assert.Equal(CompanionPerson.Boss.ToString(), chat[0].Reply.State.Person);
+        Assert.True(chat[0].OffersPractice, chat[0].Text);
+        Assert.DoesNotContain("не могу решить за вас", chat[0].Text);
+    }
+
+    [Fact]
+    public void AQuotedQuestionInsideAnEmotionalStoryDoesNotTriggerAdvice()
+    {
+        List<Turn> chat = Talk("My manager asked me, ‘What should I do?’ and I feel anxious about the project");
+
+        Assert.Equal(CompanionEmotion.Anxiety.ToString(), chat[0].Reply.State.Emotion);
+        Assert.False(chat[0].OffersPractice, chat[0].Text);
+        Assert.True(chat[0].Reply.State.QuestionPending);
+    }
+
+    [Fact]
+    public void AFirstTurnRequestForAdviceInvitesContextInsteadOfGuessingAFeeling()
+    {
+        List<Turn> chat = Talk("Не знаю, что делать");
+
+        Assert.Contains("разобраться", chat[0].Text);
+        Assert.Empty(chat[0].Reply.QuickReplies);
     }
 
     [Fact]
@@ -366,6 +444,32 @@ public class CompanionConversationQualityTests
     }
 
     [Fact]
+    public void RepeatingAQuestionKeepsItsContextForTheAnswer()
+    {
+        List<Turn> chat = Talk(
+            "Муж вчера накричал на меня, мне очень обидно",
+            "Не поняла",
+            "Уже не первый раз");
+
+        Assert.Contains(chat[0].Reply.Messages[^1], chat[1].Text);
+        Assert.Contains("Что обычно запускает такие ссоры?", chat[2].Text);
+        Assert.DoesNotContain("что из этого ближе", chat[2].Text);
+    }
+
+    [Fact]
+    public void AnUnclearMessageDoesNotDiscardTheQuestionBeingAnswered()
+    {
+        List<Turn> chat = Talk(
+            "Муж вчера накричал на меня, мне очень обидно",
+            "asdfgh",
+            "Уже не первый раз");
+
+        Assert.Contains("случайным", chat[1].Text);
+        Assert.False(chat[1].Reply.State.QuestionPending);
+        Assert.Contains("Что обычно запускает такие ссоры?", chat[2].Text);
+    }
+
+    [Fact]
     public void YesToWhetherThereIsSomeoneCloseIsAnsweredAboutThatPerson()
     {
         List<Turn> chat = Talk("Мне очень одиноко, никто не звонит и не пишет", "да");
@@ -433,6 +537,23 @@ public class CompanionConversationQualityTests
 
         Assert.Equal("vent", chat[3].Reply.State.Goal);
         Assert.True(chat[4].OffersPractice, chat[4].Text);
+    }
+
+    [Theory]
+    [InlineData(false, "Не говори мне, что делать")]
+    [InlineData(false, "Не знаю, что делать")]
+    [InlineData(true, "Don't tell me what to do")]
+    [InlineData(true, "I don't know what to do")]
+    public void AListeningPreferenceIsNotOverriddenByWordsThatLookLikeAnAdviceRequest(bool english, string message)
+    {
+        List<Turn> chat = english
+            ? Talk(true, "I feel anxious about work", "I'm afraid I might lose my job", "I keep thinking about it", "just talk", message)
+            : Talk("Мне тревожно из-за работы", "Боюсь, что меня сократят на этой неделе", "Постоянно об этом думаю", "просто выговориться", message);
+
+        Assert.Equal("vent", chat[^1].Reply.State.Goal);
+        Assert.NotEmpty(chat[^1].Reply.Messages);
+        Assert.False(chat[^1].OffersPractice, chat[^1].Text);
+        Assert.DoesNotContain(english ? "advice" : "совет", chat[^1].Text, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -619,20 +740,58 @@ public class CompanionConversationQualityTests
         Assert.Matches("Расставание переворачивает|После такого трудно", said);
     }
 
-    [Fact]
-    public void ItIsNotTheFirstTimeAnswersTheQuestionAboutRepetition()
+    [Theory]
+    [InlineData("да, это уже не первый раз")]
+    [InlineData("такое уже было")]
+    [InlineData("со мной это случалось раньше")]
+    [InlineData("уже второй раз")]
+    [InlineData("пару раз такое было")]
+    [InlineData("This has happened before")]
+    [InlineData("It happened twice")]
+    public void ARepeatedEventAnswersTheQuestionAboutRepetition(string answer)
     {
-        List<Turn> chat = Talk("Поругалась с мамой, она сказала что я неблагодарная", "да, это уже не первый раз");
+        List<Turn> chat = Talk("Поругалась с мамой, она сказала что я неблагодарная", answer);
 
         Assert.Contains("запускает такие ссоры", chat[1].Text);
     }
 
-    [Fact]
-    public void ForAWhileAnswersTheQuestionAboutHowLongSleepHasBeenBad()
+    [Theory]
+    [InlineData("это впервые")]
+    [InlineData("это не повторяется")]
+    [InlineData("Такого раньше не случалось")]
+    [InlineData("Такое не случалось раньше")]
+    [InlineData("This has not happened before")]
+    [InlineData("It never happened before")]
+    public void AFirstTimeOrExplicitlyNonRepeatedEventGetsTheFirstTimeFollowUp(string answer)
     {
-        List<Turn> chat = Talk("Не могу уснуть, лежу до утра", "уже давно");
+        List<Turn> chat = Talk("Поругалась с мамой, она сказала что я неблагодарная", answer);
+
+        Assert.Contains("это было неожиданно", chat[1].Text);
+        Assert.DoesNotContain("запускают такие ссоры", chat[1].Text);
+    }
+
+    [Theory]
+    [InlineData("уже давно")]
+    [InlineData("почти год")]
+    [InlineData("полгода")]
+    [InlineData("for a year")]
+    public void LongLastingSleeplessnessAnswersTheQuestionAboutHowLongItHasBeenBad(string answer)
+    {
+        List<Turn> chat = Talk("Не могу уснуть, лежу до утра", answer);
 
         Assert.Contains("обсудить с врачом", chat[1].Text);
+    }
+
+    [Theory]
+    [InlineData("не так давно")]
+    [InlineData("не очень давно")]
+    [InlineData("Not long ago")]
+    [InlineData("Not too long ago")]
+    public void ARecentOnsetIsNotMistakenForLongLastingSleeplessness(string answer)
+    {
+        List<Turn> chat = Talk("Не могу уснуть, лежу до утра", answer);
+
+        Assert.DoesNotContain("обсудить с врачом", chat[1].Text);
     }
 
     [Fact]

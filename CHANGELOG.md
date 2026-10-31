@@ -6,6 +6,36 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Если человек отвечает «не знаю» на вопрос в чате, помощник больше не переключается на случайный выбор эмоций: он снимает давление и предлагает пока пропустить вопрос. Not checked on a device.
+
+- Фраза «я нормально справляюсь» больше не принимается за вопрос «со мной всё нормально?», поэтому чат отвечает на рассказ, а не включает общую психообразовательную заготовку. Not checked on a device.
+
+- Классификатор больше не принимает общую фразу «мне ничего не помогает» за жалобу на собеседника, распознаёт прямые и вопросительные просьбы о совете («мне нужен совет», «как думаешь, стоит ли…?», «есть ли смысл…?») даже в конце длинной истории; ответ сохраняет ключевую фразу человека. Not checked on a device.
+
+- Если в жалобе на чат одновременно сказано о личной трудности, ответ теперь учитывает эту трудность и отдельно признаёт, что прежний ответ не помог. Not checked on a device.
+
+- Прямой вопрос о том, что делать после уже рассказанной утраты, больше не переключает разговор на общие советы и предложение практики: сохраняется бережный режим поддержки при горе. Psychologist review not performed.
+
+- После просьбы повторить вопрос или при нечитаемом ответе чат сохраняет связь с исходным вопросом, чтобы следующий ответ правильно распознался.
+
+- Текстовые ответы «да», «нет» и «не совсем» на подведение итогов теперь приводят к той же реакции, что и кнопки подтверждения и исправления.
+
+- Короткие «наверное», «возможно» и «maybe» больше не считаются согласием на вопрос; уточнённые ответы вроде «скорее да», «I think so» и «I don't think so» получают верную полярность. Not checked on a device.
+
+- Вопрос о повторяющемся конфликте теперь понимает естественные ответы вроде «такое уже было», «уже второй раз» и “this has happened before”. Not checked on a device.
+
+- Ответы «это не повторяется», «такое не случалось раньше» и “never happened before” больше не путаются с подтверждением повторяющегося конфликта. Not checked on a device.
+
+- «Не так давно», “not long ago” и похожие ответы распознаются как недавнее начало проблем со сном, а не как длительная бессонница. Not checked on a device.
+
+- Ответы «почти год», «полгода» и “for a year” распознаются как длительная проблема со сном и ведут к соответствующему продолжению. Not checked on a device.
+
+- В режиме «выговориться» слова «не знаю, что делать» больше не перебивают выбранный формат поддержки, а прямое «не говори мне, что делать» не считается просьбой о совете. Явную просьбу о совете чат сохраняет. Not checked on a device.
+
+- Упоминание чужого вопроса «что делать» внутри эмоционального рассказа больше не переключает ответ на советы; прямые просьбы и вопросы с вопросительным знаком распознаются по-прежнему. Not checked on a device.
+
+- Короткие формулировки просьбы о совете вроде «как лучше поступить?» и “what would you do?” распознаются как вопрос о совете. Not checked on a device.
+
 - Android reminders now recalculate after system time and time-zone changes, and after seasonal offset changes on Android API 37+. Scheduling waits for the notification permission result, delivery is skipped when Android blocks notifications, and channel names use the app language. Notification and home-screen widget tap handles are released after delivery or update. Audio playback now respects an audio-focus denial, including on Android versions before 8.0. Crisis-line country detection falls back to the system region on devices without telephony support and uses the pre-Android-7 locale API where needed. The Android smoke run now fails if Monkey cannot complete all 2,000 interactions. Not checked on a device.
 
 - The offline companion now handles direct requests to be heard from the opening turn, respects negated or conflicting support goals, distinguishes a request about calming another person from a request for self-calming, and lets the person change the goal mid-chat. Listening acknowledgements have short variants. NLU evaluation now reports per-emotion recall, includes an additional 60-message set, and adds multi-turn regressions for goal changes and crisis priority. Psychologist review not performed.

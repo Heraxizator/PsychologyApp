@@ -23,6 +23,10 @@ public static class CompanionActContent
         ? "That's okay, not knowing is normal. Let's try another way: which of these is closest?"
         : "Это нормально, не знать. Давайте попробуем по-другому: что из этого ближе всего?";
 
+    public static string DontKnowAfterQuestion(bool english) => english
+        ? "That's okay; you don't have to know right now. We can leave that question aside. Tell me what feels most important in this situation at the moment."
+        : "Ничего страшного, не обязательно знать это сейчас. Можем пока оставить этот вопрос. Расскажите, что в этой ситуации сейчас важнее всего для вас.";
+
     public static string Refuses(bool english) => english
         ? "Okay, we won't go into that. We can do something for the body, talk about something else, or stop here."
         : "Хорошо, не будем об этом. Можем сделать что-то для тела, поговорить о другом или остановиться.";
@@ -38,6 +42,10 @@ public static class CompanionActContent
     public static string Complaint(bool english) => english
         ? "I'm sorry that wasn't helpful. What would be more useful right now?"
         : "Мне жаль, что вышло не то. Что было бы полезнее сейчас?";
+
+    public static string ComplaintAcknowledgement(bool english) => english
+        ? "I'm sorry my reply missed what you needed. I'll try to listen more carefully now."
+        : "Мне жаль, что мой ответ не попал в то, что вам нужно. Постараюсь внимательнее вас услышать.";
 
     public static string YesProbe(bool english, Random random) => Pick(random, english
         ? ["I see. What is the main thing about it for you?", "Understood. What matters most to you in this?"]

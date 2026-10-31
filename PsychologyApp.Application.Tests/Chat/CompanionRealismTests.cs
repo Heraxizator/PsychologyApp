@@ -232,7 +232,7 @@ public class CompanionRealismTests
 
         CompanionReply repeat = Say(d, asked.State, "не поняла");
 
-        Assert.Contains(question, repeat.Messages[0]);
+        Assert.Contains(question, string.Join(" ", repeat.Messages));
     }
 
     [Fact]

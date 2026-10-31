@@ -119,8 +119,15 @@ public static class UtteranceClassifier
 
     private static readonly string[] ComplaintTerms =
     [
-        "ты не понимаешь", "ты меня не понимаешь", "ты ничего не понимаешь", "вы не понимаете", "вы меня не понимаете", "бесполезно", "ерунда какая", "какая ерунда", "тупой бот", "глупый бот",
-        "не помогает", "ты тупой", "ты тупая", "толку нет", "you dont understand", "you do not understand", "useless", "this is stupid", "doesnt help", "does not help", "this is pointless"
+        "этот ответ не помогает", "этот совет не помогает", "это бесполезно", "ерунда какая", "какая ерунда", "тупой бот", "глупый бот",
+        "ты тупой", "ты тупая", "this is stupid", "this is pointless"
+    ];
+
+    private static readonly string[] DirectComplaintTerms =
+    [
+        "ты не понимаешь", "ты меня не понимаешь", "ты ничего не понимаешь", "вы не понимаете", "вы меня не понимаете",
+        "ты не помогаешь", "ты мне не помогаешь", "вы не помогаете", "вы мне не помогаете",
+        "you dont understand", "you do not understand", "you dont help", "you are not helping", "youre not helping"
     ];
 
     // Aimed at the companion specifically, not at a third party or at themselves: "ты дебил" counts, "какой я дебил" does not.
@@ -143,14 +150,32 @@ public static class UtteranceClassifier
 
     private static readonly string[] AdviceTerms =
     [
-        "что делать", "что мне делать", "как быть", "посоветуй", "посоветуйте", "подскажи что", "подскажите что", "дай совет", "дайте совет", "что посоветуешь", "что посоветуете",
-        "что мне теперь делать", "как с этим справляться", "как с этим справиться", "как справиться", "как справляться", "как с этим бороться", "как с этим жить", "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "any advice", "give me advice", "help me", "need help", "what can i do"
+        "что делать", "что мне делать", "как быть", "посоветуй", "посоветуйте", "подскажи что", "подскажите что", "дай совет", "дайте совет", "мне нужен совет", "нужен совет", "что посоветуешь", "что посоветуете",
+        "что мне теперь делать", "как с этим справляться", "как с этим справиться", "как справиться", "как справляться", "как с этим бороться", "как с этим жить", "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "i dont know what to do", "i do not know what to do", "any advice", "give me advice", "i need advice", "i need some advice", "need advice", "help me", "need help", "what can i do"
     ];
 
-    private static readonly string[] ExplicitAdviceTerms =
+    private static readonly string[] AdviceQuestionTerms =
     [
-        "что делать", "что мне делать", "посоветуй", "посоветуйте", "подскажи что", "подскажите что", "дай совет", "дайте совет", "что посоветуешь", "что посоветуете",
-        "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "any advice", "give me advice", "help me", "need help", "what can i do"
+        "как думаешь", "как ты думаешь", "как считаете", "как считаешь", "стоит ли", "есть ли смысл", "имеет ли смысл",
+        "как лучше поступить", "как бы ты поступил", "как бы вы поступили", "что бы ты посоветовал", "что бы вы посоветовали",
+        "что делать", "что мне делать", "как мне быть", "what should i do", "what do i do", "what can i do",
+        "do you think i should", "what do you think i should", "what would you do", "how should i handle", "what do you recommend", "should i", "would it help to", "would it make sense to", "is it worth"
+    ];
+
+    private static readonly string[] NegativeAdviceTerms =
+    [
+        "не говори мне что делать", "не говорите мне что делать", "не надо говорить что делать",
+        "dont tell me what to do", "do not tell me what to do", "i dont want advice", "i do not want advice"
+    ];
+
+    private static readonly string[] NonExplicitAdviceTerms =
+    [
+        "не знаю что делать", "не знаю как быть", "i dont know what to do", "i do not know what to do"
+    ];
+
+    private static readonly string[] DirectAdviceOverrides =
+    [
+        "посоветуй", "посоветуйте", "подскажи", "подскажите", "скажи что мне делать", "скажи что делать", "дай совет", "дайте совет", "мне нужен совет", "нужен совет", "что посоветуешь", "что посоветуете", "помоги", "помогите", "give me advice", "i need advice", "i need some advice", "any advice", "what do you suggest", "what would you recommend", "help me", "need help"
     ];
 
     private static readonly string[] EntertainTerms = ["расскажи анекдот", "знаешь анекдот", "анекдот", "пошути", "умеешь шутить", "расскажи шутку", "мне скучно", "скучно", "нечем заняться", "tell me a joke", "know any jokes", "i am bored", "im bored", "tell a joke"];
@@ -169,7 +194,7 @@ public static class UtteranceClassifier
 
     private static readonly string[] NormalTerms =
     [
-        "это нормально", "нормально ли", "разве это нормально", "со мной что то не так", "со мной что нибудь не так", "я ненормальн", "это ненормально", "я нормальн", "я схожу с ума",
+        "это нормально", "нормально ли", "разве это нормально", "со мной что то не так", "со мной что нибудь не так", "я ненормальн", "это ненормально", "я схожу с ума",
         "is this normal", "is it normal", "something wrong with me", "am i crazy", "am i normal", "is that normal"
     ];
 
@@ -212,7 +237,10 @@ public static class UtteranceClassifier
 
     private static readonly string[] SadEmoji = ["😢", "😭", "☹", "😞", "😔", "💔", "🥺", "😟", "😥", "😰"];
 
-    private static readonly string[] YesTerms = ["да", "ага", "угу", "конечно", "наверное", "пожалуй", "возможно", "верно", "точно", "yes", "yeah", "yep", "sure", "maybe", "probably", "right", "exactly"];
+    private static readonly string[] UncertainAnswerTerms = ["наверное", "пожалуй", "возможно", "может быть", "скорее всего", "maybe", "probably", "perhaps", "possibly", "i guess"];
+    private static readonly string[] QualifiedYesTerms = ["наверное да", "пожалуй да", "возможно да", "может быть да", "скорее да", "думаю да", "maybe yes", "maybe yeah", "probably yes", "probably yeah", "i think so", "i guess so", "i suppose so"];
+    private static readonly string[] QualifiedNoTerms = ["наверное нет", "пожалуй нет", "возможно нет", "скорее нет", "maybe not", "probably not", "perhaps not", "i dont think so", "i do not think so", "i guess not", "i suppose not"];
+    private static readonly string[] YesTerms = ["да", "ага", "угу", "конечно", "верно", "точно", "yes", "yeah", "yep", "sure", "right", "exactly"];
     private static readonly string[] NoTerms = ["нет", "неа", "вряд ли", "no", "nope", "not really"];
 
     /// <summary>A short "yes, let us try" said right after the companion offered a practice.</summary>
@@ -292,7 +320,7 @@ public static class UtteranceClassifier
             return Utterance.SkipsQuestion;
         }
 
-        if (words <= 10 && ContainsAny(padded, ComplaintTerms))
+        if ((words <= 16 && ContainsAny(padded, DirectComplaintTerms)) || (words <= 10 && ContainsAny(padded, ComplaintTerms)))
         {
             return Utterance.ComplainsAboutCompanion;
         }
@@ -317,7 +345,11 @@ public static class UtteranceClassifier
             return Utterance.AsksIfNormal;
         }
 
-        if (words <= 9 && ContainsAny(padded, AdviceTerms))
+        bool asksAdviceDirectly = ContainsAny(padded, DirectAdviceOverrides);
+        bool asksAdviceInQuestion = HasQuestionEnding(text) && (ContainsAny(padded, AdviceTerms) || ContainsAny(padded, AdviceQuestionTerms));
+        bool expressesUncertaintyAboutWhatToDo = !hasFeeling && ContainsAny(padded, AdviceTerms);
+        if (words <= 16 && !IsNegatedAdviceRequest(normalized)
+            && (asksAdviceDirectly || asksAdviceInQuestion || expressesUncertaintyAboutWhatToDo))
         {
             return Utterance.AsksForAdvice;
         }
@@ -350,6 +382,21 @@ public static class UtteranceClassifier
         if ((words <= 6 && ContainsAny(padded, RepeatTerms)) || RepeatWholeMessage.Contains(normalized))
         {
             return Utterance.AsksToRepeat;
+        }
+
+        if (words <= 5 && QualifiedYesTerms.Contains(normalized))
+        {
+            return Utterance.Yes;
+        }
+
+        if (words <= 5 && QualifiedNoTerms.Contains(normalized))
+        {
+            return Utterance.No;
+        }
+
+        if (words <= 3 && UncertainAnswerTerms.Contains(normalized))
+        {
+            return Utterance.DontKnow;
         }
 
         if (words <= 2 && StartsWithAny(normalized, LaughStarts))
@@ -385,7 +432,36 @@ public static class UtteranceClassifier
         return IsNoise(normalized) ? Utterance.Noise : Utterance.Statement;
     }
 
-    internal static bool IsExplicitAdviceRequest(string text) => ContainsAny(Normalize(text) + " ", ExplicitAdviceTerms);
+    internal static bool IsExplicitAdviceRequest(string text)
+    {
+        string normalized = Normalize(text);
+        string padded = normalized + " ";
+        bool directRequest = ContainsAny(padded, DirectAdviceOverrides);
+        bool explicitQuestion = HasQuestionEnding(text) && (ContainsAny(padded, AdviceTerms) || ContainsAny(padded, AdviceQuestionTerms));
+        if (IsNegatedAdviceRequest(normalized))
+        {
+            return false;
+        }
+
+        return directRequest || (explicitQuestion && (!ContainsAny(padded, NonExplicitAdviceTerms) || ContainsAny(padded, AdviceQuestionTerms)));
+    }
+
+    private static bool HasQuestionEnding(string text)
+    {
+        string ending = text.TrimEnd();
+        while (ending.Length > 0 && ending[^1] is '"' or '”' or '»' or '\'' or ')')
+        {
+            ending = ending[..^1].TrimEnd();
+        }
+
+        return ending.EndsWith('?');
+    }
+
+    private static bool IsNegatedAdviceRequest(string normalized)
+    {
+        string padded = normalized + " ";
+        return ContainsAny(padded, NegativeAdviceTerms) && !ContainsAny(padded, DirectAdviceOverrides);
+    }
 
     /// <summary>Messages with no letters or digits: "???" is "what?", "!!!" is strong feeling, anything else (dots, brackets, emoji) is a reaction.</summary>
     private static Utterance ClassifyMarks(string text)

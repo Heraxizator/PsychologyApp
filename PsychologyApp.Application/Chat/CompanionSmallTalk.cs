@@ -128,6 +128,10 @@ public static class CompanionSmallTalk
 
     // ----- clarification -----
 
+    public static string RepeatLead(bool english, Random random) => Pick(random, english
+        ? ["Sorry, I'll repeat the question. You can answer briefly or skip it:", "Let me ask that again. A short answer is fine, or you can skip it:"]
+        : ["Простите, повторю вопрос. Можно ответить коротко или пропустить:", "Спрошу ещё раз. Можно ответить коротко или пропустить:"]);
+
     public static string Repeat(string? lastQuestion, bool english, Random random)
     {
         if (string.IsNullOrWhiteSpace(lastQuestion))
@@ -194,11 +198,11 @@ public static class CompanionSmallTalk
 
         return digits
             ? Pick(random, english
-                ? ["That's only digits, and I can't tell what they mean. What did you want to say?", "I only see numbers here, so I can't tell what you mean. Could you put it in words?"]
-                : ["Тут одни цифры, и я не могу понять, что они значат. Что вы хотели сказать?", "Я вижу только цифры и не понимаю, о чём вы. Можете написать словами?"])
+                ? ["That's only digits, and I can't tell what they mean. Please write what you wanted to say.", "I only see numbers here, so I couldn't tell what you meant. Try it in words."]
+                : ["Тут одни цифры, и я не могу понять, что они значат. Напишите, пожалуйста, словами, что хотели сказать.", "Я вижу только цифры и не понимаю, о чём вы. Попробуйте написать это словами."])
             : Pick(random, english
-                ? ["That looks like an accidental message, and I couldn't make it out. What did you want to say?", "I couldn't make sense of that one. Try putting it in words?"]
-                : ["Похоже, сообщение вышло случайным, и мне не удалось его понять. Что хотели сказать?", "Это сообщение разобрать не получилось. Можете написать словами?"]);
+                ? ["That looks like an accidental message, and I couldn't make it out. Please try again in words.", "I couldn't make sense of that one. Try putting it into words."]
+                : ["Похоже, сообщение вышло случайным, и мне не удалось его понять. Попробуйте ещё раз словами.", "Это сообщение разобрать не получилось. Попробуйте написать словами."]);
     }
 
     /// <summary>A number from 0 to 10 when no tension question is open: probably a rating, but of what?</summary>
